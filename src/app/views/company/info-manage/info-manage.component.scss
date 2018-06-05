@@ -1,0 +1,31 @@
+@import "../../../../global-styles/variable";
+
+.audit-page-wrap{
+  height:calc(100% - #{$fix-footer-height});
+
+  .main-row-wrap{
+    height:100%;
+  }
+  .item-row{
+
+    margin-bottom:10px;
+
+    & > div:first-child{
+      text-align:right;
+      padding:0 10px;
+    }
+  }
+
+  .img-wrap{
+    height:100%;
+    overflow-y:scroll;
+
+    .img-wrap-col{
+
+      img{
+        max-height:150px;
+      }
+    }
+  }
+
+}

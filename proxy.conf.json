@@ -1,0 +1,11 @@
+{
+    "/site": {
+        "target": "http://192.168.2.52:9002/",
+        "secure": false,
+        "changeOrigin": true,
+        "pathRewrite": {
+          "^/site": "/"
+        }
+
+    }
+}

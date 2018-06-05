@@ -1,0 +1,55 @@
+
+@import "./variable";
+
+
+
+.table-header{
+  height:$table-header-height;
+  line-height:$table-header-height;
+  font-size:13px;
+}
+.table-wrap{
+  height:calc(100% - #{$table-header-height});
+  width:100%;
+  nz-table{
+    tr{
+      font-size:13px;
+    }
+
+  }
+}
+.operate-text{
+  cursor:pointer;
+  color:#0071ff;
+  margin-right:5px;
+}
+.font-red-color{
+  color:#ff0000;
+}
+
+.fixed-footer-button-wrap{
+
+  position:fixed;
+  bottom:0px;
+  border-top:1px solid #ccc;
+  width:100%;
+  height:$fix-footer-height;
+  line-height:$fix-footer-height;
+  text-align:center;
+
+  button{
+    height:36px;
+    width:70px;
+  }
+  button + button{
+    margin-left:30px;
+  }
+}
+.submit-button{
+  height:36px;
+  width:70px;
+  font-size:14px;
+}
+.submit-button + .submit-button{
+  margin-left:20px;
+}

@@ -1,0 +1,112 @@
+@import "../../../../global-styles/variable";
+
+
+.level-table-row{
+  .set-row-default{
+    display:none;
+  }
+  &:hover .set-row-default{
+    display:inline;
+  }
+}
+.edit-add-page{
+  height:100%;
+  width:100%;
+
+  .edit-add-main{
+    width:550px;
+    margin:20px 0 0 30px;
+
+    nz-form-item{
+      margin-bottom:10px;
+
+      textarea{
+        max-height:50px;
+      }
+    }
+  }
+}
+
+.privilege-wrap{
+  $item-padding:0 20px;
+  $border-bottom:1px solid #ececec;
+  $list-header-height:30px;
+
+  height:100%;
+  margin-top:10px;
+  font-size:14px;
+
+  .main-list{
+    height:calc(100% - #{$fix-footer-height} - #{$list-header-height} - 10px);
+    overflow-y: scroll;
+    padding:0;
+    & li{
+      list-style: none;
+    }
+  }
+
+  label[nz-checkbox]{
+    font-size:14px;
+    vertical-align:middle;
+  }
+
+
+  .role-name{
+    border-bottom:1px solid #ccc;
+    border-left:4px solid #ff6600;
+    line-height:$list-header-height;
+    height:$list-header-height;
+  }
+
+  .top-menu-item > input:checked + div{
+    height:40px;
+  }
+
+  .top-menu-item > input{
+    display:none;
+  }
+
+
+  .menu-main-wrap{
+    overflow:hidden;
+
+    .top-menu-header{
+      height:40px;
+      line-height:40px;
+      padding:$item-padding;
+      border-bottom:$border-bottom;
+
+      & > label{
+        float:right;
+        color:#a85600;
+      }
+    }
+    .menu-content{
+      background:#f8f8f8;
+      padding:$item-padding;
+      border-bottom:$border-bottom;
+
+      .side-menu-item{
+        padding:$item-padding;
+
+        & div:first-child{
+          border-bottom:$border-bottom;
+          height:40px;
+          line-height:40px;
+        }
+      }
+    }
+    .most-deep{
+      border-bottom:$border-bottom;
+      span:first-child{
+        color:#0091f7;
+        padding:$item-padding;
+        height:40px;
+        line-height:40px;
+      }
+    }
+
+
+
+  }
+}

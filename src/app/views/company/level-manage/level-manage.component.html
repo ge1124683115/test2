@@ -1,0 +1,173 @@
+<nz-tabset nzType="card" [(nzSelectedIndex)]="tabPageIndex" (nzSelectChange)="levelTabChange()" [nzTabBarExtraContent]="navBreakcrumb">
+  <nz-tab nzTitle="级别">
+    <div class="table-header">
+      <span class="operate-text" (click)="addOrEditLevel(1)">新增</span>
+      <span class="operate-text" (click)="deleteLevel()">删除</span>
+    </div>
+    <div class="table-wrap" #levelTableWrap>
+      <nz-table nzSize="small" #levelTable [nzData]="levelDataList" [nzScroll]="{y:levelTableWrap.clientHeight-90 + 'px'}" [nzTotal]="levelTableConfig.total" [(nzPageIndex)]="levelTableConfig.pageNum"
+                [nzBordered]="true" [(nzPageSize)]="levelTableConfig.pageSize" [nzFrontPagination]="false" [nzShowQuickJumper]="true"
+                [nzLoading]="levelTableConfig.loading" (nzPageIndexChange)="getLevelList($event)" class="user-table">
+        <thead>
+          <tr>
+            <th nzShowCheckbox [(nzChecked)]="levelTableConfig.allChecked" (nzCheckedChange)="checkLevelTableAll($event)"></th>
+            <th [nzWidth]="'230px'"><span>操作</span></th>
+            <th *ngFor="let headItem of levelTableConfig.header" [nzWidth]="headItem.width"><span>{{headItem.name}}</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of levelTable.data;" class="level-table-row">
+            <td nzShowCheckbox [(nzChecked)]="row.checked" [nzDisabled]="row.defaulted===1?true:false" (nzCheckedChange)="checkLevelTableSingle($event,row)"></td>
+            <td>
+              <span class="operate-text" (click)="addOrEditLevel(2,row)">编辑</span>
+              <span class="operate-text" (click)="setLevelMenu(row)">设置菜单</span>
+              <span class="operate-text" (click)="deleteLevel([row.levelNo])" *ngIf="row.defaulted !== 1">删除</span>
+              <span class="operate-text set-row-default" *ngIf="row.defaulted !== 1" (click)="setDefaultLevel(row)">设为默认</span>
+              <span class="" *ngIf="row.defaulted === 1">默认</span>
+            </td>
+            <td *ngFor="let cellItem of levelTableConfig.header;">
+              {{cellItem.field==='price'? row[cellItem.field] / 100:row[cellItem.field]}}
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </nz-tab>
+  <nz-tab [nzTitle]="tabPageType === 1? '新增':'编辑'" *ngIf="tabPageType === 1 || tabPageType === 2">
+    <div class="edit-add-page">
+      <div class="edit-add-main">
+        <form nz-form [formGroup]="levelForm"  class="edit-add-form">
+          <nz-form-item>
+            <nz-form-label nzSpan="6"><span class="font-red-color">*</span>名称</nz-form-label>
+            <nz-form-control nzSpan="18">
+              <input nz-input formControlName="levelName" nzSize="default" spellcheck="false" maxlength="20" [readonly]="tabPageType===2"/>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label nzSpan="6"><span class="font-red-color">*</span>价格</nz-form-label>
+            <nz-form-control nzSpan="18">
+              <input nz-input formControlName="price" nzSize="default" spellcheck="false" max="9999999999999.99" type="number" />
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label nzSpan="6"><span class="font-red-color">*</span>天数</nz-form-label>
+            <nz-form-control nzSpan="18">
+              <input nz-input formControlName="levelDays" nzSize="default" spellcheck="false" max="99999999999" type="number" />
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label nzSpan="6">备注</nz-form-label>
+            <nz-form-control nzSpan="18">
+              <textarea nz-input formControlName="remark" nzSize="default" spellcheck="false" maxlength="50"></textarea>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label nzSpan="6">设置人数</nz-form-label>
+            <div nz-col nzSpan="18">
+              <nz-table nzSize="small" #levelRoleTable [nzData]="roleDataList" [nzScroll]="{y:'300px'}" [nzShowPagination]="false" [nzBordered]="true">
+                <thead>
+                <tr>
+                  <th [nzWidth]="'60%'">角色名称</th>
+                  <th [nzWidth]="'40%'">人数</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let role of levelRoleTable.data">
+                  <td>{{role.roleName}}</td>
+                  <td>
+                    <nz-form-control >
+                      <input nz-input type="number" min="0"  [formControlName]="role.roleId" [(ngModel)]="role.number" />
+                    </nz-form-control>
+                  </td>
+                </tr>
+                </tbody>
+              </nz-table>
+            </div>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label nzSpan="6">设为默认</nz-form-label>
+            <nz-form-control nzSpan="18">
+              <nz-radio-group formControlName="defaulted" [nzDisabled]="disableEditDefault">
+                <label nz-radio nzValue="1">是</label>
+                <label nz-radio nzValue="0">否</label>
+              </nz-radio-group>
+            </nz-form-control>
+          </nz-form-item>
+        </form>
+        <div nz-row>
+
+        </div>
+      </div>
+
+      <div class="fixed-footer-button-wrap">
+        <button nz-button nzType="primary" nzSize="large" (click)="editOrAddSubmit()">保存</button>
+        <button nz-button nzType="primary" nzSize="large" nzGhost="true" (click)="toggleMainPage()">取消</button>
+      </div>
+    </div>
+  </nz-tab>
+
+  <nz-tab nzTitle="设置菜单" *ngIf="tabPageType === 3">
+    <div class="privilege-wrap">
+      <div class="role-name">当前等级：{{setMenuLevelName}}</div>
+      <ul class="main-list">
+        <li class="top-menu-item" *ngFor="let topMenuItem of authTree;let topMenuIndex=index;">
+          <input type="checkbox" [id]="'levelMenu' + topMenuIndex" #menuControl (change)="void;" checked/>
+          <div class="menu-main-wrap">
+            <div class="top-menu-header">
+              <span>
+                <label nz-checkbox [(ngModel)]="menuCodeObj[topMenuItem.id]" [nzIndeterminate]="menuIndeterminateObj[topMenuItem.id]" (ngModelChange)="checkAllMenuState($event,[topMenuItem])">
+                  {{topMenuItem.name}}
+                </label>
+              </span>
+              <label [for]="'levelMenu' + topMenuIndex">
+                <span *ngIf="menuControl.checked">展开<i class="anticon anticon-down"></i></span>
+                <span *ngIf="!menuControl.checked">收起<i class="anticon anticon-up"></i></span>
+              </label>
+            </div>
+            <div class="menu-content">
+              <div *ngFor="let sideMenuItem of topMenuItem.children;">
+                <div class="side-menu-item">
+                  <div >
+                    <label nz-checkbox [(ngModel)]="menuCodeObj[sideMenuItem.id]" [nzIndeterminate]="menuIndeterminateObj[sideMenuItem.id]" (ngModelChange)="checkAllMenuState($event,[sideMenuItem,topMenuItem])">
+                      {{sideMenuItem.name}}
+                    </label>
+                  </div>
+                  <ng-container *ngIf="!sideMenuItem.children || sideMenuItem.children.length === 0;else subGroupItem;">
+                    <div class="most-deep" *ngIf="sideMenuItem.auths.length > 0" >
+                      <span >操作权限:</span>
+                      <span *ngFor="let authItem of sideMenuItem.auths;">
+                        <label nz-checkbox [(ngModel)]="authCodeObj[authItem.authId]" (ngModelChange)="checkAllAuthState($event,[sideMenuItem,topMenuItem])">{{authItem.authName}}</label>
+                      </span>
+                    </div>
+                  </ng-container>
+                  <ng-template #subGroupItem>
+                    <div *ngFor="let subItem of sideMenuItem.children;" class="side-menu-item">
+                      <div>
+                        <label nz-checkbox [(ngModel)]="menuCodeObj[subItem.id]" [nzIndeterminate]="menuIndeterminateObj[subItem.id]" (ngModelChange)="checkAllMenuState($event,[subItem,sideMenuItem,topMenuItem])">
+                          {{subItem.name}}
+                        </label>
+                      </div>
+                      <div class="most-deep" *ngIf="subItem.auths.length > 0" >
+                        <span >操作权限:</span>
+                        <span *ngFor="let subAuthItem of subItem.auths;">
+                          <label nz-checkbox [(ngModel)]="authCodeObj[subAuthItem.authId]" (ngModelChange)="checkAllAuthState($event,[subItem,sideMenuItem,topMenuItem])">{{subAuthItem.authName}}</label>
+                        </span>
+                      </div>
+                    </div>
+                  </ng-template>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <div class="fixed-footer-button-wrap">
+          <button nz-button nzType="primary" nzSize="large" (click)="setAuthSubmit()">保存</button>
+          <button nz-button nzType="primary" nzSize="large" nzGhost="true" (click)="toggleMainPage()">取消</button>
+        </div>
+      </ul>
+    </div>
+  </nz-tab>
+</nz-tabset>
+<ng-template #navBreakcrumb>
+  <nav-breadcrumb></nav-breadcrumb>
+</ng-template>
