@@ -38,8 +38,10 @@ export class LoginComponent {
       });
   }
   public loginSubmit(){
-
-    for(let key in this.validateForm.controls) {
+    this.router.navigate(['../main'],{
+      relativeTo:this.activeRouter
+    });
+/*    for(let key in this.validateForm.controls) {
       this.validateForm.controls[key].markAsDirty();
       this.validateForm.controls[key].updateValueAndValidity();
     }
@@ -56,13 +58,13 @@ export class LoginComponent {
           this.refreshVerify();
           return
         }
-        this.router.navigate(['../main/company'],{
+        this.router.navigate(['../main'],{
           relativeTo:this.activeRouter
         });
       },(error:UserServiceNs.HttpError) => {
         this.remark = error.message;
         this.loading = false;
-      });
+      });*/
   }
   ngOnInit(){
     this.refreshVerify();
