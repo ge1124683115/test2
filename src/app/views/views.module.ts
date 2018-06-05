@@ -1,17 +1,17 @@
-import { NgModule} from "@angular/core";
-import { CommonModule } from "@angular/common"
-import { ReactiveFormsModule,FormsModule } from "@angular/forms";
-import { NgZorroAntdModule } from "ng-zorro-antd";
-import { ViewsRoutingModule } from "./views-routing.module";
-import { CoreModule } from "../core/core.module";
-import { LayoutModule } from "../layout/layout.module";
+import { NgModule} from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { NgZorroAntdModule } from 'ng-zorro-antd';
+import { ViewsRoutingModule } from './views-routing.module';
+import { CoreModule } from '../core/core.module';
+import { LayoutModule } from '../layout/layout.module';
 
-import { MainLayoutComponent } from "./main-layout/main-layout.component";
-import { LoginComponent } from "./login-page/login.component";
+import { MainLayoutComponent } from './main-layout/main-layout.component';
+import { LoginComponent } from './login-page/login.component';
 
 
 @NgModule({
-  imports:[
+  imports: [
     CommonModule,
     ReactiveFormsModule,
     ViewsRoutingModule,
@@ -20,11 +20,11 @@ import { LoginComponent } from "./login-page/login.component";
     LayoutModule,
     FormsModule,
   ],
-  declarations:[
+  declarations: [
     MainLayoutComponent,
     LoginComponent,
   ],
 
-  exports:[ViewsRoutingModule]
+  exports: [ ViewsRoutingModule]
 })
-export class ViewsModule{}
+export class ViewsModule {}

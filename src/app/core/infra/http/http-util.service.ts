@@ -1,17 +1,17 @@
-import { Injectable } from "@angular/core";
-import { HttpClient,HttpParams,HttpHeaders,HttpEventType,HttpRequest,HttpEvent,HttpProgressEvent} from "@angular/common/http";
-import { Observable } from "rxjs/Observable";
-import { environment } from "../../../../environments/environment";
+import { Injectable } from '@angular/core';
+import { HttpClient,HttpParams,HttpHeaders,HttpEventType,HttpRequest,HttpEvent,HttpProgressEvent} from '@angular/common/http';
+import { Observable } from 'rxjs/Observable';
+import { environment } from '../../../../environments/environment';
 
 export namespace HttpUtilNs {
-  export interface UfastHttpRes{
-    code:number;
-    message:string;
+  export interface UfastHttpRes {
+    code: number;
+    message: string;
   }
-  export interface UfastHttpResT<T>{
-    code:number;
-    message:string;
-    value:T
+  export interface UfastHttpResT<T> {
+    code: number;
+    message: string;
+    value: T;
   }
   @Injectable()
   export class HttpUtilService {
@@ -25,7 +25,7 @@ export namespace HttpUtilNs {
     }
 
     private setOptions(params?: HttpParams, headers?: HttpHeaders,
-                       observe: "body" | "event" = "body",
+                       observe: 'body' | 'event' = 'body',
                        reportProgress: boolean = false) {
       let options: any = {
         headers: headers,

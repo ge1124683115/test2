@@ -1,36 +1,37 @@
-import { Component,ChangeDetectorRef,enableProdMode} from "@angular/core";
-import { Router,NavigationEnd} from "@angular/router";
-import { ShowMessageService } from "../../widget/show-message/show-message";
-import { MenuServiceNs } from "../../core/common-services/menu.service";
-import { UserServiceNs } from "../../core/common-services/user.service";
-import "rxjs/add/operator/filter";
+import { Component,ChangeDetectorRef,enableProdMode} from '@angular/core';
+import { Router,NavigationEnd} from '@angular/router';
+import { ShowMessageService } from '../../widget/show-message/show-message';
+import { MenuServiceNs } from '../../core/common-services/menu.service';
+import { UserServiceNs } from '../../core/common-services/user.service';
+import 'rxjs/add/operator/filter';
 
 enableProdMode();
 @Component({
-  selector:"main-layout",
-  styleUrls:["./main-layout.component.scss"],
-  templateUrl:"./main-layout.component.html"
+  selector: 'app-main-layout',
+  styleUrls: ['./main-layout.component.scss'],
+  templateUrl: './main-layout.component.html'
 })
-export class MainLayoutComponent{
+export class MainLayoutComponent {
 
+  hideSideMenu: boolean;
+  mainMenu: MenuServiceNs.MenuAuthorizedItemModel[];
+  sideMenu: MenuServiceNs.MenuAuthorizedItemModel;
+  selectedItem: string;
+  selectedIndex: number;
+  username: string;
 
-  hideSideMenu:boolean;
-  mainMenu:MenuServiceNs.MenuAuthorizedItemModel[];
-  sideMenu:MenuServiceNs.MenuAuthorizedItemModel;
-  selectedItem:string;
-  selectedIndex:number;
-  username:string;
-
-  constructor(private messageService:ShowMessageService,private detectorRef:ChangeDetectorRef,
-                private menuService:MenuServiceNs.MenuService,public router:Router,public userService:UserServiceNs.UserService
-  ){
+  constructor(private messageService: ShowMessageService,
+              private detectorRef: ChangeDetectorRef,
+              private menuService: MenuServiceNs.MenuService,
+              public router: Router,
+              public userService: UserServiceNs.UserService){
     this.selectedIndex = null;
     this.mainMenu = [];
-    this.sideMenu = {name:"",url:"",children:[],auths:[]};
+    this.sideMenu = {name:'',url:'',children:[],auths:[]};
     this.hideSideMenu =true;
 
 
-    this.menuService.menuNavChange.subscribe((presentMenu:MenuServiceNs.MenuAuthorizedItemModel[]) => {
+    this.menuService.menuNavChange.subscribe((presentMenu: MenuServiceNs.MenuAuthorizedItemModel[]) => {
       if(presentMenu.length === 0){
         return;
       }
@@ -52,17 +53,17 @@ export class MainLayoutComponent{
 
   }
   public navigateUserInfo(){
-    this.router.navigateByUrl("/main/personal/personalInfo");
+    this.router.navigateByUrl('/main/personal/personalInfo');
   }
   public navigatePassword(){
-    this.router.navigateByUrl("/main/personal/modifyPwd");
+    this.router.navigateByUrl('/main/personal/modifyPwd');
   }
   public logOut(){
     this.userService.logout().subscribe(() => {
-      this.router.navigateByUrl("/login")
+      this.router.navigateByUrl('/login')
     },(error:any) => {
       console.log(error);
-      this.router.navigateByUrl("/login")
+      this.router.navigateByUrl('/login')
     })
   }
   ngOnInit(){
@@ -70,25 +71,18 @@ export class MainLayoutComponent{
       if(resData.code === 0){
         this.username = resData.value.name;
       }else{
-        this.messageService.showAlertMessage("",resData.message,"warning");
+        this.messageService.showAlertMessage('',resData.message,'warning');
       }
     },(error:any) => {
-      this.messageService.showAlertMessage("",error.message,"error");
+      this.messageService.showAlertMessage('',error.message,'error');
     });
   }
   ngAfterViewInit(){
-
-    this.menuService.getMenuAuthorized()
-      .subscribe((menuData:MenuServiceNs.UfastHttpAnyResModel) => {
-
-        if(menuData.code !== 0){
-          this.messageService.showAlertMessage(menuData.message,"","warning");
-          return;
-        }
-        this.mainMenu = menuData.value;
-         this.detectorRef.detectChanges();
-      });
-
+    this.menuService.getMenuAuthorized().then( value => {
+      this.mainMenu = value;
+      console.log(value);
+      this.detectorRef.detectChanges();
+    });
   }
 
 }

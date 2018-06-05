@@ -89,7 +89,7 @@ export namespace UserServiceNs{
   }
   @Injectable()
   export class UserService{
-    public userInfo:any;
+    public userInfo: any;
 
     constructor(private http:HttpUtilNs.HttpUtilService){
       this.userInfo = {
@@ -105,8 +105,6 @@ export namespace UserServiceNs{
         }));
     }
     public postLogin(loginData:AuthLoginReqModel):Observable<AuthAnyResModel>{
-
-
       return this.http.post<AuthAnyResModel>("ius","/auth/login",loginData)
         .pipe(map((resData:AuthAnyResModel) => {
           if(resData.code === 0){

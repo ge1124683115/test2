@@ -1,27 +1,27 @@
-import { Component,Injectable} from "@angular/core";
-import { NzModalService,NzModalRef } from "ng-zorro-antd";
-import {FormGroup, FormBuilder, Validators} from "@angular/forms";
+import { Component, Injectable} from '@angular/core';
+import { NzModalService, NzModalRef } from 'ng-zorro-antd';
+import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 
-import { UserServiceNs } from "../../core/common-services/user.service";
+import { UserServiceNs } from '../../core/common-services/user.service';
 
 
 @Injectable()
 export class LoginModalService {
 
 
-  public modalSubject:NzModalRef;
+  public modalSubject: NzModalRef;
 
-  constructor(private modalService:NzModalService){
+  constructor(private modalService: NzModalService) {
 
   }
-  public showLoginModal(maskCloseable:boolean=false):NzModalRef{
+  public showLoginModal(maskCloseable: boolean = false ): NzModalRef{
     this.modalSubject = this.modalService.create({
-      nzTitle:"用户登录",
-      nzContent:LoginModalComponent,
-      nzMaskClosable:maskCloseable,
-      nzOkLoading:true,
-      nzFooter:null,
-      nzClosable:false
+      nzTitle: '用户登录',
+      nzContent: LoginModalComponent,
+      nzMaskClosable: maskCloseable,
+      nzOkLoading: true,
+      nzFooter: null,
+      nzClosable: false
 
     });
 
@@ -30,80 +30,79 @@ export class LoginModalService {
 }
 
 @Component({
-  templateUrl:"./login-modal.component.html",
-  styleUrls:["./login-modal.component.scss"]
+  templateUrl: './login-modal.component.html',
+  styleUrls: ['./login-modal.component.scss']
 })
 export class LoginModalComponent {
 
-  validateForm:FormGroup;
-  loginReqData:UserServiceNs.AuthLoginReqModel;
-  verifyImgUrl:string;
-  remark:string;
-  loading:boolean;
-  usernameDisable:boolean;
+  validateForm: FormGroup;
+  loginReqData: UserServiceNs.AuthLoginReqModel;
+  verifyImgUrl: string;
+  remark: string;
+  loading: boolean;
+  usernameDisable: boolean;
 
-  constructor(private fb:FormBuilder,private loginModalService:LoginModalService,private userService:UserServiceNs.UserService){
+  constructor(private fb: FormBuilder, private loginModalService: LoginModalService, private userService: UserServiceNs.UserService) {
     this.loginReqData = {
-      authId:"",
-      loginName:this.userService.userInfo.username,
-      password:"",
-      code:"",
+      authId: '',
+      loginName: this.userService.userInfo.username,
+      password: '123456',
+      code: '',
     };
     this.usernameDisable = false;
-    if(this.userService.userInfo.username.length > 0){
+    if ( this.userService.userInfo.username.length > 0) {
       this.usernameDisable = true;
     }
-    this.verifyImgUrl = "";
-    this.remark = "";
+    this.verifyImgUrl = '';
+    this.remark = '';
     this.loading = false;
   }
   public refreshVerify(){
     this.userService.getAuthInfo()
-      .subscribe((data:UserServiceNs.AuthInfoResModel) => {
+      .subscribe((data: UserServiceNs.AuthInfoResModel) => {
         this.verifyImgUrl = data.value.verifyImgUrl;
         this.loginReqData.authId = data.value.authId;
-      },(error:UserServiceNs.HttpError) => {
+      }, ( error: UserServiceNs.HttpError) => {
         this.remark = error.message;
       });
   }
-  public loginSubmit(){
-    for(let key in this.validateForm.controls){
+  public loginSubmit() {
+    for (const key in this.validateForm.controls) {
       this.validateForm.controls[key].markAsDirty();
       this.validateForm.controls[key].updateValueAndValidity();
     }
-    if(this.validateForm.invalid){
+    if (this.validateForm.invalid){
       return;
     }
     this.loading = true;
     this.userService.postLogin(this.loginReqData)
-      .subscribe((resData:UserServiceNs.AuthAnyResModel) => {
+      .subscribe((resData: UserServiceNs.AuthAnyResModel) => {
         this.loading = false;
 
-        if(resData.code !== 0){
+        if (resData.code !== 0) {
           this.remark = resData.message;
           this.refreshVerify();
-          return
+          return;
         }
-        this.loginModalService.modalSubject.destroy("onOk");
-      },(error:UserServiceNs.HttpError) => {
+        this.loginModalService.modalSubject.destroy('onOk');
+      }, ( error: UserServiceNs.HttpError) => {
         this.remark = error.message;
         this.loading = false;
       });
   }
 
-  public cancelModal(data:any){
-    this.loginModalService.modalSubject.destroy("onCancel");
+  public cancelModal(data: any) {
+    this.loginModalService.modalSubject.destroy('onCancel');
   }
-  ngOnInit(){
 
+  ngOnInit() {
     this.refreshVerify();
 
     this.validateForm = this.fb.group({
       userName: [ null, [ Validators.required ] ],
       password: [ null, [ Validators.required ] ],
-      verifyCode: [null,[Validators.required]],
+      verifyCode: [null, [ Validators.required]],
     });
-
   }
 
 
