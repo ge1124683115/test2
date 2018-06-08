@@ -76,63 +76,102 @@ export namespace MenuServiceNs {
     }
 
     public getMenuAuthorized(): Promise<MenuAuthorizedItemModel[]> {
-      const company1 = {
-        channel: 0,
-        children: [],
-        code: '001001',
-        icon: '',
-        id: 2,
-        leaf: 1,
-        name: '企业管理',
-        parentId: 1,
-        seq: 2,
-        showFlag: 1,
-        state: '',
-        url: '/main/company/companyInfoManage'
-      };
-      const company2 = {
-        channel: 0,
-        children: [],
-        code: '001002',
-        icon: '',
-        id: 3,
-        leaf: 1,
-        name: '企业等级管理',
-        parentId: 1,
-        seq: 3,
-        showFlag: 1,
-        state: '',
-        url: '/main/company/companyLevelManage'
-      };
       const workborad = {
+        state: 'app.workborad',
         channel: 0,
-        children: [company1, company2],
+        children: [],
         code: '002',
         icon: '',
         id: 1,
         leaf: 1,
-        name: '首页',
+        name: '工作台',
         parentId: 0,
         seq: 1,
         showFlag: 1,
-        state: '',
         url: '/main/workboard'
       };
-      this.menuList = [{
+      const companyManage = {
         channel: 0,
-        children: [],
-        code: '001',
+        state: 'app.companyManage',
+        children: [{
+          channel: 0,
+          children: [{
+            state: 'app.companyManage.personalInfo',
+            children: [],
+            code: '002',
+            icon: '',
+            id: 1,
+            leaf: 1,
+            name: '个人信息',
+            parentId: 0,
+            seq: 1,
+            showFlag: 1,
+            url: '/main/companyManage/personalInfo'
+          }],
+          code: '002',
+          icon: '',
+          id: 1,
+          leaf: 1,
+          name: '个人信息',
+          parentId: 0,
+          seq: 1,
+          showFlag: 1,
+          state: '',
+          url: ''
+        }],
+        code: '002',
         icon: '',
         id: 1,
-        leaf: 0,
-        name: '企业管理',
+        leaf: 1,
+        name: '内部管理',
         parentId: 0,
         seq: 1,
         showFlag: 1,
-        state: '',
-        url: '/main/company'
-      }];
+        url: '/main/companyManage'
+      };
+      const dataStatistics = {
+        channel: 0,
+        state: 'app.companyManage',
+        children: [{
+          channel: 0,
+          children: [{
+            state: 'app.companyManage.personalInfo',
+            children: [],
+            code: '002',
+            icon: '',
+            id: 1,
+            leaf: 1,
+            name: '商户经营数据',
+            parentId: 0,
+            seq: 1,
+            showFlag: 1,
+            url: '/main/dataStatistics/operatingData'
+          }],
+          code: '002',
+          icon: '',
+          id: 1,
+          leaf: 1,
+          name: '经营数据',
+          parentId: 0,
+          seq: 1,
+          showFlag: 1,
+          state: '',
+          url: ''
+        }],
+        code: '002',
+        icon: '',
+        id: 1,
+        leaf: 1,
+        name: '数据统计',
+        parentId: 0,
+        seq: 1,
+        showFlag: 1,
+        url: '/main/dataStatistics'
+      };
+      this.menuList = [];
       this.menuList.push( <MenuAuthorizedItemModel>workborad );
+      this.menuList.push(<MenuAuthorizedItemModel>companyManage);
+      this.menuList.push(<MenuAuthorizedItemModel>dataStatistics);
       return Promise.resolve(this.menuList);
     }
    /* public getMenuAuthorized(): Observable<HttpUtilNs.UfastHttpResT<MenuAuthorizedItemModel[]>> {

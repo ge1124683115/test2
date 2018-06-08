@@ -28,7 +28,7 @@ export class MainLayoutComponent {
     this.selectedIndex = null;
     this.mainMenu = [];
     this.sideMenu = {name:'',url:'',children:[],auths:[]};
-    this.hideSideMenu =true;
+    this.hideSideMenu =false;
 
 
     this.menuService.menuNavChange.subscribe((presentMenu: MenuServiceNs.MenuAuthorizedItemModel[]) => {

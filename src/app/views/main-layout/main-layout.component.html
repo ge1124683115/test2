@@ -1,8 +1,8 @@
 
 <ul nz-menu nzMode="horizontal" class="top-menu-bar">
   <li nz-menu-item class="logo-wrap"><img src="../../../assets/logo.png"></li>
-  <li nz-menu-item *ngFor="let topItem of mainMenu;let i=index" (click)="topNavigate(topItem.url,i)"
-      [nzSelected]="selectedItem === topItem.url"  >{{topItem.name}}</li>
+  <!--<li nz-menu-item *ngFor="let topItem of mainMenu;let i=index" (click)="topNavigate(topItem.url,i)"-->
+      <!--[nzSelected]="selectedItem === topItem.url"  >{{topItem.name}}</li>-->
   <div class="right-action-wrap">
     <div>
       <nz-dropdown>
@@ -24,10 +24,10 @@
 </ul>
 <div class="main-container">
 
-  <side-menu [sideMenu]="sideMenu" [(isCollapsed)]="hideSideMenu" width="190px" ></side-menu>
+  <side-menu [sideMenu]="mainMenu" width="120px" ></side-menu>
 
   <div class="content-container"
-       [ngStyle]="{'marginLeft':sideMenu.children.length===0?'0px': hideSideMenu?'20px':'190px'}">
+       [ngStyle]="{'marginLeft':mainMenu.length===0?'0px': hideSideMenu?'20px':'120px'}">
     <router-outlet></router-outlet>
   </div>
 </div>

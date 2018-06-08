@@ -5,8 +5,7 @@ import { WorkboardContentComponent } from './workboard-content/workboard-content
 
 const routes: Routes = [
   { path: '', redirectTo: 'content', pathMatch: 'full' },
-  { path: 'content', component: WorkboardContentComponent},
-
+  { path: 'content', component: WorkboardContentComponent}
 ];
 
 

@@ -22,7 +22,7 @@ export class NavBreadcrumbComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.subHandler = this.menuService.menuNavChange.subscribe((list:MenuServiceNs.MenuAuthorizedItemModel[]) => {
+    this.subHandler = this.menuService.menuNavChange.subscribe((list: MenuServiceNs.MenuAuthorizedItemModel[]) => {
       this.menuList = list;
     });
   }

@@ -1,54 +1,41 @@
 <div class="side-menu-wrap" [ngClass]="{'hide-side-menu':isCollapsed}"
-     [ngStyle]="{'width':sideMenu.children.length===0? '0px': isCollapsed ? '':width}">
-  <div class="side-menu-title" *ngIf="sideMenu.name.length > 0">
-    <span><i class="anticon anticon-appstore-o"></i></span>
-    <span>{{sideMenu.name}}</span>
-  </div>
-  <ul nzMode="inline"  nz-menu nzTheme="dark" class="side-menu-list">
-    <ng-container *ngFor="let item of sideMenu.children;">
-      <li nz-submenu *ngIf="item.children.length && item.children.length > 0; else noSubItem;">
-        <span title>
-          <span>
-            <img *ngIf= "item.icon" [src]="item.icon" />
-            <i *ngIf= "!item.icon" class="anticon anticon-share-alt"></i>
-          </span>
-          <span>{{item.name}}</span>
-        </span>
-        <ul>
-          <ng-container *ngFor="let subItem of item.children;">
-            <li nz-menu-item *ngIf="subItem.children && subItem.children.length === 0; else subGroupItem;" (click)="navigate(subItem.url)"
-                [nzSelected]="selectedItem === subItem.url">
-              {{subItem.name}}
-            </li>
-            <ng-template #subGroupItem>
-              <li nz-menu-group>
-                <span title>{{subItem.name}}</span>
-                <ul>
-                  <li nz-menu-item *ngFor="let minItem of subItem.children;" (click)="navigate(minItem.url)"
-                      [nzSelected]="selectedItem ===  minItem.url">
-                    {{minItem.name}}
-                  </li>
-                </ul>
-              </li>
-            </ng-template>
-          </ng-container>
-        </ul>
+     [ngStyle]="{'width':sideMenu.length===0? '0px': isCollapsed ? '':width}">
+  <ul class="side-menu-list">
+    <ng-container *ngFor="let item of sideMenu;">
+    <li (click)="navigate(item)">
+        <a [ngClass]="{'active': selectedItem.indexOf(item.url) !== -1}">
+          <i class="{{item.icon}}"></i>
+          <span class="leftMenu-name">{{item.name}}</span>
+        </a>
       </li>
-      <ng-template #noSubItem>
-        <li nz-menu-item (click)="navigate(item.url)" [nzSelected]="selectedItem === item.url">
-          <span>
-            <img *ngIf= "item.icon" [src]="item.icon" />
-            <i *ngIf= "!item.icon" class="anticon anticon-share-alt"></i>
-          </span>
-          <span>{{item.name}}</span></li>
-      </ng-template>
     </ng-container>
   </ul>
-
-  <button class="switch-bar-btu" nz-button (click)="toggleCollapsed()" style="padding:0;">
+ <!-- <button class="switch-bar-btu" nz-button (click)="toggleCollapsed()" style="padding:0;">
     <i class="anticon" [class.anticon-menu-unfold]="isCollapsed" [class.anticon-menu-fold]="!isCollapsed" ></i>
-  </button>
+  </button>-->
 </div>
+
+<div class="side-nav clearfix" *ngIf="isNeedSideNavShow && selectedMenu">
+  <ul class="side-menu">
+    <li *ngFor="let menu of selectedMenu.children">
+      <a>
+        {{menu.name}}
+      </a>
+      <ul  class="menu-item">
+        <li *ngFor="let item of menu.children">
+          <a (click)="navigate(item)" [ngClass]="{'active': selectedItem.indexOf(item.url) !== -1}">
+            <i ng-class="{true:'icon-slide-nav thrid-nav-l',false:'icon-slide-nav thrid-nav'}[$last]"></i>
+            {{item.name}}
+          </a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+  <div class="switch-nav pull-left" title="点击隐藏边栏" (click)="hideSideNav()">
+    <i class="anticon anticon-left-circle-o"></i>收起
+  </div>
+</div>
+
 
 
 
