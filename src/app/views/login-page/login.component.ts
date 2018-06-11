@@ -1,19 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { AbstractControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UserServiceNs } from '../../core/common-services/user.service';
 
 @Component({
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   validateForm: FormGroup;
   loginReqData: UserServiceNs.AuthLoginReqModel;
-  verifyImgUrl: string;
-  remark: string;
-  loading: boolean;
-
+  errMsg = '';
   constructor(private userService: UserServiceNs.UserService,
               private router: Router,
               private formBuilder: FormBuilder,
@@ -21,58 +18,40 @@ export class LoginComponent {
     this.loginReqData = {
       authId: '',
       loginName: 'admin001',
-      password: '123456',
-      code: '',
+      password: '123456'
     };
-    this.verifyImgUrl = '';
-    this.remark = '';
-    this.loading = false;
   }
-  public refreshVerify() {
-    this.userService.getAuthInfo()
-      .subscribe((data: UserServiceNs.AuthInfoResModel) => {
-        this.verifyImgUrl = data.value.verifyImgUrl;
-        this.loginReqData.authId = data.value.authId;
-      },( error: UserServiceNs.HttpError) => {
-        this.remark = error.message;
-      });
-  }
-  public loginSubmit(){
-    this.router.navigate(['../main'],{
-      relativeTo:this.activeRouter
-    });
-/*    for(let key in this.validateForm.controls) {
+  public loginSubmit() {
+    this.errMsg = '';
+    for (const key of Object.keys(this.validateForm.controls)) {
+     console.log(key);
       this.validateForm.controls[key].markAsDirty();
       this.validateForm.controls[key].updateValueAndValidity();
     }
-    if (this.validateForm.invalid){
+    console.log(this.validateForm);
+    if (this.validateForm.invalid) {
       return;
     }
-    this.loading = true;
-    this.userService.postLogin(this.loginReqData)
+    this.router.navigate(['../main'], {
+      relativeTo: this.activeRouter
+    });
+/*    this.userService.postLogin(this.loginReqData)
       .subscribe((resData: UserServiceNs.AuthAnyResModel) => {
-        this.loading = false;
-
-        if(resData.code !== 0){
-          this.remark = resData.message;
-          this.refreshVerify();
-          return
+        if (resData.code !== 0) {
+          this.errMsg = resData.message;
+          return;
         }
-        this.router.navigate(['../main'],{
-          relativeTo:this.activeRouter
+        this.router.navigate(['../main'], {
+          relativeTo: this.activeRouter
         });
-      },(error:UserServiceNs.HttpError) => {
-        this.remark = error.message;
-        this.loading = false;
+      }, (error: UserServiceNs.HttpError) => {
+        this.errMsg = error.message;
       });*/
   }
-  ngOnInit(){
-    this.refreshVerify();
-
+  ngOnInit(): void {
     this.validateForm = this.formBuilder.group({
       userName: [ null, [ Validators.required ] ],
       password: [ null, [ Validators.required ] ],
-      verifyCode: [null,[Validators.required]],
     });
   }
 }

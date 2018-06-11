@@ -58,13 +58,6 @@ export class LoginModalComponent {
     this.loading = false;
   }
   public refreshVerify(){
-    this.userService.getAuthInfo()
-      .subscribe((data: UserServiceNs.AuthInfoResModel) => {
-        this.verifyImgUrl = data.value.verifyImgUrl;
-        this.loginReqData.authId = data.value.authId;
-      }, ( error: UserServiceNs.HttpError) => {
-        this.remark = error.message;
-      });
   }
   public loginSubmit() {
     for (const key in this.validateForm.controls) {

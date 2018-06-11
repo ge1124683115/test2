@@ -1,36 +1,52 @@
-
-<div class="wrap">
-  <h2>登录页</h2>
-  <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="loginSubmit()">
-    <nz-form-item class="form-item">
-      <nz-form-label nzSpan="4">用户名</nz-form-label>
-      <nz-form-control nzSpan="20">
-        <input nz-input formControlName="userName" nzSize="default" [(ngModel)]="loginReqData.loginName" spellcheck="false" />
-      </nz-form-control>
-    </nz-form-item>
-    <nz-form-item>
-      <nz-form-label nzSpan="4">密&emsp;码</nz-form-label>
-      <nz-form-control nzSpan="20">
-        <input nz-input formControlName="password" nzSize="default" [(ngModel)]="loginReqData.password" type="password" />
-      </nz-form-control>
-    </nz-form-item>
-    <nz-form-item>
-      <nz-form-label nzSpan="4">验证码</nz-form-label>
-      <nz-form-control nzSpan="14">
-        <input nz-input formControlName="verifyCode" nzSize="default" [(ngModel)]="loginReqData.code" spellcheck="false" />
-      </nz-form-control>
-      <nz-form-extra nzSpan="6" (click)="refreshVerify()">
-        <img [src]="verifyImgUrl" alt="加载失败"/>
-      </nz-form-extra>
-    </nz-form-item>
-    <div nz-row class="remark-row">
-      <div nz-col nzSpan="4">&nbsp;</div>
-      <div nz-col nzSpan>{{remark}}</div>
+<div class="login-bg">
+  <div class="left-cloud"></div>
+  <div class="right-cloud"></div>
+  <div class="qr-code">
+    <img style="width: 80px;height: auto" src="../../../assets/img/login/code.png" alt="">
+    <div class="m-t-sm text-content">
+      扫码下载货氪农资宝APP
     </div>
-    <div class="form-footer">
-      <button nz-button nzType="primary" nzSize="large" type="submit" [nzLoading]="loading">登录</button>
-      <button nz-button nzType="primary" nzSize="large" nzGhost="true" (click)="cancelModal()" [disabled]="loading">取消</button>
+  </div>
+  <div class="login-form-content">
+    <div class="login-logo">
+      <img src="../../../assets/img/login/logo.png" alt="">
     </div>
-  </form>
+    <div class="form-title text-center" style="">
+      账号登录
+    </div>
+    <div class="form-body">
+      <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="loginSubmit()">
+        <nz-form-item>
+          <nz-form-control>
+            <nz-form-explain *ngIf="errMsg">{{errMsg}}</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-control>
+            <nz-input-group nzPrefixIcon="anticon anticon-user">
+              <input type="text" nz-input formControlName="userName" placeholder="用户名或手机号" [(ngModel)]="loginReqData.loginName">
+            </nz-input-group>
+            <nz-form-explain *ngIf="validateForm.get('userName').dirty && validateForm.get('userName').errors">请输入您的账号!</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-control>
+            <nz-input-group nzPrefixIcon="anticon anticon-lock">
+              <input type="password" nz-input formControlName="password" placeholder="密码" [(ngModel)]="loginReqData.password">
+            </nz-input-group>
+            <nz-form-explain *ngIf="validateForm.get('password').dirty && validateForm.get('password').errors">请输入您的密码!</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-control>
+            <a class="login-form-forgot" class="login-form-forgot">忘记密码</a>
+            <a href="">重置</a>
+            <button nz-button class="login-form-button" [nzType]="'primary'" type="submit">登录</button>
+          </nz-form-control>
+        </nz-form-item>
+      </form>
+    </div>
+  </div>
 </div>
+
 
