@@ -13,7 +13,6 @@ const routes: Routes = [
     path: 'main', component: MainLayoutComponent, children: [
       { path: '', redirectTo: 'workboard', pathMatch: 'full'},
       { path: 'workboard', loadChildren: './workboard/workboard.module#WorkboardModule' },
-      { path: 'company', loadChildren: './company/company.module#CompanyModule' },
       { path: 'companyManage', loadChildren: './company-manage/company-manage.module#CompanyManageModule' },
       { path: 'dataStatistics', loadChildren: './data-statistics/data-statistics.module#DataStatisticsModule' }
     ]
