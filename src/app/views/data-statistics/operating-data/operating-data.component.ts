@@ -45,9 +45,12 @@ export class OperatingDataComponent implements OnInit {
     });
   }
 
-  jumpRouter(item: any, type: string): void {
+  jumpRouter(item: any, type?: string): void {
+    if (item.orgId) {
+      return;
+    }
     if (type === 'sale') {
-      this.router.navigateByUrl('/main/dataStatistics/saleData', {queryParams: {orgId: item.orgId}});
+      this.router.navigateByUrl('/main/dataStatistics/saleData/'+item.orgId);
       return;
     }
     //this.router.navigateByUrl('/main/dataStatistics/saleData', {queryParams: {orgId: item.orgId}});
