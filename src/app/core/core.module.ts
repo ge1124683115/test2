@@ -13,7 +13,6 @@ import { MenuServiceNs } from "./common-services/menu.service";
 import { ScepterServiceNs } from "./common-services/scepter.service";
 import { UfastValidatorsService } from "./infra/validators/validators.service";
 import { UfastValidatorsRuleService } from "./infra/validators/validatorsRule.service";
-import { CompanyServiceNs } from "./trans/company.service";
 import { DeptServiceNs } from "./common-services/dept.service";
 import { EventBusService } from './common-services/event-bus.service';
 /**
@@ -40,7 +39,6 @@ const httpInterceptorProvider = [
 
     UfastValidatorsRuleService,
     UfastValidatorsService,
-    CompanyServiceNs.CompanyService,
     ScepterServiceNs.ScepterService,
     DeptServiceNs.DeptService,
     EventBusService

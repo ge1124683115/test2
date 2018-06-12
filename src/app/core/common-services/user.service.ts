@@ -19,16 +19,17 @@ export namespace UserServiceNs {
     value: any;
   }
   export interface AuthInfoResModel extends HttpUtilNs.UfastHttpRes {
-    value:{
-      authId:string;
-      verifyCode?:string;
-      verifyImgUrl:string;
+    value: {
+      authId: string;
+      verifyCode?: string;
+      verifyImgUrl: string;
     }
   }
   export interface AuthLoginReqModel {
     authId: string;
     loginName: string;
     password: string;
+    code?: string;
   }
   export interface AuthUpdateInfoReqModel{
     email?:string;
@@ -97,21 +98,27 @@ export namespace UserServiceNs {
         username: ''
       };
     }
-
-    public postLogin(loginData:AuthLoginReqModel):Observable<AuthAnyResModel>{
-      return this.http.post<AuthAnyResModel>('ius','/auth/login',loginData)
-        .pipe(map((resData:AuthAnyResModel) => {
-          if(resData.code === 0){
+    public getAuthInfo(): Promise<AuthInfoResModel> {
+      return this.http.get<AuthInfoResModel>('ius', '/auth/authInfo')
+        .pipe(retry(2), map((data: AuthInfoResModel) => {
+          data.value.verifyImgUrl = this.http.getFullUrl('ius', '/auth/kaptcha') + `?authid=${data.value.authId}`;
+          return data;
+        })).toPromise();
+    }
+    public postLogin(loginData: AuthLoginReqModel): Promise<AuthAnyResModel> {
+      return this.http.post<AuthAnyResModel>('ius', 'auth/login', loginData)
+        .pipe(map((resData: AuthAnyResModel) => {
+          if (resData.code === 0) {
             this.userInfo.username = loginData.loginName;
           }
           return resData;
-        }));
+        })).toPromise();
     }
 
-    public logout():Observable<AuthAnyResModel>{
-      return this.http.post('ius','/auth/logout')
-        .pipe(map((resData:AuthAnyResModel) => {
-          if(resData.code === 0){
+    public logout(): Observable<AuthAnyResModel> {
+      return this.http.post('ius', 'auth/logout')
+        .pipe(map((resData: AuthAnyResModel) => {
+          if (resData.code === 0) {
             this.userInfo.username = '';
           }
           return resData;

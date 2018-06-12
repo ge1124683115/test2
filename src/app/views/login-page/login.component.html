@@ -39,6 +39,16 @@
         </nz-form-item>
         <nz-form-item>
           <nz-form-control>
+            <nz-input-group>
+              <input type="text" nz-input formControlName="verifyCode" placeholder="验证码" style="width: 50%" [(ngModel)]="loginReqData.code" spellcheck="false">
+              <nz-form-extra (click)="refreshVerify()">
+                <img [src]="verifyImgUrl" alt="加载失败"/>
+              </nz-form-extra>
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-control>
             <a class="login-form-forgot" class="login-form-forgot">忘记密码</a>
             <a href="">重置</a>
             <button nz-button class="login-form-button" [nzType]="'primary'" type="submit">登录</button>

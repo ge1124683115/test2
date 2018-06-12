@@ -6,17 +6,16 @@
  ng build --prod
  ****/
 
-
+const webServerUrl = 'http://192.168.1.37:8087';
 export const environment = {
   production: true,
-  baseUrl:{
-    ius:"http://192.168.2.103:4200/site/ius/",
-    dev:"http://192.168.2.103:4200/site/hx/",
-    photo:"http://192.168.2.103:4200/site/hx/cpyPhoto/loadImage?path="
+  baseUrl: {
+    bizs: `${webServerUrl}/`,
+    ius: `${webServerUrl}/ius/`,
   },
   otherData: {
     sysRole: 0,
-    sysSite: "0",
-    companySite:"1"
+    sysSite: '0',
+    companySite: '1'
   }
 };

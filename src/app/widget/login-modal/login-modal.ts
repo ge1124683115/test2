@@ -1,4 +1,4 @@
-import { Component, Injectable} from '@angular/core';
+import { Component, Injectable, OnInit} from '@angular/core';
 import { NzModalService, NzModalRef } from 'ng-zorro-antd';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 
@@ -12,7 +12,6 @@ export class LoginModalService {
   public modalSubject: NzModalRef;
 
   constructor(private modalService: NzModalService) {
-
   }
   public showLoginModal(maskCloseable: boolean = false ): NzModalRef{
     this.modalSubject = this.modalService.create({
@@ -33,7 +32,7 @@ export class LoginModalService {
   templateUrl: './login-modal.component.html',
   styleUrls: ['./login-modal.component.scss']
 })
-export class LoginModalComponent {
+export class LoginModalComponent implements OnInit {
 
   validateForm: FormGroup;
   loginReqData: UserServiceNs.AuthLoginReqModel;
@@ -47,6 +46,7 @@ export class LoginModalComponent {
       authId: '',
       loginName: this.userService.userInfo.username,
       password: '123456',
+      code: ''
     };
     this.usernameDisable = false;
     if ( this.userService.userInfo.username.length > 0) {
@@ -56,9 +56,9 @@ export class LoginModalComponent {
     this.remark = '';
     this.loading = false;
   }
-  public refreshVerify(){
+  public refreshVerify() {
   }
-  public loginSubmit() {
+  public async loginSubmit() {
     for (const key in this.validateForm.controls) {
       this.validateForm.controls[key].markAsDirty();
       this.validateForm.controls[key].updateValueAndValidity();
@@ -67,20 +67,14 @@ export class LoginModalComponent {
       return;
     }
     this.loading = true;
-    this.userService.postLogin(this.loginReqData)
-      .subscribe((resData: UserServiceNs.AuthAnyResModel) => {
-        this.loading = false;
-
-        if (resData.code !== 0) {
-          this.remark = resData.message;
-          this.refreshVerify();
-          return;
-        }
-        this.loginModalService.modalSubject.destroy('onOk');
-      }, ( error: UserServiceNs.HttpError) => {
-        this.remark = error.message;
-        this.loading = false;
-      });
+    const resData: UserServiceNs.AuthAnyResModel = await this.userService.postLogin(this.loginReqData);
+    this.loading = false;
+    if (resData.code !== 0) {
+      this.remark = resData.message;
+      this.refreshVerify();
+      return;
+    }
+    this.loginModalService.modalSubject.destroy('onOk');
   }
 
   public cancelModal(data: any) {
@@ -88,8 +82,6 @@ export class LoginModalComponent {
   }
 
   ngOnInit() {
-    this.refreshVerify();
-
     this.validateForm = this.fb.group({
       userName: [ null, [ Validators.required ] ],
       password: [ null, [ Validators.required ] ],
