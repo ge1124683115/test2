@@ -1,13 +1,13 @@
-
+@import "../../../global-styles/variable";
 $menu-item-fontSize:14px;
 $menu-item-color:#fff;
-
+$side-menu-width: #180px;
 
 $switch-bar-width:20px;
 
 
 .side-menu-wrap{
-
+ width: $side-menu-width;
   ul, li {
     margin: 0;
     padding: 0;
@@ -57,7 +57,7 @@ $switch-bar-width:20px;
       font-size: 14px;
     }
     a:hover{
-      background: rgb(75, 88, 130);
+      background: $primary-color ;
     }
     a{
       color: #fff;
@@ -86,7 +86,7 @@ $switch-bar-width:20px;
     }
   }
   .active{
-    background: #5494FE !important;
+    background: $primary-color  !important;
   }
 
 }
@@ -118,8 +118,8 @@ $switch-bar-width:20px;
 }
 .side-nav {
   position: fixed;
-  width: 170px;
-  margin-left: 120px;
+  width: 150px;
+  margin-left: 180px;
   top: 0;
   margin-top: 60px;
   background: #edeef0;
@@ -198,7 +198,7 @@ $switch-bar-width:20px;
     margin-top: 10px;
   }
   .side-menu .active{
-    background: #5494FE !important;
+    background: $primary-color !important;
   }
   .switch-nav{
     width: 100%;
