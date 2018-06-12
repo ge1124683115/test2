@@ -1,41 +1,46 @@
-<div class="operate-data">
+<div class="merchant-sale-data">
   <form nz-form [formGroup]="validateForm" class="search-form">
     <div nz-row [nzGutter]="24">
-      <div nz-col [nzSpan]="6">
+      <div nz-col [nzSpan]="5">
         <nz-form-item nzFlex>
-          <nz-form-label nzFor="companySearch">商户搜索</nz-form-label>
+          <nz-form-label nzFor="productName">商品名称</nz-form-label>
           <nz-form-control>
-            <input formControlName="companySearch" nz-input placeholder="名称/联系人/电话" id="companySearch">
+            <input formControlName="productName" nz-input placeholder="productName" id="productName">
           </nz-form-control>
         </nz-form-item>
       </div>
-      <div nz-col [nzSpan]="6">
+      <div nz-col [nzSpan]="5">
         <nz-form-item nzFlex>
-          <nz-form-label nzFor="companyAreaId">所属区域</nz-form-label>
+          <nz-form-label nzFor="productClass">商品类别</nz-form-label>
           <nz-form-control>
-            <input formControlName="companyAreaId" nz-input id="companyAreaId">
+
           </nz-form-control>
         </nz-form-item>
       </div>
-      <div nz-col [nzSpan]="6">
+      <div nz-col [nzSpan]="5">
         <nz-form-item nzFlex>
-          <nz-form-label nzFor="companyState">商户状态</nz-form-label>
+          <nz-form-label nzFor="toxicity">剂型</nz-form-label>
           <nz-form-control>
-            <nz-select style="width: 200px;" id="companyState" formControlName="companyState">
-              <nz-option nzValue="0" nzLabel="全部商户"></nz-option>
-              <nz-option nzValue="1" nzLabel="在用"></nz-option>
-              <nz-option nzValue="2" nzLabel="停用"></nz-option>
+
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="5">
+        <nz-form-item nzFlex>
+          <nz-form-label nzFor="toxicity">毒性</nz-form-label>
+          <nz-form-control>
+            <nz-select style="width: 200px;" id="toxicity" formControlName="toxicity">
+              <nz-option *ngFor="let option of toxicitys" [nzValue]="option.value" [nzLabel]="option.label"></nz-option>
             </nz-select>
           </nz-form-control>
         </nz-form-item>
       </div>
-      <div nz-col [nzSpan]="6">
+      <div nz-col [nzSpan]="4">
         <button nz-button nzType="default" class="mr10" (click)="resetForm()">清空</button>
         <button nz-button nzType="primary">搜索</button>
       </div>
     </div>
   </form>
-
   <div class="content-container">
     <nz-table  #tableData nzBordered  nzSize="middle" [nzData]="tableDataSet" nzShowSizeChanger
                [nzFrontPagination]="false"
@@ -47,13 +52,17 @@
                (nzPageSizeChange)="searchData(true)">
       <thead>
       <tr>
-        <th nzWidth="22%">商品名称</th>
-        <th nzWidth="13%">所属区域</th>
-        <th nzWidth="13%">联系人</th>
-        <th nzWidth="13%">手机号</th>
-        <th nzWidth="13%">创建时间</th>
-        <th nzWidth="13%">商户状态</th>
-        <th nzWidth="13%">操作</th>
+        <th>商品名称</th>
+        <th>登记证号</th>
+        <th>规格</th>
+        <th>品牌</th>
+        <th>生产厂家</th>
+        <th>商品类别</th>
+        <th>剂型</th>
+        <th>毒性</th>
+        <th>单位换算关系</th>
+        <th>销售数量</th>
+        <th>操作</th>
       </tr>
       </thead>
       <tbody>
@@ -65,9 +74,7 @@
         <td>{{data.expireDate}}</td>
         <td>{{data.companyAccountType}}</td>
         <td>
-          <a (click)="jumpRouter(data)">销售数据</a>
-          <nz-divider nzType="vertical"></nz-divider>
-          <a routerLink="/heroes">进货数据</a>
+          <a>交易记录</a>
         </td>
       </tr>
       </tbody>

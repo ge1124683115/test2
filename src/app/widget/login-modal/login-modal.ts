@@ -47,7 +47,6 @@ export class LoginModalComponent {
       authId: '',
       loginName: this.userService.userInfo.username,
       password: '123456',
-      code: '',
     };
     this.usernameDisable = false;
     if ( this.userService.userInfo.username.length > 0) {
@@ -64,7 +63,7 @@ export class LoginModalComponent {
       this.validateForm.controls[key].markAsDirty();
       this.validateForm.controls[key].updateValueAndValidity();
     }
-    if (this.validateForm.invalid){
+    if (this.validateForm.invalid) {
       return;
     }
     this.loading = true;

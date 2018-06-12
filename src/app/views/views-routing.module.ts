@@ -7,7 +7,7 @@ import { LoginComponent } from './login-page/login.component';
 
 
 const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full'},
+  //{ path: '', redirectTo: 'login', pathMatch: 'full'},
   { path: 'login', component: LoginComponent},
   {
     path: 'main', component: MainLayoutComponent, children: [
@@ -18,7 +18,7 @@ const routes: Routes = [
       { path: 'dataStatistics', loadChildren: './data-statistics/data-statistics.module#DataStatisticsModule' }
     ]
   },
-  { path: '**', redirectTo: 'main/workboard'}
+  //{ path: '**', redirectTo: 'main/workboard'}
 ];
 
 @NgModule({

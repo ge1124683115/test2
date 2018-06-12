@@ -135,7 +135,7 @@ export namespace MenuServiceNs {
         children: [{
           channel: 0,
           children: [{
-            state: 'app.companyManage.personalInfo',
+            state: 'app.companyManage',
             children: [],
             code: '002',
             icon: '',
@@ -152,6 +152,31 @@ export namespace MenuServiceNs {
           id: 1,
           leaf: 1,
           name: '经营数据',
+          parentId: 0,
+          seq: 1,
+          showFlag: 1,
+          state: '',
+          url: ''
+        }, {
+          channel: 0,
+          children: [{
+            state: 'app.companyManage.merchantData',
+            children: [],
+            code: '002',
+            icon: '',
+            id: 1,
+            leaf: 1,
+            name: '商户查询',
+            parentId: 0,
+            seq: 1,
+            showFlag: 1,
+            url: '/main/dataStatistics/merchantData'
+          }],
+          code: '002',
+          icon: '',
+          id: 1,
+          leaf: 1,
+          name: '商户数据',
           parentId: 0,
           seq: 1,
           showFlag: 1,

@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { MenuServiceNs } from '../../core/common-services/menu.service';
 import { Router, NavigationEnd } from '@angular/router';
-
+import {EventBusService} from '../../core/common-services/event-bus.service';
 @Component({
   selector: 'side-menu',
   styleUrls: ['./side-menu.component.scss'],
@@ -16,7 +16,7 @@ export class SideMenuComponent {
   selectedItem: string;
   selectedMenu: MenuServiceNs.MenuAuthorizedItemModel;
   isCollapsedList: boolean;
-  constructor(public router: Router) {
+  constructor(public router: Router, public eventBusService: EventBusService) {
     this.isCollapsedChange = new EventEmitter();
     this.isCollapsed = false;
     this.width = '210px';
@@ -29,6 +29,11 @@ export class SideMenuComponent {
           this.selectedItem = event.urlAfterRedirects;
         }
       });
+    this.eventBusService.sideNavChange.subscribe((value) => {
+        if (!this.isNeedSideNavShow) {
+          this.isNeedSideNavShow = false;
+        }
+    });
   }
   public toggleCollapsed () {
     this.isCollapsed = !this.isCollapsed;

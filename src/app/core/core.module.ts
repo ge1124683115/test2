@@ -15,7 +15,7 @@ import { UfastValidatorsService } from "./infra/validators/validators.service";
 import { UfastValidatorsRuleService } from "./infra/validators/validatorsRule.service";
 import { CompanyServiceNs } from "./trans/company.service";
 import { DeptServiceNs } from "./common-services/dept.service";
-
+import { EventBusService } from './common-services/event-bus.service';
 /**
 * 定义拦截器顺序，
  * 参考：https://angular.cn/guide/http#interceptor-order
@@ -43,6 +43,7 @@ const httpInterceptorProvider = [
     CompanyServiceNs.CompanyService,
     ScepterServiceNs.ScepterService,
     DeptServiceNs.DeptService,
+    EventBusService
   ]
 })
 export class CoreModule{}

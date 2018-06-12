@@ -71,7 +71,7 @@ export class UfastCodeInterceptor implements HttpInterceptor{
       }
       this.loginModalService = this.injector.get(LoginModalService);
       if(this.loginModalCtrl === null){
-        this.loginModalCtrl = this.loginModalService.showLoginModal();
+        //this.loginModalCtrl = this.loginModalService.showLoginModal();
       }
 
       //重定义observable

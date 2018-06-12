@@ -1,7 +1,10 @@
 
 @import "./variable";
 
-
+*{
+  margin: 0;
+  padding: 0;
+}
 
 .table-header{
   height:$table-header-height;
