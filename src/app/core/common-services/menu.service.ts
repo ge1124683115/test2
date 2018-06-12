@@ -90,52 +90,32 @@ export namespace MenuServiceNs {
         showFlag: 1,
         url: '/main/workboard'
       };
-      const companyManage = {
+      const dataStatistics = {
         channel: 0,
-        state: 'app.companyManage',
-        children: [{
-          channel: 0,
-          children: [{
-            state: 'app.companyManage.personalInfo',
-            children: [],
-            code: '002',
-            icon: '',
-            id: 1,
-            leaf: 1,
-            name: '个人信息',
-            parentId: 0,
-            seq: 1,
-            showFlag: 1,
-            url: '/main/companyManage/personalInfo'
-          }],
-          code: '002',
-          icon: '',
-          id: 1,
-          leaf: 1,
-          name: '个人信息',
-          parentId: 0,
-          seq: 1,
-          showFlag: 1,
-          state: '',
-          url: ''
-        }],
+        state: 'app.dataStatistics',
         code: '002',
         icon: '',
         id: 1,
         leaf: 1,
-        name: '内部管理',
+        name: '数据统计',
         parentId: 0,
         seq: 1,
         showFlag: 1,
-        url: '/main/companyManage'
-      };
-      const dataStatistics = {
-        channel: 0,
-        state: 'app.companyManage',
+        url: '/main/dataStatistics',
         children: [{
           channel: 0,
+          code: '002',
+          icon: '',
+          id: 1,
+          leaf: 1,
+          name: '经营数据',
+          parentId: 0,
+          seq: 1,
+          showFlag: 1,
+          state: '',
+          url: '',
           children: [{
-            state: 'app.companyManage',
+            state: 'app.dataStatistics.operatingData',
             children: [],
             code: '002',
             icon: '',
@@ -147,16 +127,55 @@ export namespace MenuServiceNs {
             showFlag: 1,
             url: '/main/dataStatistics/operatingData'
           }],
+        }, {
+          channel: 0,
           code: '002',
           icon: '',
           id: 1,
           leaf: 1,
-          name: '经营数据',
+          name: '农药数据',
           parentId: 0,
           seq: 1,
           showFlag: 1,
           state: '',
-          url: ''
+          url: '',
+          children: [{
+            state: 'app.dataStatistics.pesticideQuery',
+            children: [],
+            code: '002',
+            icon: '',
+            id: 1,
+            leaf: 1,
+            name: '农药查询',
+            parentId: 0,
+            seq: 1,
+            showFlag: 1,
+            url: '/main/dataStatistics/pesticideQuery'
+          }, {
+            state: 'app.dataStatistics.restrictPesticideQuery',
+            children: [],
+            code: '002',
+            icon: '',
+            id: 1,
+            leaf: 1,
+            name: '限制农药查询',
+            parentId: 0,
+            seq: 1,
+            showFlag: 1,
+            url: '/main/dataStatistics/restrictPesticideQuery'
+          }, {
+            state: 'app.dataStatistics.suspectedPesticideQuery',
+            children: [],
+            code: '002',
+            icon: '',
+            id: 1,
+            leaf: 1,
+            name: '存疑农药查询',
+            parentId: 0,
+            seq: 1,
+            showFlag: 1,
+            url: '/main/dataStatistics/suspectedPesticideQuery'
+          }],
         }, {
           channel: 0,
           children: [{
@@ -182,20 +201,10 @@ export namespace MenuServiceNs {
           showFlag: 1,
           state: '',
           url: ''
-        }],
-        code: '002',
-        icon: '',
-        id: 1,
-        leaf: 1,
-        name: '数据统计',
-        parentId: 0,
-        seq: 1,
-        showFlag: 1,
-        url: '/main/dataStatistics'
+        }]
       };
       this.menuList = [];
       this.menuList.push( <MenuAuthorizedItemModel>workborad );
-      this.menuList.push(<MenuAuthorizedItemModel>companyManage);
       this.menuList.push(<MenuAuthorizedItemModel>dataStatistics);
       return Promise.resolve(this.menuList);
     }
