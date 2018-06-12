@@ -7,11 +7,13 @@
    ng build --dev
    ng build
  ****/
-const webServerUrl = 'http://192.168.1.121:9008';
+// const webServerUrl = 'http://192.168.1.37:8087';
+const webServerUrl = 'http://localhost:4200';
 export const environment = {
   production: false,
   baseUrl: {
-    site: `${webServerUrl}/`,
+    bizs: `${webServerUrl}/bizs/`,
+    ius: `${webServerUrl}/ius/`,
   },
   otherData: {
     sysRole: 0,

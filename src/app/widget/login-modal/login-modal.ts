@@ -46,6 +46,7 @@ export class LoginModalComponent implements OnInit {
       authId: '',
       loginName: this.userService.userInfo.username,
       password: '123456',
+      code: ''
     };
     this.usernameDisable = false;
     if ( this.userService.userInfo.username.length > 0) {
@@ -55,9 +56,9 @@ export class LoginModalComponent implements OnInit {
     this.remark = '';
     this.loading = false;
   }
-  public refreshVerify(){
+  public refreshVerify() {
   }
-  public loginSubmit() {
+  public async loginSubmit() {
     for (const key in this.validateForm.controls) {
       this.validateForm.controls[key].markAsDirty();
       this.validateForm.controls[key].updateValueAndValidity();
@@ -66,20 +67,14 @@ export class LoginModalComponent implements OnInit {
       return;
     }
     this.loading = true;
-    this.userService.postLogin(this.loginReqData)
-      .subscribe((resData: UserServiceNs.AuthAnyResModel) => {
-        this.loading = false;
-
-        if (resData.code !== 0) {
-          this.remark = resData.message;
-          this.refreshVerify();
-          return;
-        }
-        this.loginModalService.modalSubject.destroy('onOk');
-      }, ( error: UserServiceNs.HttpError) => {
-        this.remark = error.message;
-        this.loading = false;
-      });
+    const resData: UserServiceNs.AuthAnyResModel = await this.userService.postLogin(this.loginReqData);
+    this.loading = false;
+    if (resData.code !== 0) {
+      this.remark = resData.message;
+      this.refreshVerify();
+      return;
+    }
+    this.loginModalService.modalSubject.destroy('onOk');
   }
 
   public cancelModal(data: any) {

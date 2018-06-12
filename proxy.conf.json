@@ -1,11 +1,17 @@
 {
     "/site": {
-        "target": "http://192.168.2.52:9002/",
+        "target": "http://192.168.1.37:8087/",
         "secure": false,
-        "changeOrigin": true,
-        "pathRewrite": {
-          "^/site": "/"
-        }
-
+        "changeOrigin": true
+    },
+    "/ius": {
+        "target": "http://192.168.1.37:8087/",
+        "secure": false,
+        "changeOrigin": true
+    },
+    "/bizs": {
+        "target": "http://192.168.1.37:8087/",
+        "secure": false,
+        "changeOrigin": true
     }
 }

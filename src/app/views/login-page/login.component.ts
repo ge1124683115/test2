@@ -8,9 +8,10 @@ import { UserServiceNs } from '../../core/common-services/user.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  validateForm: FormGroup;
-  loginReqData: UserServiceNs.AuthLoginReqModel;
-  errMsg = '';
+  public validateForm: FormGroup;
+  public loginReqData: UserServiceNs.AuthLoginReqModel;
+  public errMsg = '';
+  public verifyImgUrl = '';
   constructor(private userService: UserServiceNs.UserService,
               private router: Router,
               private formBuilder: FormBuilder,
@@ -18,10 +19,11 @@ export class LoginComponent implements OnInit {
     this.loginReqData = {
       authId: '',
       loginName: 'admin001',
-      password: '123456'
+      password: '123456',
+      code: '',
     };
   }
-  public loginSubmit() {
+  public async loginSubmit() {
     this.errMsg = '';
     for (const key of Object.keys(this.validateForm.controls)) {
      console.log(key);
@@ -32,26 +34,31 @@ export class LoginComponent implements OnInit {
     if (this.validateForm.invalid) {
       return;
     }
+/*    this.router.navigate(['../main'], {
+      relativeTo: this.activeRouter
+    });*/
+    const resData: UserServiceNs.AuthAnyResModel = await this.userService.postLogin(this.loginReqData);
+    if (resData.code !== 0) {
+      this.errMsg = resData.message;
+      return;
+    }
     this.router.navigate(['../main'], {
       relativeTo: this.activeRouter
     });
-/*    this.userService.postLogin(this.loginReqData)
-      .subscribe((resData: UserServiceNs.AuthAnyResModel) => {
-        if (resData.code !== 0) {
-          this.errMsg = resData.message;
-          return;
-        }
-        this.router.navigate(['../main'], {
-          relativeTo: this.activeRouter
-        });
-      }, (error: UserServiceNs.HttpError) => {
-        this.errMsg = error.message;
-      });*/
   }
+
+  public async refreshVerify() {
+    const data: UserServiceNs.AuthInfoResModel = await this.userService.getAuthInfo();
+    this.verifyImgUrl = data.value.verifyImgUrl;
+    this.loginReqData.authId = data.value.authId;
+  }
+
   ngOnInit(): void {
+    this.refreshVerify();
     this.validateForm = this.formBuilder.group({
       userName: [ null, [ Validators.required ] ],
       password: [ null, [ Validators.required ] ],
+      verifyCode: [ null, [ Validators.required ] ],
     });
   }
 }
