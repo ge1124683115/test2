@@ -1,5 +1,5 @@
-import { Component,ChangeDetectorRef,enableProdMode, OnInit} from '@angular/core';
-import { Router,NavigationEnd} from '@angular/router';
+import { Component, ChangeDetectorRef, enableProdMode, OnInit} from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
 import { ShowMessageService } from '../../widget/show-message/show-message';
 import { MenuServiceNs } from '../../core/common-services/menu.service';
 import { UserServiceNs } from '../../core/common-services/user.service';
@@ -27,57 +27,54 @@ export class MainLayoutComponent implements OnInit {
               public userService: UserServiceNs.UserService){
     this.selectedIndex = null;
     this.mainMenu = [];
-    this.sideMenu = {name:'',url:'',children:[],auths:[]};
-    this.hideSideMenu =false;
+    this.sideMenu = {name: '', url: '', children: [], auths: []};
+    this.hideSideMenu = false;
 
 
     this.menuService.menuNavChange.subscribe((presentMenu: MenuServiceNs.MenuAuthorizedItemModel[]) => {
-      if(presentMenu.length === 0){
+      if (presentMenu.length === 0) {
         return;
       }
       this.sideMenu = presentMenu[0];
       this.hideSideMenu = false;
       this.selectedItem = this.sideMenu.url;
-    })
+    });
   }
 
 
-  public topNavigate(url:string,index:number){
-
-    //一级菜单路由必须是绝对路径
+  public topNavigate(url: string, index: number) {
+    // 一级菜单路由必须是绝对路径
     this.router.navigateByUrl(url)
       .then(() => {
         this.hideSideMenu = false;
       });
-
-
   }
-  public navigateUserInfo(){
+  public navigateUserInfo() {
     this.router.navigateByUrl('/main/personal/personalInfo');
   }
-  public navigatePassword(){
+  public navigatePassword() {
     this.router.navigateByUrl('/main/personal/modifyPwd');
   }
-  public logOut(){
+  public logOut() {
     this.userService.logout().subscribe(() => {
-      this.router.navigateByUrl('/login')
-    },(error:any) => {
+      this.router.navigateByUrl('/login');
+    }, (error: any) => {
       console.log(error);
-      this.router.navigateByUrl('/login')
-    })
-  }
-  ngOnInit(){
-    this.userService.getLogin().subscribe((resData:UserServiceNs.UfastHttpAnyResModel) => {
-      if(resData.code === 0){
-        this.username = resData.value.name;
-      }else{
-        this.messageService.showAlertMessage('',resData.message,'warning');
-      }
-    },(error:any) => {
-      this.messageService.showAlertMessage('',error.message,'error');
+      this.router.navigateByUrl('/login');
     });
   }
-  ngAfterViewInit(){
+  ngOnInit() {
+    this.userService.getLogin().subscribe((resData: UserServiceNs.UfastHttpAnyResModel) => {
+      if (resData.code === 0) {
+        this.username = resData.value.name;
+      } else {
+        this.messageService.showAlertMessage('', resData.message, 'warning');
+      }
+    }, (error: any) => {
+      this.messageService.showAlertMessage('', error.message, 'error');
+    });
+  }
+  ngAfterViewInit() {
     this.menuService.getMenuAuthorized().then( value => {
       this.mainMenu = value;
       console.log(value);
