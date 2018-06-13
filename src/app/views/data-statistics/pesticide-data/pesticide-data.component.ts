@@ -33,15 +33,21 @@ interface PesticideListData {
 })
 export class PesticideDataComponent implements OnInit {
   public validateForm: FormGroup;
+  public pesticideCategoryList = [
+    {label: '全部类别', value: ''},
+    {label: '杀虫剂', value: '杀虫剂'},
+    {label: '杀菌剂', value: '杀菌剂'},
+    {label: '除草剂', value: '除草剂'},
+    {label: '生成调节剂', value: '生成调节剂'},
+    {label: '种子处理剂', value: '种子处理剂'},
+    {label: '杀鼠剂', value: '杀鼠剂'},
+    {label: '卫生用药', value: '卫生用药'},
+  ];
   public dosageList = [
     {label: '全部剂型', value: ''},
-    {label: '粉剂', value: '1'},
-    {label: '可容性粉剂', value: '2'},
     ];
   public toxicityList = [
     {label: '全部毒性', value: ''},
-    {label: '微毒', value: '1'},
-    {label: '低毒', value: '2'},
     ];
   pageIndex = 1;
   pageSize = 10;
@@ -52,12 +58,22 @@ export class PesticideDataComponent implements OnInit {
     { text: 'male', value: 'male' },
     { text: 'female', value: 'female' }
   ];
+  public searchParam = {
+    certificateCode: '',
+    dosage: '',
+    holderName: '',
+    pesticideCategory: '',
+    pesticideName: '',
+    toxicity: ''
+  };
   constructor(private http: HttpUtilNs.HttpUtilService,
               private fb: FormBuilder) { }
 
   ngOnInit() {
     this.resetForm();
     this.searchData();
+    this.getToxicityList();
+    this.getDosageList();
   }
 
   public async searchData(reset: boolean = false) {
@@ -65,9 +81,7 @@ export class PesticideDataComponent implements OnInit {
       this.pageIndex = 1;
     }
     const param = {
-      'filters': {
-        'certificateCode': ''
-      },
+      'filters': this.searchParam,
       'pageNum': this.pageIndex,
       'pageSize': this.pageSize,
     };
@@ -82,6 +96,9 @@ export class PesticideDataComponent implements OnInit {
   }
 
   public resetForm(): void {
+    for (const key of Object.keys(this.searchParam)) {
+      this.searchParam[key] = '';
+    }
     this.validateForm = this.fb.group({
       pesticideName: [''],
       pesticideCategory: ['0'],
@@ -89,6 +106,29 @@ export class PesticideDataComponent implements OnInit {
       holderName: [''],
       dosage: ['0'],
       toxicity: ['0']
+    });
+  }
+
+  private async getToxicityList() {
+    const data = <any[]> (await this.getDictList('ToxicityType'));
+    this.toxicityList = [{label: '全部毒性', value: ''}];
+    data.forEach( item => {
+      this.toxicityList.push({label: item.value, value: item.value});
+    });
+  }
+
+  private async getDosageList() {
+    const data = <any[]> (await this.getDictList('DosageType'));
+    this.dosageList = [{label: '全部剂型', value: ''}];
+    data.forEach( item => {
+      this.dosageList.push({label: item.value, value: item.value});
+    });
+  }
+
+  private getDictList(dicType: string): Promise<any> {
+    return this.http.get<HttpUtilNs.UfastHttpResT<any>>('bizs',
+      `sysDict/list?groupName=${dicType}`).toPromise().then( data => {
+        return data.value;
     });
   }
 }

@@ -5,7 +5,7 @@
         <nz-form-item nzFlex>
           <nz-form-label nzFor="pesticideName">农药名称</nz-form-label>
           <nz-form-control>
-            <input formControlName="pesticideName" nz-input placeholder="名称/登记证号" id="pesticideName">
+            <input formControlName="pesticideName" nz-input placeholder="名称/登记证号" id="pesticideName" [(ngModel)]="searchParam.pesticideName">
           </nz-form-control>
         </nz-form-item>
       </div>
@@ -13,10 +13,8 @@
         <nz-form-item nzFlex>
           <nz-form-label nzFor="pesticideCategory">农药类别</nz-form-label>
           <nz-form-control>
-            <nz-select id="pesticideCategory" formControlName="pesticideCategory">
-              <nz-option nzValue="0" nzLabel="全部类别"></nz-option>
-              <nz-option nzValue="1" nzLabel="杀虫剂"></nz-option>
-              <nz-option nzValue="2" nzLabel="杀菌剂"></nz-option>
+            <nz-select id="pesticideCategory" formControlName="pesticideCategory" [(ngModel)]="searchParam.pesticideCategory">
+              <nz-option *ngFor="let option of pesticideCategoryList" [nzValue]="option.value" [nzLabel]="option.label"></nz-option>
             </nz-select>
           </nz-form-control>
         </nz-form-item>
@@ -25,10 +23,10 @@
         <nz-form-item nzFlex>
           <nz-form-label nzFor="registrationStatus">登记证状态</nz-form-label>
           <nz-form-control>
-            <nz-select id="registrationStatus" formControlName="registrationStatus">
-              <nz-option nzValue="0" nzLabel="全部状态"></nz-option>
-              <nz-option nzValue="1" nzLabel="有效"></nz-option>
-              <nz-option nzValue="2" nzLabel="无效"></nz-option>
+            <nz-select id="registrationStatus" formControlName="registrationStatus" [(ngModel)]="searchParam.certificateCode">
+              <nz-option nzValue="" nzLabel="全部状态"></nz-option>
+              <nz-option nzValue="有效" nzLabel="有效"></nz-option>
+              <nz-option nzValue="无效" nzLabel="无效"></nz-option>
             </nz-select>
           </nz-form-control>
         </nz-form-item>
@@ -37,7 +35,7 @@
         <nz-form-item nzFlex>
           <nz-form-label nzFor="holderName">登记证持有人</nz-form-label>
           <nz-form-control>
-            <input formControlName="holderName" nz-input id="holderName">
+            <input formControlName="holderName" nz-input id="holderName" [(ngModel)]="searchParam.holderName">
           </nz-form-control>
         </nz-form-item>
       </div>
@@ -45,7 +43,7 @@
         <nz-form-item nzFlex>
           <nz-form-label nzFor="dosage">剂&emsp;&emsp;型</nz-form-label>
           <nz-form-control>
-            <nz-select id="dosage" formControlName="dosage">
+            <nz-select id="dosage" formControlName="dosage" [(ngModel)]="searchParam.dosage">
               <nz-option *ngFor="let option of dosageList" [nzValue]="option.value" [nzLabel]="option.label"></nz-option>
             </nz-select>
           </nz-form-control>
@@ -55,7 +53,7 @@
         <nz-form-item nzFlex>
           <nz-form-label nzFor="toxicityCode">毒&emsp;&emsp;性</nz-form-label>
           <nz-form-control>
-            <nz-select id="toxicityCode" formControlName="toxicity">
+            <nz-select id="toxicityCode" formControlName="toxicity"  [(ngModel)]="searchParam.toxicity">
               <nz-option *ngFor="let option of toxicityList" [nzValue]="option.value" [nzLabel]="option.label"></nz-option>
             </nz-select>
           </nz-form-control>
@@ -64,7 +62,7 @@
       <div nz-col [nzSpan]="12">
         <div class="search-btn-group">
           <button nz-button nzType="default" class="mr10" (click)="resetForm()" type="button">清空</button>
-          <button nz-button nzType="primary" type="button">搜索</button>
+          <button nz-button nzType="primary" type="button" (click)="searchData()">搜索</button>
         </div>
       </div>
     </div>
