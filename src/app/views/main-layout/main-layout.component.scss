@@ -48,12 +48,12 @@ $side-menu-bar-width:180px;
   height:calc(100% - #{$top-menu-bar-height});
   height:-webkit-calc(100% - #{$top-menu-bar-height});
   height:-moz-calc(100% - #{$top-menu-bar-height});
+  background-color: #D4D5D4;
 }
 
 .content-container{
-
   background:#fff;
-  height:100%;
+/*  height:100%;*/
   padding:10px;
   transition:margin .2s linear;
   -webkit-transition:margin .2s linear;

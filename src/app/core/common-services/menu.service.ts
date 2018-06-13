@@ -45,7 +45,7 @@ export namespace MenuServiceNs {
     menuList: MenuAuthorizedItemModel[];
     menuNavChange: BehaviorSubject<MenuAuthorizedItemModel[]>;
     presentMenu: MenuAuthorizedItemModel[];
-
+    private hasUrlFound = false;
     constructor(private http: HttpUtilNs.HttpUtilService, private router: Router){
       this.menuList = [];
 
@@ -57,19 +57,29 @@ export namespace MenuServiceNs {
       this.router.events.filter(event => event instanceof NavigationEnd)
         .subscribe((event: NavigationEnd) => {
           this.presentMenu = [];
-          this.checkMenu(event.urlAfterRedirects, this.menuList);
-          if(this.presentMenu.length > 0){
+          this.hasUrlFound = false;
+          this.checkMenu(event.urlAfterRedirects, this.menuList, 0);
+          if (this.presentMenu.length > 0) {
             this.menuNavChange.next(this.presentMenu);
           }
         });
     }
-    private checkMenu(url: string, menu: MenuAuthorizedItemModel[]){
-
-      for(let index=0,len = menu.length;index < len;index++){
-        if(url.startsWith(menu[index].url)){
-          this.presentMenu.push(menu[index]);
-          this.checkMenu(url,menu[index].children);
-          break;
+    private checkMenu(url: string, menu: MenuAuthorizedItemModel[], levelIndex: number){
+      if (this.hasUrlFound) {
+        return;
+      }
+      for (let index = 0, len = menu.length; index < len; index++) {
+        const menuItem = menu[index];
+        if ( url === menuItem.url) {
+          this.hasUrlFound = true;
+        }
+        // 当url为空的时候，下面这个判断为true, 对于一些伪路由，只有标签名没有url
+        if (url.startsWith(menuItem.url)) {
+          this.presentMenu[levelIndex] = menuItem;
+          this.checkMenu(url, menuItem.children, levelIndex + 1);
+          if (!!menuItem.url) {
+            break;
+          }
         }
 
       }
@@ -102,7 +112,8 @@ export namespace MenuServiceNs {
         seq: 1,
         showFlag: 1,
         url: '/main/dataStatistics',
-        children: [{
+        children: [
+          {
           channel: 0,
           code: '002',
           icon: '',
@@ -127,7 +138,8 @@ export namespace MenuServiceNs {
             showFlag: 1,
             url: '/main/dataStatistics/operatingData'
           }],
-        }, {
+        },
+          {
           channel: 0,
           code: '002',
           icon: '',
@@ -176,10 +188,21 @@ export namespace MenuServiceNs {
             showFlag: 1,
             url: '/main/dataStatistics/suspectedPesticideQuery'
           }],
-        }, {
+        },
+          {
           channel: 0,
+          code: '002',
+          icon: '',
+          id: 1,
+          leaf: 1,
+          name: '商户数据',
+          parentId: 0,
+          seq: 1,
+          showFlag: 1,
+          state: '',
+          url: '',
           children: [{
-            state: 'app.companyManage.merchantData',
+            state: 'app.dataStatistics.merchantData',
             children: [],
             code: '002',
             icon: '',
@@ -191,17 +214,8 @@ export namespace MenuServiceNs {
             showFlag: 1,
             url: '/main/dataStatistics/merchantData'
           }],
-          code: '002',
-          icon: '',
-          id: 1,
-          leaf: 1,
-          name: '商户数据',
-          parentId: 0,
-          seq: 1,
-          showFlag: 1,
-          state: '',
-          url: ''
-        }]
+        }
+        ]
       };
       this.menuList = [];
       this.menuList.push( <MenuAuthorizedItemModel>workborad );
