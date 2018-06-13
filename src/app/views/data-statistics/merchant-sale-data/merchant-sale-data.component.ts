@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import { MerchantSaleDataServiceNs } from './merchant-sale-data.service';
+import { Router, ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-merchant-sale-data',
   templateUrl: './merchant-sale-data.component.html',
@@ -31,8 +33,12 @@ export class MerchantSaleDataComponent implements OnInit {
   pageSize = 10;
   total = 1;
   loading = false;
-
-  constructor(private fb: FormBuilder) { }
+  searchParam: MerchantSaleDataServiceNs.MerchantSaleSearchReqModel;
+  constructor(private fb: FormBuilder,
+              private merchantSaleDataService: MerchantSaleDataServiceNs.MerchantSaleDataService,
+              private route: ActivatedRoute) {
+      this.searchParam = {};
+  }
 
 
 
@@ -54,6 +60,11 @@ export class MerchantSaleDataComponent implements OnInit {
     //TODO:
   }
   ngOnInit() {
+    this.route.params
+      .subscribe((params) => {
+        this.searchParam.orgId = params['orgId'];
+        console.info(this.searchParam.orgId);
+      });
     this.validateForm = this.fb.group({
       productName: [''],
       productClass: [''],
