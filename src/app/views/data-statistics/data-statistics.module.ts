@@ -9,6 +9,7 @@ import { OperatingDataServiceNs } from './operating-data/operating-data.service'
 import { MerchantDataServiceNs } from  './merchant-data/merchant-data.service';
 import { PesticideDataComponent } from './pesticide-data/pesticide-data.component';
 import { MerchantSaleDataComponent } from './merchant-sale-data/merchant-sale-data.component';
+import { MerchantSaleDataServiceNs } from './merchant-sale-data/merchant-sale-data.service';
 @NgModule({
   imports: [
     CommonModule,
@@ -19,7 +20,8 @@ import { MerchantSaleDataComponent } from './merchant-sale-data/merchant-sale-da
   declarations: [OperatingDataComponent, MerchantDataComponent, PesticideDataComponent, MerchantSaleDataComponent],
   providers: [
     OperatingDataServiceNs.OperatingDataService,
-    MerchantDataServiceNs.MerchantDataService
+    MerchantDataServiceNs.MerchantDataService,
+    MerchantSaleDataServiceNs.MerchantSaleDataService
   ]
 })
 export class DataStatisticsModule { }

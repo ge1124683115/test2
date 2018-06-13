@@ -13,8 +13,8 @@
         <nz-form-item nzFlex>
           <nz-form-label nzFor="companyAreaId">所属区域</nz-form-label>
           <nz-form-control>
-            <nz-cascader formControlName="companyAreaId" id="companyAreaId" nzPlaceHolder="选择区域"
-              [nzLoadData]="loadAreaData"
+            <nz-cascader style="width: 200px;" formControlName="companyAreaId" id="companyAreaId" nzPlaceHolder="选择区域"
+              [nzLoadData]="loadAreaDataHandler"
               (ngModelChange)="areaChanges($event)">
             </nz-cascader>
           </nz-form-control>
@@ -72,7 +72,7 @@
       </div>
       <div nz-col [nzSpan]="6">
         <button nz-button nzType="default" class="mr10" (click)="resetForm()">清空</button>
-        <button nz-button nzType="primary">搜索</button>
+        <button nz-button nzType="primary" (click)="submitForm()">搜索</button>
       </div>
     </div>
   </form>
@@ -88,27 +88,26 @@
                (nzPageSizeChange)="searchData(true)">
       <thead>
       <tr>
-        <th>商品名称</th>
+        <th>商户名称</th>
+        <th>统一社会信用代码</th>
+        <th>经营许可证号</th>
+        <th>许可证状态</th>
         <th>所属区域</th>
-        <th>联系人</th>
-        <th>手机号</th>
-        <th>创建时间</th>
+        <th>企业法人</th>
+        <th>经营范围</th>
         <th>商户状态</th>
-        <th>操作</th>
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let data of tableData.data">
         <td>{{data.companyName}}</td>
+        <td>{{data.unifiedSocialCreditcode}}</td>
+        <td>{{data.businessLicenseNo }}</td>
+        <td>{{data.businessLicenseState | i18nPlural: businessLicenseStateMapping }}</td>
         <td>{{data.companyAreaName}}</td>
-        <td>{{data.expireDate}}</td>
-        <td>{{data.linkMan}}</td>
-        <td>{{data.linkManTel}}</td>
-        <td>{{data.companyAccountType}}</td>
-        <td>
-          <a>销售数据</a>
-          <a>进货数据</a>
-        </td>
+        <td>{{data.legalName}}</td>
+        <td>{{data.businessScope | i18nPlural: businessScopeStateMapping}}</td>
+        <td>{{data.companyAccountType | i18nPlural: merchantStatuMapping }}</td>
       </tr>
       </tbody>
     </nz-table>

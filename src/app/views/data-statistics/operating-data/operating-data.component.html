@@ -31,7 +31,7 @@
       </div>
       <div nz-col [nzSpan]="6">
         <button nz-button nzType="default" class="mr10" (click)="resetForm()">清空</button>
-        <button nz-button nzType="primary">搜索</button>
+        <button nz-button nzType="primary" (click)="submitForm()">搜索</button>
       </div>
     </div>
   </form>
@@ -63,7 +63,7 @@
         <td>{{data.linkMan1 }}</td>
         <td>{{data.linkManTel1}}</td>
         <td>{{data.expireDate}}</td>
-        <td>{{data.companyAccountType}}</td>
+        <td>{{data.companyAccountType  | i18nPlural: merchantStatuMapping }}</td>
         <td>
           <a (click)="jumpRouter(data,'sale')">销售数据</a>
           <nz-divider nzType="vertical"></nz-divider>
