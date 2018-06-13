@@ -1,4 +1,4 @@
-import { Component,ChangeDetectorRef,enableProdMode} from '@angular/core';
+import { Component,ChangeDetectorRef,enableProdMode, OnInit} from '@angular/core';
 import { Router,NavigationEnd} from '@angular/router';
 import { ShowMessageService } from '../../widget/show-message/show-message';
 import { MenuServiceNs } from '../../core/common-services/menu.service';
@@ -11,7 +11,7 @@ enableProdMode();
   styleUrls: ['./main-layout.component.scss'],
   templateUrl: './main-layout.component.html'
 })
-export class MainLayoutComponent {
+export class MainLayoutComponent implements OnInit {
 
   hideSideMenu: boolean;
   mainMenu: MenuServiceNs.MenuAuthorizedItemModel[];

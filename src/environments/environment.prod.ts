@@ -10,7 +10,7 @@ const webServerUrl = 'http://192.168.1.37:8087';
 export const environment = {
   production: true,
   baseUrl: {
-    bizs: `${webServerUrl}/`,
+    bizs: `${webServerUrl}/bizs/`,
     ius: `${webServerUrl}/ius/`,
   },
   otherData: {
