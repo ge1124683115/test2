@@ -30,6 +30,14 @@ export class PurchaseDataComponent implements OnInit {
     value: '5',
     label: '剧毒'
   }];
+  productClassList = [{
+	  value: '',
+	  label: '全部'
+  }];
+  dosageList = [{
+	  value: '',
+	  label: '全部剂型'
+  }];
   tableDataSet = [];
   pageIndex = 1;
   pageSize = 10;
@@ -99,6 +107,16 @@ export class PurchaseDataComponent implements OnInit {
       dosage: ['0']
     });
     this.searchData();
+	this.getDosageList();
+  }
+  
+  private async getDosageList() {
+    const data = <any[]> (await this.purchaseDataService.getDictList('DosageType'));
+    this.dosageList = [{label: '全部剂型', value: ''}];
+    data.forEach( item => {
+      this.dosageList.push({label: item.value, value: item.value});
+    });
   }
 
+  
 }
