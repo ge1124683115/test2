@@ -13,23 +13,8 @@ export class PurchaseDataComponent implements OnInit {
   paramsReqData: PurchaseDataServiceNs.PurchaseReqModel;
   searchParam: PurchaseDataServiceNs.PurchaseSearchReqModel;
   toxicitys = [{
-    value: '0',
+    value: '',
     label: '全部'
-  }, {
-    value: '1',
-    label: '微毒'
-  }, {
-    value: '2',
-    label: '低毒'
-  }, {
-    value: '3',
-    label: '中等毒'
-  }, {
-    value: '4',
-    label: '高毒'
-  }, {
-    value: '5',
-    label: '剧毒'
   }];
   productClassList = [{
     value: '',
@@ -86,8 +71,8 @@ export class PurchaseDataComponent implements OnInit {
     this.validateForm = this.fb.group({
       productName: [''],
       productClass: [''],
-      toxicity: ['0'],
-      dosage: ['0']
+      toxicity: [''],
+      dosage: ['']
     });
   }
   submitForm(): void {
@@ -135,13 +120,14 @@ export class PurchaseDataComponent implements OnInit {
     this.validateForm = this.fb.group({
       productName: [''],
       productClass: [''],
-      toxicity: ['0'],
-      dosage: ['0']
+      toxicity: [''],
+      dosage: ['']
     });
     this.currentMerchantInfo = localStorage.getItem('bkr-merchantData') ? JSON.parse(localStorage.getItem('bkr-merchantData')) : {};
     this.searchData();
-	this.getDosageList();
-	this.getProductClassList();
+	  this.getDosageList();
+	  this.getProductClassList();
+    this.getToxicityList();
   }
 
   private async getDosageList() {
@@ -153,11 +139,18 @@ export class PurchaseDataComponent implements OnInit {
   }
 
   private async getProductClassList() {
-    const data = <any[]> (await this.purchaseDataService.getProductClassList(this.searchParam.orgId));
+    const data = <any[]> (await this.purchaseDataService.getProductClassList());
     this.productClassList = [{label: '全部', value: ''}];
     data.forEach( item => {
       this.productClassList.push({label: item.className, value: item.classCode});
     });
   }
 
+  private async getToxicityList() {
+    const data = <any[]> (await this.purchaseDataService.getDictList('ToxicityType'));
+    this.toxicitys = [{label: '全部毒性', value: ''}];
+    data.forEach( item => {
+      this.toxicitys.push({label: item.value, value: item.value});
+    });
+  }
 }

@@ -38,11 +38,11 @@ export namespace MerchantSaleDataServiceNs {
   }
 
   export interface MerchantSaleSearchReqModel {
-    dosage?: number;
+    dosage?: string;
     orgId?: string;
-    productClass?: number;
+    productClass?: string;
     productName?: string;
-    toxicity?: number;
+    toxicity?: string;
   }
   @Injectable()
   export class MerchantSaleDataService {

@@ -25,7 +25,7 @@ import { RestrictPesticideComponent } from './restrict-pesticide/restrict-pestic
     ReactiveFormsModule
   ],
   declarations: [OperatingDataComponent, MerchantDataComponent, PesticideDataComponent, MerchantSaleDataComponent,
-    SaleDetailsComponent, PurchaseDataComponent, PurchaseDetailsComponent],
+    SaleDetailsComponent, PurchaseDataComponent, PurchaseDetailsComponent, RestrictPesticideComponent],
   providers: [
     OperatingDataServiceNs.OperatingDataService,
     MerchantDataServiceNs.MerchantDataService,
