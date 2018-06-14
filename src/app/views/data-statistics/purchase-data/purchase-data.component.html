@@ -1,10 +1,10 @@
 <div class="purchase-data">
   <div class="head-info">
       <span class="mr25 title">
-        商户A
+        {{currentMerchantInfo.companyName}}
       </span>
-    <span>
-          江苏省 南京市 玄武区
+      <span>
+        {{(currentMerchantInfo.companyAreaName || '') + (currentMerchantInfo.address || '')}}
       </span>
   </div>
   <form nz-form [formGroup]="validateForm" class="search-form">
@@ -52,9 +52,9 @@
   <div class="content-container">
     <div class="btn-list">
       <nz-button-group>
-        <button nz-button nzType="default" [ngClass]="{'selected-btn':currentUnitType === 'small'}" (click)="setUnitShowType('small')">显示小单位</button>
-        <button nz-button nzType="default" [ngClass]="{'selected-btn':currentUnitType === 'big'}" (click)="setUnitShowType('big')">显示大单位</button>
-        <button nz-button nzType="default" [ngClass]="{'selected-btn':currentUnitType === ''}" (click)="setUnitShowType()">显示辅助单位</button>
+        <button nz-button nzType="default" [ngClass]="{'selected-btn':currentUnitType === 0}" (click)="setUnitShowType(0)">显示小单位</button>
+        <button nz-button nzType="default" [ngClass]="{'selected-btn':currentUnitType === 1}" (click)="setUnitShowType(1)">显示大单位</button>
+        <button nz-button nzType="default" [ngClass]="{'selected-btn':currentUnitType === 2}" (click)="setUnitShowType(2)">显示辅助单位</button>
       </nz-button-group>
     </div>
     <nz-table  #tableData nzBordered  nzSize="middle" [nzData]="tableDataSet" nzShowSizeChanger
@@ -67,17 +67,17 @@
                (nzPageSizeChange)="searchData(true)">
       <thead>
       <tr>
-        <th>商品名称</th>
-        <th>登记证号</th>
-        <th>规格</th>
-        <th>品牌</th>
-        <th>生产厂家</th>
-        <th>商品类别</th>
-        <th>剂型</th>
-        <th>毒性</th>
-        <th>单位换算关系</th>
-        <th>进货数量</th>
-        <th>操作</th>
+        <th style="width: 12%">商品名称</th>
+        <th style="width: 9%">登记证号</th>
+        <th style="width: 9%">规格</th>
+        <th style="width: 9%">品牌</th>
+        <th style="width: 9%">生产厂家</th>
+        <th style="width: 9%">商品类别</th>
+        <th style="width: 8%">剂型</th>
+        <th style="width: 9%">毒性</th>
+        <th style="width: 9%">单位换算关系</th>
+        <th style="width: 9%">进货数量</th>
+        <th style="width: 8%">操作</th>
       </tr>
       </thead>
       <tbody>
@@ -93,11 +93,15 @@
         <td>{{data.relationDesc}}</td>
         <td>{{data.quantityResult}}</td>
         <td>
-          <a>交易记录</a>
+          <a (click)="jumpRouter(data)">交易记录</a>
         </td>
       </tr>
       </tbody>
     </nz-table>
+    <div class="go-back">
+      <button nz-button nzType="primary"
+              (click)="goBack()">返回</button>
+    </div>
   </div>
 </div>
 

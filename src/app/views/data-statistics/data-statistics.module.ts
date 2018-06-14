@@ -11,8 +11,12 @@ import { PesticideDataComponent } from './pesticide-data/pesticide-data.componen
 import { MerchantSaleDataComponent } from './merchant-sale-data/merchant-sale-data.component';
 import { MerchantSaleDataServiceNs } from './merchant-sale-data/merchant-sale-data.service';
 import { SaleDetailsComponent } from './sale-details/sale-details.component';
+import { SaleDetailsServiceNs } from './sale-details/sale-details.service';
 import { PurchaseDataComponent } from './purchase-data/purchase-data.component';
 import { PurchaseDataServiceNs } from './purchase-data/purchase-data.service';
+import { PurchaseDetailsComponent } from './purchase-details/purchase-details.component';
+import { PurchaseDetailsServiceNs } from './purchase-details/purchase-details.service';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -21,12 +25,14 @@ import { PurchaseDataServiceNs } from './purchase-data/purchase-data.service';
     ReactiveFormsModule
   ],
   declarations: [OperatingDataComponent, MerchantDataComponent, PesticideDataComponent, MerchantSaleDataComponent,
-    SaleDetailsComponent, PurchaseDataComponent],
+    SaleDetailsComponent, PurchaseDataComponent, PurchaseDetailsComponent],
   providers: [
     OperatingDataServiceNs.OperatingDataService,
     MerchantDataServiceNs.MerchantDataService,
     MerchantSaleDataServiceNs.MerchantSaleDataService,
-    PurchaseDataServiceNs.PurchaseDataService
+    PurchaseDataServiceNs.PurchaseDataService,
+    SaleDetailsServiceNs.SaleDetailsService,
+    PurchaseDetailsServiceNs.PurchaseDetailsService
   ]
 })
 export class DataStatisticsModule { }

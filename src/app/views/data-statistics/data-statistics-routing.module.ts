@@ -6,6 +6,7 @@ import { MerchantSaleDataComponent} from './merchant-sale-data/merchant-sale-dat
 import { PurchaseDataComponent } from './purchase-data/purchase-data.component';
 import { PesticideDataComponent } from './pesticide-data/pesticide-data.component';
 import { SaleDetailsComponent } from './sale-details/sale-details.component';
+import { PurchaseDetailsComponent } from './purchase-details/purchase-details.component';
 
 const routes: Routes = [
   { path: 'operatingData', component: OperatingDataComponent},
@@ -13,7 +14,8 @@ const routes: Routes = [
   { path: 'saleData/:orgId', component: MerchantSaleDataComponent},
   { path: 'saleDetails/:productCode', component: SaleDetailsComponent},
   { path: 'purchaseData/:orgId', component: PurchaseDataComponent},
-  { path: 'pesticideQuery', component: PesticideDataComponent}
+  { path: 'pesticideQuery', component: PesticideDataComponent},
+  { path: 'purchaseDetails/:orgId/:productCode', component: PurchaseDetailsComponent}
   ];
 
 @NgModule({

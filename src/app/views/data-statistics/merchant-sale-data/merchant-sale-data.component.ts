@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import { MerchantSaleDataServiceNs } from './merchant-sale-data.service';
+import { OperatingDataServiceNs } from '../operating-data/operating-data.service';
 import { Router, ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-merchant-sale-data',
@@ -35,16 +36,16 @@ export class MerchantSaleDataComponent implements OnInit {
   loading = false;
   searchParam: MerchantSaleDataServiceNs.MerchantSaleSearchReqModel;
   paramsReqData: MerchantSaleDataServiceNs.MerchantSaleReqModel;
-  currentUnitType: string;
+  currentMerchantInfo: OperatingDataServiceNs.OperatingDataModel;
+  currentUnitType: number;
   constructor(private fb: FormBuilder,
               private merchantSaleDataService: MerchantSaleDataServiceNs.MerchantSaleDataService,
               private route: ActivatedRoute,
               private router: Router) {
       this.searchParam = {};
-      this.currentUnitType = 'small';
+      this.currentUnitType = 0;
+      this.currentMerchantInfo = {};
   }
-
-
 
   searchData(reset: boolean = false): void {
     if (reset) {
@@ -69,6 +70,7 @@ export class MerchantSaleDataComponent implements OnInit {
       }
       this.tableDataSet = data.value.list || [];
       this.total = data.value.total || 0;
+      this.getCurrentUnitTypeVaule();
     });
   }
 
@@ -89,8 +91,23 @@ export class MerchantSaleDataComponent implements OnInit {
     this.searchData(true);
   }
 
-  setUnitShowType(type?: string): void {
-      this.currentUnitType = type || '';
+  setUnitShowType(type?: number): void {
+    this.currentUnitType = type || 0;
+    this.getCurrentUnitTypeVaule();
+  }
+
+  private getCurrentUnitTypeVaule(): void {
+    this.tableDataSet.forEach( item => {
+      if (!item.productQuantityDOs) {
+        item.quantityResult = '';
+        return;
+      }
+      if (item.productQuantityDOs && item.productQuantityDOs.length > 1) {
+        item.quantityResult = item.productQuantityDOs[this.currentUnitType].quantityResult;
+        return;
+      }
+      item.quantityResult = item.productQuantityDOs[0].quantityResult;
+    });
   }
 
   jumpRouter(item: any): void {
@@ -99,7 +116,13 @@ export class MerchantSaleDataComponent implements OnInit {
     }
     this.router.navigateByUrl('/main/dataStatistics/saleDetails/' + item.productCode);
   }
+
+  goBack(): void {
+    window.history.back();
+  }
+
   ngOnInit() {
+
     this.route.params
       .subscribe((params) => {
         this.searchParam.orgId = params['orgId'];
@@ -110,6 +133,7 @@ export class MerchantSaleDataComponent implements OnInit {
       toxicity: ['0'],
       dosage: ['0']
     });
+    this.currentMerchantInfo = localStorage.getItem('bkr-merchantData') ? JSON.parse(localStorage.getItem('bkr-merchantData')) : {};
     this.searchData();
   }
 

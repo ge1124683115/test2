@@ -59,7 +59,6 @@ export class OperatingDataComponent implements OnInit {
 
 
   public areaChanges(value: any): void {
-    console.info(value);
     if (!value) {
       return;
     }
@@ -108,6 +107,7 @@ export class OperatingDataComponent implements OnInit {
     if (!item.orgId) {
       return;
     }
+    localStorage.setItem('bkr-merchantData', JSON.stringify(item));
     if (type === 'sale') {
       this.router.navigateByUrl('/main/dataStatistics/saleData/' + item.orgId);
       return;
@@ -115,7 +115,7 @@ export class OperatingDataComponent implements OnInit {
     this.router.navigateByUrl('/main/dataStatistics/purchaseData/' + item.orgId);
   }
   ngOnInit() {
-
+    localStorage.removeItem('bkr-merchantData');
     this.validateForm = this.fb.group({
       companySearch: [''],
       companyAreaId: [],

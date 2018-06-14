@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { PurchaseDataServiceNs } from './purchase-data.service';
+import { OperatingDataServiceNs } from '../operating-data/operating-data.service';
 @Component({
   selector: 'app-purchase-data',
   templateUrl: './purchase-data.component.html',
@@ -35,12 +36,15 @@ export class PurchaseDataComponent implements OnInit {
   pageSize = 10;
   total = 1;
   loading = false;
-  currentUnitType: string;
+  currentUnitType: number;
+  currentMerchantInfo: OperatingDataServiceNs.OperatingDataModel;
   constructor(private fb: FormBuilder,
               private purchaseDataService: PurchaseDataServiceNs.PurchaseDataService,
-              private route: ActivatedRoute) {
-    this.currentUnitType = 'small';
+              private route: ActivatedRoute,
+              private router: Router) {
+    this.currentUnitType = 0;
     this.searchParam = {};
+    this.currentMerchantInfo = {};
   }
 
   searchData(reset: boolean = false): void {
@@ -66,6 +70,7 @@ export class PurchaseDataComponent implements OnInit {
       }
       this.tableDataSet = data.value.list || [];
       this.total = data.value.total || 0;
+      this.getCurrentUnitTypeVaule();
     });
   }
 
@@ -84,10 +89,37 @@ export class PurchaseDataComponent implements OnInit {
     this.searchParam.dosage = this.validateForm.get('dosage').value || 0;
   }
 
-  setUnitShowType(type?: string): void {
-    this.currentUnitType = type || '';
+  setUnitShowType(type?: number): void {
+    this.currentUnitType = type || 0;
+    this.getCurrentUnitTypeVaule();
   }
+
+  private getCurrentUnitTypeVaule(): void {
+    this.tableDataSet.forEach( item => {
+      if (!item.productQuantityDOs) {
+        item.quantityResult = '';
+        return;
+      }
+      if (item.productQuantityDOs && item.productQuantityDOs.length > 1) {
+        item.quantityResult = item.productQuantityDOs[this.currentUnitType].quantityResult;
+        return;
+      }
+      item.quantityResult = item.productQuantityDOs[0].quantityResult;
+    });
+  }
+  jumpRouter(item: any): void {
+    if (!item.productCode) {
+      return;
+    }
+    localStorage.setItem('bkr-productInfo', JSON.stringify(item));
+    this.router.navigateByUrl('/main/dataStatistics/purchaseDetails/' + this.searchParam.orgId + '/' + item.productCode);
+  }
+  goBack(): void {
+    window.history.back();
+  }
+
   ngOnInit() {
+    localStorage.removeItem('bkr-productInfo');
     this.route.params
       .subscribe((params) => {
         this.searchParam.orgId = params['orgId'];
@@ -98,6 +130,7 @@ export class PurchaseDataComponent implements OnInit {
       toxicity: ['0'],
       dosage: ['0']
     });
+    this.currentMerchantInfo = localStorage.getItem('bkr-merchantData') ? JSON.parse(localStorage.getItem('bkr-merchantData')) : {};
     this.searchData();
   }
 

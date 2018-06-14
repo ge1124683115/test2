@@ -5,17 +5,17 @@ import { HttpUtilNs } from '../../../core/infra/http/http-util.service';
 export namespace PurchaseDataServiceNs {
   import UfastHttpResT = HttpUtilNs.UfastHttpResT;
   export interface PurchaseDataModel {
-    orgId: string;
-    productCode: number;
-    fullname: string;
-    productClass: string;
-    uomCode: string;
-    inventory: string;
-    specification: string;
-    manufacturer: string;
-    certificateCode: string;
-    dosage: string;
-    productBrand: string;
+    orgId?: string;
+    productCode?: number;
+    fullname?: string;
+    productClass?: string;
+    uomCode?: string;
+    inventory?: string;
+    specification?: string;
+    manufacturer?: string;
+    certificateCode?: string;
+    dosage?: string;
+    productBrand?: string;
     productQuantityDOs?: {
       type: number,
       quantityResult: string
