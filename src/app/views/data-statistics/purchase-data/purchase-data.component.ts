@@ -108,6 +108,7 @@ export class PurchaseDataComponent implements OnInit {
     });
     this.searchData();
 	this.getDosageList();
+	this.getProductClassList();
   }
   
   private async getDosageList() {
@@ -117,6 +118,13 @@ export class PurchaseDataComponent implements OnInit {
       this.dosageList.push({label: item.value, value: item.value});
     });
   }
-
   
+  private async getProductClassList() {
+    const data = <any[]> (await this.purchaseDataService.getProductClassList(this.searchParam.orgId));
+    this.productClassList = [{label: '全部', value: ''}];
+    data.forEach( item => {
+      this.productClassList.push({label: item.className, value: item.classCode});
+    });
+  }
+
 }
