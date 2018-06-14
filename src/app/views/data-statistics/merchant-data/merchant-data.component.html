@@ -5,7 +5,7 @@
         <nz-form-item nzFlex>
           <nz-form-label nzFor="companySearch">客户名称</nz-form-label>
           <nz-form-control>
-            <input formControlName="companySearch" nz-input placeholder="名称/登记证号" id="companySearch">
+            <input formControlName="companySearch" nz-input placeholder="名称/联系人/手机" id="companySearch">
           </nz-form-control>
         </nz-form-item>
       </div>
@@ -13,7 +13,7 @@
         <nz-form-item nzFlex>
           <nz-form-label nzFor="companyAreaId">所属区域</nz-form-label>
           <nz-form-control>
-            <nz-cascader style="width: 200px;" formControlName="companyAreaId" id="companyAreaId" nzPlaceHolder="选择区域"
+            <nz-cascader style="width: 200px;" nzChangeOnSelect formControlName="companyAreaId" id="companyAreaId" nzPlaceHolder="选择区域"
               [nzLoadData]="loadAreaDataHandler"
               (ngModelChange)="areaChanges($event)">
             </nz-cascader>
@@ -93,7 +93,7 @@
         <th>经营许可证号</th>
         <th>许可证状态</th>
         <th>所属区域</th>
-        <th>企业法人</th>
+        <th>联系人</th>
         <th>经营范围</th>
         <th>商户状态</th>
       </tr>
@@ -105,9 +105,9 @@
         <td>{{data.businessLicenseNo }}</td>
         <td>{{data.businessLicenseState | i18nPlural: businessLicenseStateMapping }}</td>
         <td>{{data.companyAreaName}}</td>
-        <td>{{data.legalName}}</td>
+        <td>{{data.linkMan1}}</td>
         <td>{{data.businessScope | i18nPlural: businessScopeStateMapping}}</td>
-        <td>{{data.companyAccountType | i18nPlural: merchantStatuMapping }}</td>
+        <td>{{data.isLock | i18nPlural: merchantStatuMapping }}</td>
       </tr>
       </tbody>
     </nz-table>

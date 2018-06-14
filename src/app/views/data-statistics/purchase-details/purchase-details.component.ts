@@ -1,32 +1,35 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { SaleDetailsServiceNs } from './sale-details.service';
 import { DatePipe } from '@angular/common';
+import { PurchaseDetailsServiceNs} from './purchase-details.service';
+import { PurchaseDataServiceNs } from '../purchase-data/purchase-data.service';
 
 @Component({
-  selector: 'app-sale-details',
-  templateUrl: './sale-details.component.html',
-  styleUrls: ['./sale-details.component.scss']
+  selector: 'app-purchase-details',
+  templateUrl: './purchase-details.component.html',
+  styleUrls: ['./purchase-details.component.scss']
 })
-export class SaleDetailsComponent implements OnInit {
+export class PurchaseDetailsComponent implements OnInit {
+  inventoryCount = 0;
+  returnCount = 0;
   validateForm: FormGroup;
   pageIndex = 1;
   pageSize = 10;
   total = 1;
   loading = false;
   tableDataSet = [];
-  paramsReqData: SaleDetailsServiceNs.SaleDetailReqModel;
-  searchParam: SaleDetailsServiceNs.SaleDetailSearchReqModel;
+  paramsReqData: PurchaseDetailsServiceNs.PurchaseDetailReqModel;
+  searchParam: PurchaseDetailsServiceNs.PurchaseDetailSearchReqModel;
   currentUnitType = 0;
-  currentProduct: SaleDetailsServiceNs.SaleProductInfoModel;
+  currentProductInfo: PurchaseDataServiceNs.PurchaseDataModel;
   constructor(private fb: FormBuilder,
-              private saleDetailsService: SaleDetailsServiceNs.SaleDetailsService,
+              private purchaseDetailsService: PurchaseDetailsServiceNs.PurchaseDetailsService,
               private datePipe: DatePipe,
               private route: ActivatedRoute) {
     this.searchParam = {};
     this.currentUnitType = 0;
-    this.currentProduct = {};
+    this.currentProductInfo = {};
   }
 
   searchData(reset: boolean = false): void {
@@ -37,36 +40,33 @@ export class SaleDetailsComponent implements OnInit {
       pageNum: this.pageIndex,
       pageSize: this.pageSize,
       filters : {
-        dealerName: this.searchParam.dealerName,
+        companyName : this.searchParam.companyName ,
+        contacter: this.searchParam.contacter,
         endTime: this.searchParam.endTime || '',
         productCode: this.searchParam.productCode || '',
         startTime: this.searchParam.startTime || '',
+        orgId: this.searchParam.orgId || ''
       }
     };
     this.loading = true;
-    this.saleDetailsService.getSaleDetails(this.paramsReqData).then((data) => {
+    this.purchaseDetailsService.getPurchaseDetails(this.paramsReqData).then((data) => {
       this.loading = false;
       if (!data.value) {
         return;
       }
-      this.tableDataSet = data.value.list || [];
-      this.total = data.value.total || 0;
+      this.tableDataSet = data.value.pageInfo.list || [];
+      this.total = data.value.pageInfo.total || 0;
       this.getCurrentUnitTypeVaule();
-    });
-
-    this.saleDetailsService.getSaleProductInfo(this.paramsReqData).then((res) => {
-      if (!res.value) {
-        return;
-      }
-      this.currentProduct = res.value || {};
+      this.inventoryCount = data.value.inCount;
+      this.returnCount = data.value.returnCount;
     });
   }
 
   private getCurrentUnitTypeVaule(): void {
     this.tableDataSet.forEach( item => {
       if (item.productQuantityDOs && item.productQuantityDOs.length > 1) {
-          item.quantityResult = item.productQuantityDOs[this.currentUnitType].quantityResult;
-          return;
+        item.quantityResult = item.productQuantityDOs[this.currentUnitType].quantityResult;
+        return;
       }
       item.quantityResult = item.productQuantityDOs[0].quantityResult;
     });
@@ -74,7 +74,8 @@ export class SaleDetailsComponent implements OnInit {
 
   resetForm(): void {
     this.validateForm = this.fb.group({
-      dealerName: [''],
+      companyName : [''],
+      contacter: [''],
       rangePicker: [[]]
     });
     this.submitForm();
@@ -87,8 +88,8 @@ export class SaleDetailsComponent implements OnInit {
 
   submitForm(): void {
     const rangeTime = this.validateForm.get('rangePicker').value || [];
-    this.searchParam.dealerName = this.validateForm.get('dealerName').value || '';
-
+    this.searchParam.companyName  = this.validateForm.get('companyName').value || '';
+    this.searchParam.contacter = this.validateForm.get('contacter').value || '';
     if (rangeTime.length > 1) {
       this.searchParam.startTime = this.datePipe.transform(rangeTime[0], 'yyyy-MM-dd');
       this.searchParam.endTime = this.datePipe.transform(rangeTime[1], 'yyyy-MM-dd');
@@ -99,15 +100,18 @@ export class SaleDetailsComponent implements OnInit {
     this.searchData(true);
   }
   goBack(): void {
-      window.history.back();
+    window.history.back();
   }
   ngOnInit() {
+    this.currentProductInfo = localStorage.getItem('bkr-productInfo') ? JSON.parse(localStorage.getItem('bkr-productInfo')) : {};
     this.route.params
       .subscribe((params) => {
         this.searchParam.productCode  = params['productCode'];
+        this.searchParam.orgId = params['orgId'];
       });
     this.validateForm = this.fb.group({
-      dealerName: [''],
+      companyName: [''],
+      contacter: [''],
       rangePicker: [[]]
     });
     this.searchData();

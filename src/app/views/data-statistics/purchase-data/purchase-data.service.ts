@@ -5,17 +5,17 @@ import { HttpUtilNs } from '../../../core/infra/http/http-util.service';
 export namespace PurchaseDataServiceNs {
   import UfastHttpResT = HttpUtilNs.UfastHttpResT;
   export interface PurchaseDataModel {
-    orgId: string;
-    productCode: number;
-    fullname: string;
-    productClass: string;
-    uomCode: string;
-    inventory: string;
-    specification: string;
-    manufacturer: string;
-    certificateCode: string;
-    dosage: string;
-    productBrand: string;
+    orgId?: string;
+    productCode?: number;
+    fullname?: string;
+    productClass?: string;
+    uomCode?: string;
+    inventory?: string;
+    specification?: string;
+    manufacturer?: string;
+    certificateCode?: string;
+    dosage?: string;
+    productBrand?: string;
     productQuantityDOs?: {
       type: number,
       quantityResult: string
@@ -52,6 +52,20 @@ export namespace PurchaseDataServiceNs {
           return data;
         })).toPromise();
     }
+
+	public getDictList(dicType: string): Promise<any> {
+		return this.http.get<HttpUtilNs.UfastHttpResT<any>>('bizs',
+		  'sysDict/list?groupName='+dicType).toPromise().then( data => {
+			return data.value;
+		});
+	}
+
+	public getProductClassList(orgId: string): Promise<any> {
+		return this.http.get<HttpUtilNs.UfastHttpResT<any>>('bizs',
+      'company/getPorductClassList?orgId=' + orgId).toPromise().then( data => {
+			return data.value;
+		});
+	}
 
   }
 }

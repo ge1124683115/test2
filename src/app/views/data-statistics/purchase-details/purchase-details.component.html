@@ -1,35 +1,43 @@
-<div class="main-form-and-list-wrap sale-details">
+<div class="main-form-and-list-wrap purchase-details">
   <div class="head-info">
-      <span class="mr25 title">
-        {{currentProduct.productName}}
+<span class="mr25 title">
+        {{currentProductInfo.fullname}}
       </span>
     <span class="mr25 title">
-        {{currentProduct.productBrand}}
+        {{currentProductInfo.productBrand}}
       </span>
     <span class="mr25 title">
-        {{currentProduct.specification}}
+        {{currentProductInfo.specification}}
       </span>
     <span class="mr25">
-          {{currentProduct.unitConversionRelationship}}
+          {{currentProductInfo.relationDesc}}
       </span>
     <span class="mr25">
-          销售次数:&nbsp;{{currentProduct.saleOutTimes || 0 }}次
+          进货次数:&nbsp;{{inventoryCount || 0 }}次
     </span>
     <span class="mr25">
-          销退次数:&nbsp;{{currentProduct.saleReturnTimes || 0}}次
+          退货次数:&nbsp;{{returnCount || 0}}次
     </span>
   </div>
   <form nz-form [formGroup]="validateForm" class="search-form">
     <div nz-row [nzGutter]="24">
-      <div nz-col [nzSpan]="8">
+      <div nz-col [nzSpan]="6">
         <nz-form-item nzFlex>
-          <nz-form-label nzFor="dealerName">交易人姓名</nz-form-label>
+          <nz-form-label nzFor="companyName">供应商搜索</nz-form-label>
           <nz-form-control>
-            <input formControlName="dealerName" nz-input placeholder="姓名/手机号/身份证号" id="dealerName">
+            <input formControlName="companyName" nz-input placeholder="供应商名称" id="companyName">
           </nz-form-control>
         </nz-form-item>
       </div>
-      <div nz-col [nzSpan]="10">
+      <div nz-col [nzSpan]="6">
+        <nz-form-item nzFlex>
+          <nz-form-label nzFor="contacter">联系人</nz-form-label>
+          <nz-form-control>
+            <input formControlName="contacter" nz-input placeholder="姓名/手机号" id="contacter">
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="8">
         <nz-form-item nzFlex>
           <nz-form-label nzFor="rangePicker">交易时间</nz-form-label>
           <nz-form-control>
@@ -37,7 +45,7 @@
           </nz-form-control>
         </nz-form-item>
       </div>
-      <div nz-col [nzSpan]="6">
+      <div nz-col [nzSpan]="4">
         <div class="search-btn-group">
           <button nz-button nzType="default" class="mr10" type="button" (click)="resetForm()">清空</button>
           <button nz-button nzType="primary" type="button" (click)="submitForm()">搜索</button>
@@ -72,21 +80,21 @@
         <th style="width: 13%">交易时间</th>
         <th style="width: 13%">交易类型</th>
         <th style="width: 13%">交易数量</th>
-        <th style="width: 13%">客户名称</th>
+        <th style="width: 13%">供应商名称</th>
+        <th style="width: 13%">联系人</th>
         <th style="width: 13%">手机号</th>
-        <th style="width: 13%">身份证号</th>
         <th style="width: 22%">地址</th>
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let data of tableData.data">
         <td>{{data.createDate}}</td>
-        <td>{{data.billType}}</td>
+        <td>{{data.type}}</td>
         <td>{{data.quantityResult}}</td>
-        <td>{{data.companyName}}</td>
-        <td>{{data.companyTel}}</td>
-        <td>{{data.idCard}}</td>
-        <td>{{data.companyAreaName}}</td>
+        <td>{{data.comapnayName}}</td>
+        <td>{{data.contact}}</td>
+        <td>{{data.contactTel}}</td>
+        <td>{{data.address}}</td>
       </tr>
       </tbody>
     </nz-table>

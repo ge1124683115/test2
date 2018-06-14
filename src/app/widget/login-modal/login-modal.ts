@@ -56,7 +56,10 @@ export class LoginModalComponent implements OnInit {
     this.remark = '';
     this.loading = false;
   }
-  public refreshVerify() {
+  public async refreshVerify() {
+    const data: UserServiceNs.AuthInfoResModel = await this.userService.getAuthInfo();
+    this.verifyImgUrl = data.value.verifyImgUrl;
+    this.loginReqData.authId = data.value.authId;
   }
   public async loginSubmit() {
     for (const key in this.validateForm.controls) {
@@ -71,7 +74,6 @@ export class LoginModalComponent implements OnInit {
     this.loading = false;
     if (resData.code !== 0) {
       this.remark = resData.message;
-      this.refreshVerify();
       return;
     }
     this.loginModalService.modalSubject.destroy('onOk');
@@ -82,6 +84,7 @@ export class LoginModalComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.refreshVerify();
     this.validateForm = this.fb.group({
       userName: [ null, [ Validators.required ] ],
       password: [ null, [ Validators.required ] ],

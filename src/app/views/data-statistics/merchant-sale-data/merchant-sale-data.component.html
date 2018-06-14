@@ -1,10 +1,10 @@
 <div class="merchant-sale-data">
   <div class="head-info">
       <span class="mr25 title">
-        商户A
+        {{currentMerchantInfo.companyName}}
       </span>
       <span>
-          江苏省 南京市 玄武区
+        {{(currentMerchantInfo.companyAreaName || '') + (currentMerchantInfo.address || '')}}
       </span>
   </div>
   <form nz-form [formGroup]="validateForm" class="search-form">
@@ -21,15 +21,19 @@
         <nz-form-item nzFlex>
           <nz-form-label nzFor="productClass">商品类别</nz-form-label>
           <nz-form-control>
-
+            <nz-select style="width: 200px;" id="productClass" formControlName="productClass">
+              <nz-option *ngFor="let option of productClasses" [nzValue]="option.value" [nzLabel]="option.label"></nz-option>
+            </nz-select>
           </nz-form-control>
         </nz-form-item>
       </div>
       <div nz-col [nzSpan]="5">
         <nz-form-item nzFlex>
-          <nz-form-label nzFor="toxicity">剂型</nz-form-label>
+          <nz-form-label nzFor="dosage">剂型</nz-form-label>
           <nz-form-control>
-
+            <nz-select style="width: 200px;" id="dosage" formControlName="dosage">
+              <nz-option *ngFor="let option of dosageList" [nzValue]="option.value" [nzLabel]="option.label"></nz-option>
+            </nz-select>
           </nz-form-control>
         </nz-form-item>
       </div>
@@ -50,11 +54,11 @@
     </div>
   </form>
   <div class="content-container">
-    <div class="btn-list">
+    <div class="unit-btn-list">
       <nz-button-group>
-        <button nz-button nzType="default" [ngClass]="{'selected-btn':currentUnitType === 'small'}" (click)="setUnitShowType('small')">显示小单位</button>
-        <button nz-button nzType="default" [ngClass]="{'selected-btn':currentUnitType === 'big'}" (click)="setUnitShowType('big')">显示大单位</button>
-        <button nz-button nzType="default" [ngClass]="{'selected-btn':currentUnitType === ''}" (click)="setUnitShowType()">显示辅助单位</button>
+        <button nz-button nzType="default" [ngClass]="{'selected-btn':currentUnitType === 0}" (click)="setUnitShowType(0)">显示小单位</button>
+        <button nz-button nzType="default" [ngClass]="{'selected-btn':currentUnitType === 1}" (click)="setUnitShowType(1)">显示大单位</button>
+        <button nz-button nzType="default" [ngClass]="{'selected-btn':currentUnitType === 2}" (click)="setUnitShowType(2)">显示辅助单位</button>
       </nz-button-group>
     </div>
     <nz-table  #tableData nzBordered  nzSize="middle" [nzData]="tableDataSet" nzShowSizeChanger
@@ -98,6 +102,10 @@
       </tr>
       </tbody>
     </nz-table>
+    <div class="go-back">
+      <button nz-button nzType="primary"
+              (click)="goBack()">返回</button>
+    </div>
   </div>
 </div>
 

@@ -13,7 +13,7 @@
         <nz-form-item nzFlex>
           <nz-form-label nzFor="companyAreaId">所属区域</nz-form-label>
           <nz-form-control>
-            <nz-cascader style="width: 200px;" formControlName="companyAreaId" id="companyAreaId" nzPlaceHolder="选择区域"
+            <nz-cascader style="width: 200px;" nzChangeOnSelect formControlName="companyAreaId" id="companyAreaId" nzPlaceHolder="选择区域"
                          [nzLoadData]="loadAreaDataHandler"
                          (ngModelChange)="areaChanges($event)">
             </nz-cascader>
@@ -50,7 +50,7 @@
                (nzPageSizeChange)="searchData(true)">
       <thead>
       <tr>
-        <th nzWidth="22%">商品名称</th>
+        <th nzWidth="22%">商户名称</th>
         <th nzWidth="13%">所属区域</th>
         <th nzWidth="13%">联系人</th>
         <th nzWidth="13%">手机号</th>
@@ -66,7 +66,7 @@
         <td>{{data.linkMan1 }}</td>
         <td>{{data.linkManTel1}}</td>
         <td>{{data.expireDate}}</td>
-        <td>{{data.companyAccountType  | i18nPlural: merchantStatuMapping }}</td>
+        <td>{{data.isLock  | i18nPlural: merchantStatuMapping }}</td>
         <td>
           <a (click)="jumpRouter(data,'sale')">销售数据</a>
           <nz-divider nzType="vertical"></nz-divider>

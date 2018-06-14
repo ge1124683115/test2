@@ -13,7 +13,7 @@
         <nz-form-item nzFlex>
           <nz-form-label nzFor="pesticideCategory">农药类别</nz-form-label>
           <nz-form-control>
-            <nz-select id="pesticideCategory" formControlName="pesticideCategory" [(ngModel)]="searchParam.pesticideCategory">
+            <nz-select id="pesticideCategory" formControlName="pesticideCategory" [(ngModel)]="searchParam.pesticideCategoryCode">
               <nz-option *ngFor="let option of pesticideCategoryList" [nzValue]="option.value" [nzLabel]="option.label"></nz-option>
             </nz-select>
           </nz-form-control>
@@ -23,7 +23,7 @@
         <nz-form-item nzFlex>
           <nz-form-label nzFor="registrationStatus">登记证状态</nz-form-label>
           <nz-form-control>
-            <nz-select id="registrationStatus" formControlName="registrationStatus" [(ngModel)]="searchParam.certificateCode">
+            <nz-select id="registrationStatus" formControlName="registrationStatus" [(ngModel)]="searchParam.status">
               <nz-option nzValue="" nzLabel="全部状态"></nz-option>
               <nz-option nzValue="有效" nzLabel="有效"></nz-option>
               <nz-option nzValue="无效" nzLabel="无效"></nz-option>
@@ -43,7 +43,7 @@
         <nz-form-item nzFlex>
           <nz-form-label nzFor="dosage">剂&emsp;&emsp;型</nz-form-label>
           <nz-form-control>
-            <nz-select id="dosage" formControlName="dosage" [(ngModel)]="searchParam.dosage">
+            <nz-select id="dosage" formControlName="dosage" [(ngModel)]="searchParam.dosageCode">
               <nz-option *ngFor="let option of dosageList" [nzValue]="option.value" [nzLabel]="option.label"></nz-option>
             </nz-select>
           </nz-form-control>
@@ -53,7 +53,7 @@
         <nz-form-item nzFlex>
           <nz-form-label nzFor="toxicityCode">毒&emsp;&emsp;性</nz-form-label>
           <nz-form-control>
-            <nz-select id="toxicityCode" formControlName="toxicity"  [(ngModel)]="searchParam.toxicity">
+            <nz-select id="toxicityCode" formControlName="toxicity"  [(ngModel)]="searchParam.toxicityCode">
               <nz-option *ngFor="let option of toxicityList" [nzValue]="option.value" [nzLabel]="option.label"></nz-option>
             </nz-select>
           </nz-form-control>

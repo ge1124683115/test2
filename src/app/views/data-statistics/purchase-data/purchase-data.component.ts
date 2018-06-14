@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { PurchaseDataServiceNs } from './purchase-data.service';
+import { OperatingDataServiceNs } from '../operating-data/operating-data.service';
 @Component({
   selector: 'app-purchase-data',
   templateUrl: './purchase-data.component.html',
@@ -12,35 +13,31 @@ export class PurchaseDataComponent implements OnInit {
   paramsReqData: PurchaseDataServiceNs.PurchaseReqModel;
   searchParam: PurchaseDataServiceNs.PurchaseSearchReqModel;
   toxicitys = [{
-    value: '0',
+    value: '',
     label: '全部'
-  }, {
-    value: '1',
-    label: '微毒'
-  }, {
-    value: '2',
-    label: '低毒'
-  }, {
-    value: '3',
-    label: '中等毒'
-  }, {
-    value: '4',
-    label: '高毒'
-  }, {
-    value: '5',
-    label: '剧毒'
+  }];
+  productClassList = [{
+    value: '',
+	  label: '全部'
+  }];
+  dosageList = [{
+	  value: '',
+	  label: '全部剂型'
   }];
   tableDataSet = [];
   pageIndex = 1;
   pageSize = 10;
   total = 1;
   loading = false;
-  currentUnitType: string;
+  currentUnitType: number;
+  currentMerchantInfo: OperatingDataServiceNs.OperatingDataModel;
   constructor(private fb: FormBuilder,
               private purchaseDataService: PurchaseDataServiceNs.PurchaseDataService,
-              private route: ActivatedRoute) {
-    this.currentUnitType = 'small';
+              private route: ActivatedRoute,
+              private router: Router) {
+    this.currentUnitType = 0;
     this.searchParam = {};
+    this.currentMerchantInfo = {};
   }
 
   searchData(reset: boolean = false): void {
@@ -66,6 +63,7 @@ export class PurchaseDataComponent implements OnInit {
       }
       this.tableDataSet = data.value.list || [];
       this.total = data.value.total || 0;
+      this.getCurrentUnitTypeVaule();
     });
   }
 
@@ -73,8 +71,8 @@ export class PurchaseDataComponent implements OnInit {
     this.validateForm = this.fb.group({
       productName: [''],
       productClass: [''],
-      toxicity: ['0'],
-      dosage: ['0']
+      toxicity: [''],
+      dosage: ['']
     });
   }
   submitForm(): void {
@@ -84,10 +82,37 @@ export class PurchaseDataComponent implements OnInit {
     this.searchParam.dosage = this.validateForm.get('dosage').value || 0;
   }
 
-  setUnitShowType(type?: string): void {
-    this.currentUnitType = type || '';
+  setUnitShowType(type?: number): void {
+    this.currentUnitType = type || 0;
+    this.getCurrentUnitTypeVaule();
   }
+
+  private getCurrentUnitTypeVaule(): void {
+    this.tableDataSet.forEach( item => {
+      if (!item.productQuantityDOs) {
+        item.quantityResult = '';
+        return;
+      }
+      if (item.productQuantityDOs && item.productQuantityDOs.length > 1) {
+        item.quantityResult = item.productQuantityDOs[this.currentUnitType].quantityResult;
+        return;
+      }
+      item.quantityResult = item.productQuantityDOs[0].quantityResult;
+    });
+  }
+  jumpRouter(item: any): void {
+    if (!item.productCode) {
+      return;
+    }
+    localStorage.setItem('bkr-productInfo', JSON.stringify(item));
+    this.router.navigateByUrl('/main/dataStatistics/purchaseDetails/' + this.searchParam.orgId + '/' + item.productCode);
+  }
+  goBack(): void {
+    window.history.back();
+  }
+
   ngOnInit() {
+    localStorage.removeItem('bkr-productInfo');
     this.route.params
       .subscribe((params) => {
         this.searchParam.orgId = params['orgId'];
@@ -95,10 +120,37 @@ export class PurchaseDataComponent implements OnInit {
     this.validateForm = this.fb.group({
       productName: [''],
       productClass: [''],
-      toxicity: ['0'],
-      dosage: ['0']
+      toxicity: [''],
+      dosage: ['']
     });
+    this.currentMerchantInfo = localStorage.getItem('bkr-merchantData') ? JSON.parse(localStorage.getItem('bkr-merchantData')) : {};
     this.searchData();
+	  this.getDosageList();
+	  this.getProductClassList();
+    this.getToxicityList();
   }
 
+  private async getDosageList() {
+    const data = <any[]> (await this.purchaseDataService.getDictList('DosageType'));
+    this.dosageList = [{label: '全部剂型', value: ''}];
+    data.forEach( item => {
+      this.dosageList.push({label: item.value, value: item.value});
+    });
+  }
+
+  private async getProductClassList() {
+    const data = <any[]> (await this.purchaseDataService.getProductClassList(this.searchParam.orgId));
+    this.productClassList = [{label: '全部', value: ''}];
+    data.forEach( item => {
+      this.productClassList.push({label: item.className, value: item.classCode});
+    });
+  }
+
+  private async getToxicityList() {
+    const data = <any[]> (await this.purchaseDataService.getDictList('ToxicityType'));
+    this.toxicitys = [{label: '全部毒性', value: ''}];
+    data.forEach( item => {
+      this.toxicitys.push({label: item.value, value: item.value});
+    });
+  }
 }
