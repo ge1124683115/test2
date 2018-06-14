@@ -59,6 +59,14 @@ export class PurchaseDataComponent implements OnInit {
       }
     };
     this.loading = true;
+    this.purchaseDataService.getPurchaseData(this.paramsReqData).then((data) => {
+      this.loading = false;
+      if (!data.value) {
+        return;
+      }
+      this.tableDataSet = data.value.list || [];
+      this.total = data.value.total || 0;
+    });
   }
 
   public resetForm(): void {
