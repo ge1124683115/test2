@@ -8,11 +8,6 @@ import { PesticideDataComponent } from './pesticide-data/pesticide-data.componen
 import { SaleDetailsComponent } from './sale-details/sale-details.component';
 import { RestrictPesticideComponent } from './restrict-pesticide/restrict-pesticide.component';
 
-<<<<<<< .mine
-
-=======
-
->>>>>>> .theirs
 const routes: Routes = [
   { path: 'operatingData', component: OperatingDataComponent},
   { path: 'merchantData', component: MerchantDataComponent},
