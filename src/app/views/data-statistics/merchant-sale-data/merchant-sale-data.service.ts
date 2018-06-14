@@ -5,40 +5,24 @@ import { HttpUtilNs } from '../../../core/infra/http/http-util.service';
 export namespace MerchantSaleDataServiceNs {
   import UfastHttpResT = HttpUtilNs.UfastHttpResT;
   export interface MerchantSaleDataModel {
-    address: string;
-    businessLicenseNo: string;
-    businessLicenseState: number;
-    businessModel: number;
-    businessScope: number;
-    companyAccountType: number;
-    companyAreaId: string;
-    companyAreaName: string;
-    companyIntro: string;
-    companyName: string;
-    companyScale: number;
-    companyTel: string;
-    createDate: string;
-    entSortId: string;
-    expireDate: string;
-    fax: string;
-    graspVersion: string;
-    idcardNo: string;
-    isCompany: number;
-    isDel: number;
-    isGrasp: number;
-    isLimitUserNumber: number;
-    isLock: number;
-    legalName: string;
-    linkMan1: string;
-    linkManTel1: string;
-    logoUrl: string;
-    orgId: string;
-    regChannel: number;
-    remark: string;
-    shortName: string;
-    unifiedSocialCreditcode: string;
-    userNumber: number;
-    zip: string;
+    orgId?: string;
+    productCode?: number;
+    productName?: string;
+    productClass?: string;
+    productClassName?: string;
+    uomCode?: string;
+    inventory?: string;
+    specification?: string;
+    manufacturer?: string;
+    certificateCode?: string;
+    dosageName?: string;
+    toxicityName?: string;
+    productBrand?: string;
+    productQuantityDOs?: {
+      type: number,
+      quantityResult: string
+    }[];
+    unitConversionRelationship?: string;
   }
 
   export interface MerchantSaleResModel extends UfastHttpResT<{list: MerchantSaleDataModel[];
