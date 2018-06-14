@@ -13,7 +13,10 @@
         <nz-form-item nzFlex>
           <nz-form-label nzFor="companyAreaId">所属区域</nz-form-label>
           <nz-form-control>
-            <input formControlName="companyAreaId" nz-input id="companyAreaId">
+            <nz-cascader style="width: 200px;" formControlName="companyAreaId" id="companyAreaId" nzPlaceHolder="选择区域"
+                         [nzLoadData]="loadAreaDataHandler"
+                         (ngModelChange)="areaChanges($event)">
+            </nz-cascader>
           </nz-form-control>
         </nz-form-item>
       </div>
