@@ -35,11 +35,11 @@ export class PurchaseDataComponent implements OnInit {
   pageSize = 10;
   total = 1;
   loading = false;
-  currentUnitType: string;
+  currentUnitType: number;
   constructor(private fb: FormBuilder,
               private purchaseDataService: PurchaseDataServiceNs.PurchaseDataService,
               private route: ActivatedRoute) {
-    this.currentUnitType = 'small';
+    this.currentUnitType = 0;
     this.searchParam = {};
   }
 
@@ -84,8 +84,8 @@ export class PurchaseDataComponent implements OnInit {
     this.searchParam.dosage = this.validateForm.get('dosage').value || 0;
   }
 
-  setUnitShowType(type?: string): void {
-    this.currentUnitType = type || '';
+  setUnitShowType(type?: number): void {
+    this.currentUnitType = type || 0;
   }
   ngOnInit() {
     this.route.params

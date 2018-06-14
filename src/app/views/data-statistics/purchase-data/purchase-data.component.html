@@ -51,9 +51,9 @@
   <div class="content-container">
     <div class="btn-list">
       <nz-button-group>
-        <button nz-button nzType="default" [ngClass]="{'selected-btn':currentUnitType === 'small'}" (click)="setUnitShowType('small')">显示小单位</button>
-        <button nz-button nzType="default" [ngClass]="{'selected-btn':currentUnitType === 'big'}" (click)="setUnitShowType('big')">显示大单位</button>
-        <button nz-button nzType="default" [ngClass]="{'selected-btn':currentUnitType === ''}" (click)="setUnitShowType()">显示辅助单位</button>
+        <button nz-button nzType="default" [ngClass]="{'selected-btn':currentUnitType === 0}" (click)="setUnitShowType(0)">显示小单位</button>
+        <button nz-button nzType="default" [ngClass]="{'selected-btn':currentUnitType === 1}" (click)="setUnitShowType(1)">显示大单位</button>
+        <button nz-button nzType="default" [ngClass]="{'selected-btn':currentUnitType === 2}" (click)="setUnitShowType(2)">显示辅助单位</button>
       </nz-button-group>
     </div>
     <nz-table  #tableData nzBordered  nzSize="middle" [nzData]="tableDataSet" nzShowSizeChanger
@@ -90,7 +90,7 @@
         <td>{{data.dosage}}</td>
         <td>{{data.toxicity}}</td>
         <td>{{data.relationDesc}}</td>
-        <td>{{data.quantityResult}}</td>
+        <td>{{(data.productQuantityDOs)?data.productQuantityDOs[currentUnitType].quantityResult:''}}</td>
         <td>
           <a>交易记录</a>
         </td>
