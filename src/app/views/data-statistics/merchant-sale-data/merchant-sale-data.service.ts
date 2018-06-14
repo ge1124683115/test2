@@ -64,8 +64,8 @@ export namespace MerchantSaleDataServiceNs {
   export class MerchantSaleDataService {
     constructor(private http: HttpUtilNs.HttpUtilService) {
     }
-    public getMerchantSaleData(paramsData: MerchantSaleResModel): Promise<MerchantSaleResModel> {
-      return this.http.post<MerchantSaleResModel>('bizs', 'company/getCompanyList', paramsData)
+    public getMerchantSaleData(paramsData: MerchantSaleReqModel): Promise<MerchantSaleResModel> {
+      return this.http.post<MerchantSaleResModel>('bizs', 'company/getCompanySaleList', paramsData)
         .pipe(map((data: MerchantSaleResModel) => {
           return data;
         })).toPromise();

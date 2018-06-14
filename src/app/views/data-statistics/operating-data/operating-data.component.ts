@@ -75,10 +75,10 @@ export class OperatingDataComponent implements OnInit {
       return;
     }
     if (type === 'sale') {
-      this.router.navigateByUrl('/main/dataStatistics/saleData/'+item.orgId);
+      this.router.navigateByUrl('/main/dataStatistics/saleData/' + item.orgId);
       return;
     }
-    //this.router.navigateByUrl('/main/dataStatistics/saleData', {queryParams: {orgId: item.orgId}});
+    this.router.navigateByUrl('/main/dataStatistics/purchaseData/' + item.orgId);
   }
   ngOnInit() {
 

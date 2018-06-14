@@ -1,14 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup} from '@angular/forms';
-import { MerchantSaleDataServiceNs } from './merchant-sale-data.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { PurchaseDataServiceNs } from './purchase-data.service';
 @Component({
-  selector: 'app-merchant-sale-data',
-  templateUrl: './merchant-sale-data.component.html',
-  styleUrls: ['./merchant-sale-data.component.scss']
+  selector: 'app-purchase-data',
+  templateUrl: './purchase-data.component.html',
+  styleUrls: ['./purchase-data.component.scss']
 })
-export class MerchantSaleDataComponent implements OnInit {
+export class PurchaseDataComponent implements OnInit {
   validateForm: FormGroup;
+  paramsReqData: PurchaseDataServiceNs.PurchaseReqModel;
+  searchParam: PurchaseDataServiceNs.PurchaseSearchReqModel;
   toxicitys = [{
     value: '0',
     label: '全部'
@@ -33,17 +35,13 @@ export class MerchantSaleDataComponent implements OnInit {
   pageSize = 10;
   total = 1;
   loading = false;
-  searchParam: MerchantSaleDataServiceNs.MerchantSaleSearchReqModel;
-  paramsReqData: MerchantSaleDataServiceNs.MerchantSaleReqModel;
   currentUnitType: string;
   constructor(private fb: FormBuilder,
-              private merchantSaleDataService: MerchantSaleDataServiceNs.MerchantSaleDataService,
+              private purchaseDataService: PurchaseDataServiceNs.PurchaseDataService,
               private route: ActivatedRoute) {
-      this.searchParam = {};
-      this.currentUnitType = 'small';
+    this.currentUnitType = 'small';
+    this.searchParam = {};
   }
-
-
 
   searchData(reset: boolean = false): void {
     if (reset) {
@@ -54,21 +52,13 @@ export class MerchantSaleDataComponent implements OnInit {
       pageSize: this.pageSize,
       filters : {
         orgId: this.searchParam.orgId,
-        dosage: this.searchParam.dosage || 0,
-        toxicity: this.searchParam.toxicity || 0,
-        productClass: this.searchParam.productClass || 0,
-        productName: this.searchParam.productName || ''
+        dosage: this.searchParam.dosage || '',
+        toxicity: this.searchParam.toxicity || '',
+        productClass: this.searchParam.productClass || '',
+        fullname: this.searchParam.fullname || ''
       }
     };
     this.loading = true;
-    this.merchantSaleDataService.getMerchantSaleData(this.paramsReqData).then((data) => {
-      this.loading = false;
-      if (!data.value) {
-        return;
-      }
-      this.tableDataSet = data.value.list || [];
-      this.total = data.value.total || 0;
-    });
   }
 
   public resetForm(): void {
@@ -80,14 +70,14 @@ export class MerchantSaleDataComponent implements OnInit {
     });
   }
   submitForm(): void {
-    this.searchParam.productName = this.validateForm.get('productName').value || '';
+    this.searchParam.fullname = this.validateForm.get('productName').value || '';
     this.searchParam.productClass = this.validateForm.get('productClass').value || 0;
     this.searchParam.toxicity = this.validateForm.get('toxicity').value || 0;
     this.searchParam.dosage = this.validateForm.get('dosage').value || 0;
   }
 
   setUnitShowType(type?: string): void {
-      this.currentUnitType = type || '';
+    this.currentUnitType = type || '';
   }
   ngOnInit() {
     this.route.params
