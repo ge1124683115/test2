@@ -117,6 +117,9 @@ $switch-bar-width:20px;
   z-index: 99;
 }
 .side-nav {
+  a:hover{
+    background: $primary-color ;
+  }
   position: fixed;
   width: 150px;
   margin-left: 180px;
