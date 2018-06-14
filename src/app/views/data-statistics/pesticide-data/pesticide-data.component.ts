@@ -59,12 +59,12 @@ export class PesticideDataComponent implements OnInit {
     { text: 'female', value: 'female' }
   ];
   public searchParam = {
-    certificateCode: '',
-    dosage: '',
+    dosageCode: '',
     holderName: '',
-    pesticideCategory: '',
+    pesticideCategoryCode: '',
     pesticideName: '',
-    toxicity: ''
+	status: '',
+    toxicityCode: ''
   };
   constructor(private http: HttpUtilNs.HttpUtilService,
               private fb: FormBuilder) { }
