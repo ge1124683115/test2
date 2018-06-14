@@ -119,6 +119,7 @@ $switch-bar-width:20px;
   z-index: 99;
 }
 .side-nav {
+  border-left: 1px solid #ffffff;
   background: #1E2542;
   a:hover{
     background: $primary-color ;
