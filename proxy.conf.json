@@ -9,7 +9,7 @@
         "secure": false,
         "changeOrigin": true
     },
-    "/bizs": {
+    "/nzbxcs": {
         "target": "http://192.168.1.37:8087/",
         "secure": false,
         "changeOrigin": true

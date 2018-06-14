@@ -13,6 +13,7 @@ import { MerchantSaleDataServiceNs } from './merchant-sale-data/merchant-sale-da
 import { SaleDetailsComponent } from './sale-details/sale-details.component';
 import { PurchaseDataComponent } from './purchase-data/purchase-data.component';
 import { PurchaseDataServiceNs } from './purchase-data/purchase-data.service';
+import { RestrictPesticideComponent } from './restrict-pesticide/restrict-pesticide.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -21,7 +22,7 @@ import { PurchaseDataServiceNs } from './purchase-data/purchase-data.service';
     ReactiveFormsModule
   ],
   declarations: [OperatingDataComponent, MerchantDataComponent, PesticideDataComponent, MerchantSaleDataComponent,
-    SaleDetailsComponent, PurchaseDataComponent],
+    SaleDetailsComponent, PurchaseDataComponent, RestrictPesticideComponent],
   providers: [
     OperatingDataServiceNs.OperatingDataService,
     MerchantDataServiceNs.MerchantDataService,

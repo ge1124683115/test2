@@ -175,7 +175,7 @@ export namespace MenuServiceNs {
             seq: 1,
             showFlag: 1,
             url: '/main/dataStatistics/restrictPesticideQuery'
-          }, {
+          }, /*{
             state: 'app.dataStatistics.suspectedPesticideQuery',
             children: [],
             code: '002',
@@ -187,7 +187,7 @@ export namespace MenuServiceNs {
             seq: 1,
             showFlag: 1,
             url: '/main/dataStatistics/suspectedPesticideQuery'
-          }],
+          }*/],
         },
           {
           channel: 0,
