@@ -1,3 +1,34 @@
-<p>
-  sale-details works!
-</p>
+<div class="main-form-and-list-wrap">
+  <form nz-form [formGroup]="validateForm" class="search-form">
+    <div nz-row [nzGutter]="24">
+      <div nz-col [nzSpan]="8">
+        <nz-form-item nzFlex>
+          <nz-form-label nzFor="dealerName">交易人姓名</nz-form-label>
+          <nz-form-control>
+            <input formControlName="dealerName" nz-input placeholder="姓名/手机号/身份证号" id="dealerName">
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="10">
+        <nz-form-item nzFlex>
+          <nz-form-label nzFor="rangePicker">交易时间</nz-form-label>
+          <nz-form-control>
+            <nz-range-picker formControlName="rangePicker" nzFormat="yyyy/MM/dd"></nz-range-picker>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+
+
+
+      <div nz-col [nzSpan]="6">
+        <div class="search-btn-group">
+          <button nz-button nzType="default" class="mr10" type="button">清空</button>
+          <button nz-button nzType="primary" type="button">搜索</button>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div class="content-container">
+  </div>
+</div>

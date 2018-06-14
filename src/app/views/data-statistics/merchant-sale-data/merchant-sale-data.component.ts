@@ -38,7 +38,8 @@ export class MerchantSaleDataComponent implements OnInit {
   currentUnitType: string;
   constructor(private fb: FormBuilder,
               private merchantSaleDataService: MerchantSaleDataServiceNs.MerchantSaleDataService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private router: Router) {
       this.searchParam = {};
       this.currentUnitType = 'small';
   }
@@ -78,16 +79,25 @@ export class MerchantSaleDataComponent implements OnInit {
       toxicity: ['0'],
       dosage: ['0']
     });
+    this.searchData(true);
   }
   submitForm(): void {
     this.searchParam.productName = this.validateForm.get('productName').value || '';
     this.searchParam.productClass = this.validateForm.get('productClass').value || 0;
     this.searchParam.toxicity = this.validateForm.get('toxicity').value || 0;
     this.searchParam.dosage = this.validateForm.get('dosage').value || 0;
+    this.searchData(true);
   }
 
   setUnitShowType(type?: string): void {
       this.currentUnitType = type || '';
+  }
+
+  jumpRouter(item: any): void {
+    if (!item.productCode) {
+      return;
+    }
+    this.router.navigateByUrl('/main/dataStatistics/saleDetails/' + item.productCode);
   }
   ngOnInit() {
     this.route.params
