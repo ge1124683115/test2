@@ -56,3 +56,22 @@
 .submit-button + .submit-button{
   margin-left:20px;
 }
+
+.main-form-and-list-wrap {
+  .mr10{
+    margin-right: 10px;
+  }
+  .search-form {
+    overflow: hidden;
+    padding: 20px 20px 0 20px;
+    border-bottom: 1px solid #999;
+
+    .ant-select {
+      width: 176px !important;
+    }
+  }
+  .content-container {
+    overflow: hidden;
+    padding: 20px;
+  }
+}

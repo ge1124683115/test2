@@ -1,3 +1,107 @@
-<p>
-  pesticide-data works!
-</p>
+<div class="main-form-and-list-wrap">
+  <form nz-form [formGroup]="validateForm" class="search-form">
+    <div nz-row [nzGutter]="24">
+      <div nz-col [nzSpan]="6">
+        <nz-form-item nzFlex>
+          <nz-form-label nzFor="pesticideName">农药名称</nz-form-label>
+          <nz-form-control>
+            <input formControlName="pesticideName" nz-input placeholder="名称/登记证号" id="pesticideName" [(ngModel)]="searchParam.pesticideName">
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="6">
+        <nz-form-item nzFlex>
+          <nz-form-label nzFor="pesticideCategory">农药类别</nz-form-label>
+          <nz-form-control>
+            <nz-select id="pesticideCategory" formControlName="pesticideCategory" [(ngModel)]="searchParam.pesticideCategory">
+              <nz-option *ngFor="let option of pesticideCategoryList" [nzValue]="option.value" [nzLabel]="option.label"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="6">
+        <nz-form-item nzFlex>
+          <nz-form-label nzFor="registrationStatus">登记证状态</nz-form-label>
+          <nz-form-control>
+            <nz-select id="registrationStatus" formControlName="registrationStatus" [(ngModel)]="searchParam.certificateCode">
+              <nz-option nzValue="" nzLabel="全部状态"></nz-option>
+              <nz-option nzValue="有效" nzLabel="有效"></nz-option>
+              <nz-option nzValue="无效" nzLabel="无效"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="6">
+        <nz-form-item nzFlex>
+          <nz-form-label nzFor="holderName">登记证持有人</nz-form-label>
+          <nz-form-control>
+            <input formControlName="holderName" nz-input id="holderName" [(ngModel)]="searchParam.holderName">
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="6">
+        <nz-form-item nzFlex>
+          <nz-form-label nzFor="dosage">剂&emsp;&emsp;型</nz-form-label>
+          <nz-form-control>
+            <nz-select id="dosage" formControlName="dosage" [(ngModel)]="searchParam.dosage">
+              <nz-option *ngFor="let option of dosageList" [nzValue]="option.value" [nzLabel]="option.label"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="6">
+        <nz-form-item nzFlex>
+          <nz-form-label nzFor="toxicityCode">毒&emsp;&emsp;性</nz-form-label>
+          <nz-form-control>
+            <nz-select id="toxicityCode" formControlName="toxicity"  [(ngModel)]="searchParam.toxicity">
+              <nz-option *ngFor="let option of toxicityList" [nzValue]="option.value" [nzLabel]="option.label"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="12">
+        <div class="search-btn-group">
+          <button nz-button nzType="default" class="mr10" (click)="resetForm()" type="button">清空</button>
+          <button nz-button nzType="primary" type="button" (click)="searchData()">搜索</button>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div class="content-container">
+    <nz-table  #tableData nzBordered  nzSize="middle" [nzData]="dataSet" nzShowSizeChanger
+               [nzFrontPagination]="false"
+               [nzLoading]="loading"
+               [nzTotal]="total"
+               [(nzPageIndex)]="pageIndex"
+               [(nzPageSize)]="pageSize"
+               (nzPageIndexChange)="searchData()"
+               (nzPageSizeChange)="searchData(true)">
+      <thead>
+      <tr>
+        <th>农药名称</th>
+        <th>登记证号</th>
+        <th>登记证持有人</th>
+        <th>商品类别</th>
+        <th>剂型</th>
+        <th>毒性</th>
+        <th>有效期开始日期</th>
+        <th>有效期截止日期</th>
+        <th>登记证状态</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let data of dataSet">
+        <td>{{data.pesticideName}}</td>
+        <td>{{data.certificateCode}}</td>
+        <td>{{data.holderName}}</td>
+        <td>{{data.pesticideCategory}}</td>
+        <td>{{data.dosage}}</td>
+        <td>{{data.toxicity}}</td>
+        <td>{{data.validStartDay}}</td>
+        <td>{{data.validStartDay}}</td>
+        <td>{{data.status}}</td>
+      </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
