@@ -13,7 +13,7 @@
         <nz-form-item nzFlex>
           <nz-form-label nzFor="productName">商品名称</nz-form-label>
           <nz-form-control>
-            <input formControlName="productName" nz-input placeholder="名称/规格/首字母/登记证号" id="productName">
+            <input formControlName="productName" nz-input placeholder="名称/规格/首字母/登记证号" id="productName" [(ngModel)]="searchParam.fullname">
           </nz-form-control>
         </nz-form-item>
       </div>
@@ -29,7 +29,6 @@
         <nz-form-item nzFlex>
           <nz-form-label nzFor="toxicity">剂型</nz-form-label>
           <nz-form-control>
-
           </nz-form-control>
         </nz-form-item>
       </div>
@@ -45,7 +44,7 @@
       </div>
       <div nz-col [nzSpan]="4">
         <button nz-button nzType="default" class="mr10" (click)="resetForm()">清空</button>
-        <button nz-button nzType="primary">搜索</button>
+        <button nz-button nzType="primary" (click)="searchData()">搜索</button>
       </div>
     </div>
   </form>
@@ -87,7 +86,7 @@
         <td>{{data.specification }}</td>
         <td>{{data.productBrand}}</td>
         <td>{{data.manufacturer}}</td>
-        <td>{{data.productClass}}</td>
+        <td>{{data.className}}</td>
         <td>{{data.dosage}}</td>
         <td>{{data.toxicity}}</td>
         <td>{{data.relationDesc}}</td>
