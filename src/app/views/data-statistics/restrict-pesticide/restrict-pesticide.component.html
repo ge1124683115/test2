@@ -1,0 +1,42 @@
+<div class="main-form-and-list-wrap">
+  <form nz-form [formGroup]="validateForm" class="search-form">
+    <div nz-row [nzGutter]="24">
+      <div nz-col [nzSpan]="4">
+        <nz-form-item>
+          <nz-input-group >
+            <input formControlName="searchContent" nz-input placeholder="商品名称" [(ngModel)]="searchParam.value">
+          </nz-input-group>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="4" style="text-align: left">
+        <button nz-button [nzType]="'primary'" type="button" (click)="searchData()">搜索</button>
+        <button nz-button (click)="resetForm()" type="button">清空</button>
+      </div>
+    </div>
+  </form>
+  <div class="content-container">
+    <nz-table  #tableData nzBordered  nzSize="middle" [nzData]="listData" nzShowSizeChanger
+               [nzFrontPagination]="false"
+               [nzLoading]="loading"
+               [nzTotal]="total"
+               [(nzPageIndex)]="pageIndex"
+               [(nzPageSize)]="pageSize"
+               (nzPageIndexChange)="searchData()"
+               (nzPageSizeChange)="searchData(true)">
+      <thead>
+      <tr>
+        <th width="5%">序号</th>
+        <th>有效成分名称</th>
+        <th>备注</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let data of listData">
+        <td>{{data.seqNo}}</td>
+        <td>{{data.value}}</td>
+        <td>{{data.remark}}</td>
+      </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
