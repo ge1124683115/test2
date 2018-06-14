@@ -167,7 +167,6 @@ export class MerchantDataComponent implements OnInit {
   }
 
   public areaChanges(value: any): void {
-    console.info(value);
     if (!value) {
       return;
     }

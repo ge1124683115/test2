@@ -75,3 +75,33 @@
     padding: 20px;
   }
 }
+.go-back{
+  margin-top: 20px;
+  button{
+    width: 100px;
+    height: 40px;
+    line-height: 40px;
+    border: 1px solid $primary-color;
+    border-radius: 4px;
+  }
+}
+.ant-btn-primary{
+  background: $primary-color;
+  border-color: $primary-color;
+}
+.ant-btn-primary:hover{
+  background: $primary-color;
+  border-color: $primary-color;
+}
+.unit-btn-list {
+  text-align: right;
+  margin-bottom: 10px;
+  color: $primary-color;
+  height: 30px;
+  line-height: 30px;
+  .selected-btn{
+    background: $primary-color;
+    color: #ffffff;
+  }
+}
+

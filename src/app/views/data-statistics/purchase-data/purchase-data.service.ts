@@ -60,9 +60,9 @@ export namespace PurchaseDataServiceNs {
 		});
 	}
 
-	public getProductClassList(): Promise<any> {
+	public getProductClassList(orgId: string): Promise<any> {
 		return this.http.get<HttpUtilNs.UfastHttpResT<any>>('bizs',
-		  'ProducnzbPrebuilclass/list?code=0').toPromise().then( data => {
+      'company/getPorductClassList?orgId=' + orgId).toPromise().then( data => {
 			return data.value;
 		});
 	}

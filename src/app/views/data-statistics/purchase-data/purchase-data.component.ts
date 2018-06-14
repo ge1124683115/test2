@@ -139,7 +139,7 @@ export class PurchaseDataComponent implements OnInit {
   }
 
   private async getProductClassList() {
-    const data = <any[]> (await this.purchaseDataService.getProductClassList());
+    const data = <any[]> (await this.purchaseDataService.getProductClassList(this.searchParam.orgId));
     this.productClassList = [{label: '全部', value: ''}];
     data.forEach( item => {
       this.productClassList.push({label: item.className, value: item.classCode});
