@@ -4,8 +4,7 @@ import { OperatingDataServiceNs } from './operating-data.service';
 import { MerchantDataServiceNs } from '../merchant-data/merchant-data.service';
 import { Router, ActivatedRoute } from '@angular/router';
 enum MerchantStatusE {
-  all = 0,
-  inUse,
+  inUse = 0,
   blockUp
 }
 @Component({
@@ -23,7 +22,6 @@ export class OperatingDataComponent implements OnInit {
               private merchantDataService: MerchantDataServiceNs.MerchantDataService) {
     this.searchParam = {};
 
-    this.merchantStatuMapping[`=${MerchantStatusE.all}`] = '全部';
     this.merchantStatuMapping[`=${MerchantStatusE.inUse}`] = '在用';
     this.merchantStatuMapping[`=${MerchantStatusE.blockUp}`] = '停用';
 

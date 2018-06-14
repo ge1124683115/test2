@@ -31,6 +31,14 @@ export class PurchaseDataComponent implements OnInit {
     value: '5',
     label: '剧毒'
   }];
+  productClassList = [{
+    value: '',
+	  label: '全部'
+  }];
+  dosageList = [{
+	  value: '',
+	  label: '全部剂型'
+  }];
   tableDataSet = [];
   pageIndex = 1;
   pageSize = 10;
@@ -132,6 +140,24 @@ export class PurchaseDataComponent implements OnInit {
     });
     this.currentMerchantInfo = localStorage.getItem('bkr-merchantData') ? JSON.parse(localStorage.getItem('bkr-merchantData')) : {};
     this.searchData();
+	this.getDosageList();
+	this.getProductClassList();
+  }
+
+  private async getDosageList() {
+    const data = <any[]> (await this.purchaseDataService.getDictList('DosageType'));
+    this.dosageList = [{label: '全部剂型', value: ''}];
+    data.forEach( item => {
+      this.dosageList.push({label: item.value, value: item.value});
+    });
+  }
+
+  private async getProductClassList() {
+    const data = <any[]> (await this.purchaseDataService.getProductClassList(this.searchParam.orgId));
+    this.productClassList = [{label: '全部', value: ''}];
+    data.forEach( item => {
+      this.productClassList.push({label: item.className, value: item.classCode});
+    });
   }
 
 }

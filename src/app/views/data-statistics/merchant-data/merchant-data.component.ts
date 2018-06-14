@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import { MerchantDataServiceNs } from './merchant-data.service';
 enum MerchantStatusE {
-  all = 0,
-  inUse,
+  inUse = 0,
   blockUp
 }
 enum BusinessLicenseStatesE {
@@ -75,7 +74,6 @@ export class MerchantDataComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private merchantDataService: MerchantDataServiceNs.MerchantDataService) {
     this.searchParam = {};
-    this.merchantStatuMapping[`=${MerchantStatusE.all}`] = '全部';
     this.merchantStatuMapping[`=${MerchantStatusE.inUse}`] = '在用';
     this.merchantStatuMapping[`=${MerchantStatusE.blockUp}`] = '停用';
 

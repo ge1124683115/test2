@@ -13,23 +13,27 @@
         <nz-form-item nzFlex>
           <nz-form-label nzFor="productName">商品名称</nz-form-label>
           <nz-form-control>
-            <input formControlName="productName" nz-input placeholder="名称/规格/首字母/登记证号" id="productName">
+            <input formControlName="productName" nz-input placeholder="名称/规格/首字母/登记证号" id="productName" [(ngModel)]="searchParam.fullname">
           </nz-form-control>
         </nz-form-item>
       </div>
-      <div nz-col [nzSpan]="5">
+      <div nz-col [nzSpan]="6">
         <nz-form-item nzFlex>
           <nz-form-label nzFor="productClass">商品类别</nz-form-label>
           <nz-form-control>
-
+			<nz-select style="width: 200px;" id="productClass" formControlName="productClass" [(ngModel)]="searchParam.productClass">
+              <nz-option *ngFor="let option of productClassList" [nzValue]="option.value" [nzLabel]="option.label"></nz-option>
+            </nz-select>
           </nz-form-control>
         </nz-form-item>
       </div>
       <div nz-col [nzSpan]="5">
         <nz-form-item nzFlex>
-          <nz-form-label nzFor="toxicity">剂型</nz-form-label>
+          <nz-form-label nzFor="dosage">剂型</nz-form-label>
           <nz-form-control>
-
+			<nz-select style="width: 200px;" id="dosage" formControlName="dosage" [(ngModel)]="searchParam.dosage">
+              <nz-option *ngFor="let option of dosageList" [nzValue]="option.value" [nzLabel]="option.label"></nz-option>
+            </nz-select>
           </nz-form-control>
         </nz-form-item>
       </div>
@@ -37,15 +41,17 @@
         <nz-form-item nzFlex>
           <nz-form-label nzFor="toxicity">毒性</nz-form-label>
           <nz-form-control>
-            <nz-select style="width: 200px;" id="toxicity" formControlName="toxicity">
+            <nz-select style="width: 200px;" id="toxicity" formControlName="toxicity" [(ngModel)]="searchParam.toxicity">
               <nz-option *ngFor="let option of toxicitys" [nzValue]="option.value" [nzLabel]="option.label"></nz-option>
             </nz-select>
           </nz-form-control>
         </nz-form-item>
       </div>
-      <div nz-col [nzSpan]="4">
-        <button nz-button nzType="default" class="mr10" (click)="resetForm()">清空</button>
-        <button nz-button nzType="primary">搜索</button>
+      <div nz-col [nzSpan]="3">
+		<div class="search-btn-group">
+			<button nz-button nzType="default" class="mr10" (click)="resetForm()">清空</button>
+			<button nz-button nzType="primary" (click)="searchData()">搜索</button>
+		</div>
       </div>
     </div>
   </form>
@@ -87,11 +93,11 @@
         <td>{{data.specification }}</td>
         <td>{{data.productBrand}}</td>
         <td>{{data.manufacturer}}</td>
-        <td>{{data.productClass}}</td>
+        <td>{{data.className}}</td>
         <td>{{data.dosage}}</td>
         <td>{{data.toxicity}}</td>
         <td>{{data.relationDesc}}</td>
-        <td>{{data.quantityResult}}</td>
+        <td>{{(data.productQuantityDOs)?data.productQuantityDOs[currentUnitType].quantityResult:''}}</td>
         <td>
           <a (click)="jumpRouter(data)">交易记录</a>
         </td>

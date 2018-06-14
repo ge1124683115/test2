@@ -52,6 +52,20 @@ export namespace PurchaseDataServiceNs {
           return data;
         })).toPromise();
     }
+	
+	public getDictList(dicType: string): Promise<any> {
+		return this.http.get<HttpUtilNs.UfastHttpResT<any>>('bizs',
+		  'sysDict/list?groupName='+dicType).toPromise().then( data => {
+			return data.value;
+		});
+	}
+	
+	public getProductClassList(orgId: string): Promise<any> {
+		return this.http.get<HttpUtilNs.UfastHttpResT<any>>('bizs',
+		  'company/getPorductClassList?orgId='+orgId).toPromise().then( data => {
+			return data.value;
+		});
+	}
 
   }
 }

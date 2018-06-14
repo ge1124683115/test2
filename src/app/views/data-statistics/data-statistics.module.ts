@@ -16,7 +16,7 @@ import { PurchaseDataComponent } from './purchase-data/purchase-data.component';
 import { PurchaseDataServiceNs } from './purchase-data/purchase-data.service';
 import { PurchaseDetailsComponent } from './purchase-details/purchase-details.component';
 import { PurchaseDetailsServiceNs } from './purchase-details/purchase-details.service';
-
+import { RestrictPesticideComponent } from './restrict-pesticide/restrict-pesticide.component';
 @NgModule({
   imports: [
     CommonModule,
