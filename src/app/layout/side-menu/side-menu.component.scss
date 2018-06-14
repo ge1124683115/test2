@@ -7,7 +7,7 @@ $switch-bar-width:20px;
 
 
 .side-menu-wrap{
- width: $side-menu-width;
+  width: $side-menu-width;
   text-align: center;
   ul, li {
     margin: 0;
@@ -16,7 +16,7 @@ $switch-bar-width:20px;
   }
   float:left;
   height:100%;
-  background:#404040;
+  background: #1E2542;
   position:relative;
   overflow:hidden;
 
@@ -41,6 +41,7 @@ $switch-bar-width:20px;
     background:inherit;
     width:calc(100%);
     li{
+      background: #181D33;
       font-size:$menu-item-fontSize;
       color:$menu-item-color;
       margin: 10px 0;
@@ -118,6 +119,7 @@ $switch-bar-width:20px;
   z-index: 99;
 }
 .side-nav {
+  background: #1E2542;
   a:hover{
     background: $primary-color ;
   }
@@ -126,7 +128,6 @@ $switch-bar-width:20px;
   margin-left: 180px;
   top: 0;
   margin-top: 60px;
-  background: #edeef0;
   height: 100%;
   z-index: 5;
   .nav-con {
@@ -161,8 +162,9 @@ $switch-bar-width:20px;
     display: inline-block;
     width: 100%;
     text-decoration: none;
-    color: #1580E4;
-    background: #ECF2FD;
+    opacity: 0.6;
+    font-size: 14px;
+    color: #FFFFFF;
   }
   a {
     color: #333;
@@ -179,7 +181,7 @@ $switch-bar-width:20px;
     font-size: 12px;
     display: inline-block;
     width: 100%;
-    color: #666;
+    color: #FFFFFF;;
     text-decoration: none;
     padding-left: 30px;
   }
@@ -194,7 +196,7 @@ $switch-bar-width:20px;
     margin-right: 4px;
   }
   .side-menu > li > a > i {
-    color: #666;
+    color: #FFFFFF;
     font-weight: bolder;
     float: right;
     padding-right: 5px;
