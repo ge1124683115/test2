@@ -75,3 +75,27 @@
     padding: 20px;
   }
 }
+
+.pull-left {
+  float: left;
+}
+
+.pull-right {
+  float: right;
+}
+
+.clearfix {
+ /* clear: both;*/
+}
+
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: " ";
+}
+.clearfix:after {
+  clear: both;
+}
+.m-t {
+  margin-top: 15px;
+}

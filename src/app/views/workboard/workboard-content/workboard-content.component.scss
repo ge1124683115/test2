@@ -1,0 +1,73 @@
+/*工作台*/
+$title-height: 45px;
+$content-height: 170px;
+
+.work-board {
+  overflow: hidden;
+}
+.work-board .main {
+  width: 69%;
+}
+.work-board .side {
+  width: 30%;
+}
+.work-board .group {
+  width: 100%;
+  height: auto;
+  background: #fff;
+  border: 1px solid #F1F4F9;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px 0 #BAC4CD;
+}
+.work-board .group .group-title
+{
+  width: 100%;
+  height: $title-height;
+  padding-left: 10px;
+  border-bottom: 1px solid #F1F4F9;
+  vertical-align: middle;
+}
+.work-board .group .group-operate,
+.work-board .group .group-notice{
+  height: $content-height;
+}
+.work-board .group .group-title i {
+  vertical-align: middle;
+  color: #358ED7;
+}
+.work-board .group .group-title .title {
+  font-size: 14px;
+  line-height: 45px;
+  color: #333333;
+  vertical-align: middle;
+}
+
+.group-operate>ul {
+  overflow: hidden;
+}
+
+.group-operate>ul li {
+  float: left;
+  width: 156px;
+  padding: 32px 34px;
+}
+.group-operate li div {
+  text-align: center;
+  margin: 5px 0px;
+}
+
+.group-operate li:hover {
+  background: #EFF3F7;
+  border-radius: 5px;
+}
+.group-operate li a {
+  display: block;
+  font-size: 14px;
+  color: #333333;
+}
+
+.no-data-bg {
+  background-image: url('../../../../assets/img/workboard/no-data.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}

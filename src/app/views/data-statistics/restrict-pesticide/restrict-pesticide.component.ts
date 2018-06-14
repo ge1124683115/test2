@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpUtilNs } from '../../../core/infra/http/http-util.service';
 import {FormBuilder, Validators, FormGroup, FormControl} from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 interface ListItem {
   id: number;
