@@ -12,7 +12,7 @@ const webServerUrl = 'http://localhost:4200';
 export const environment = {
   production: false,
   baseUrl: {
-    bizs: `${webServerUrl}/nzbzs/`,
+    bizs: `${webServerUrl}/nzbxcs/`,
     ius: `${webServerUrl}/ius/`,
   },
   otherData: {

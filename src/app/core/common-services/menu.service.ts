@@ -70,6 +70,9 @@ export namespace MenuServiceNs {
       }
       for (let index = 0, len = menu.length; index < len; index++) {
         const menuItem = menu[index];
+        if (this.hasUrlFound) {
+          return;
+        }
         if ( url === menuItem.url) {
           this.hasUrlFound = true;
         }
@@ -81,7 +84,6 @@ export namespace MenuServiceNs {
             break;
           }
         }
-
       }
     }
 
