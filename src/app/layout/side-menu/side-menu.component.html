@@ -4,7 +4,7 @@
     <ng-container *ngFor="let item of sideMenu;">
     <li (click)="navigate(item)">
         <a [ngClass]="{'active': selectedItem.indexOf(item.url) !== -1}">
-          <i class="{{item.icon}}"></i>
+          <i   class="{{item.icon}}"></i>
           <span class="leftMenu-name">{{item.name}}</span>
         </a>
       </li>

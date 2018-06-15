@@ -1,0 +1,47 @@
+
+@font-face {font-family: "bkrfont";
+  src: url('iconfont.eot?t=1529033735226'); /* IE9*/
+  src: url('iconfont.eot?t=1529033735226#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('data:application/x-font-woff;charset=utf-8;base64,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') format('woff'),
+  url('iconfont.ttf?t=1529033735226') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('iconfont.svg?t=1529033735226#bkrfont') format('svg'); /* iOS 4.1- */
+}
+
+.bkrfont {
+  font-family:"bkrfont" !important;
+  font-size:16px;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.bkr-line-wide:before { content: "\e61f"; }
+
+.bkr-home:before { content: "\e606"; }
+
+.bkr-more:before { content: "\e60a"; }
+
+.bkr-collapse:before { content: "\e60b"; }
+
+.bkr-inner-management:before { content: "\e60c"; }
+
+.bkr-merchant-analyze-data:before { content: "\e60d"; }
+
+.bkr-analyze-data:before { content: "\e60e"; }
+
+.bkr-home1:before { content: "\e60f"; }
+
+.bkr-doubt:before { content: "\e610"; }
+
+.bkr-statistics-data:before { content: "\e611"; }
+
+.bkr-no-result:before { content: "\e612"; }
+
+.bkr-exit:before { content: "\e613"; }
+
+.bkr-info-manage:before { content: "\e614"; }
+
+.bkr-biz-manage:before { content: "\e615"; }
+
+.bkr-user:before { content: "\e616"; }
+
