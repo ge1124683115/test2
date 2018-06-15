@@ -77,7 +77,7 @@ export class MerchantDataComponent implements OnInit {
     this.merchantStatuMapping[`=${MerchantStatusE.inUse}`] = '在用';
     this.merchantStatuMapping[`=${MerchantStatusE.blockUp}`] = '停用';
 
-    this.businessLicenseStateMapping[`=${BusinessLicenseStatesE.all}`] = '全部';
+    this.businessLicenseStateMapping[`=${BusinessLicenseStatesE.all}`] = '';
     this.businessLicenseStateMapping[`=${BusinessLicenseStatesE.survival}`] = '存续';
     this.businessLicenseStateMapping[`=${BusinessLicenseStatesE.employment}`] = '在业';
     this.businessLicenseStateMapping[`=${BusinessLicenseStatesE.revoked}`] = '吊销';
@@ -87,7 +87,7 @@ export class MerchantDataComponent implements OnInit {
     this.businessLicenseStateMapping[`=${BusinessLicenseStatesE.closed}`] = '停业';
     this.businessLicenseStateMapping[`=${BusinessLicenseStatesE.liquidation}`] = '清算';
 
-    this.businessScopeStateMapping[`=${BusinessScopeStatesE.all}`] = '全部';
+    this.businessScopeStateMapping[`=${BusinessScopeStatesE.all}`] = '';
     this.businessScopeStateMapping[`=${BusinessScopeStatesE.unLimit}`] = '农药';
     this.businessScopeStateMapping[`=${BusinessScopeStatesE.limit}`] = '农药（限制药品除外）';
     this.loadAreaDataHandler = this.loadAreaData.bind(this);
