@@ -14,6 +14,7 @@ export namespace SaleDetailsServiceNs {
     quantityResult?: string;
     companyName?: string;
     companyTel?: string;
+    contactTel?: string;
     idCard?: string;
     address?: string;
     companyAreaName?: string;
