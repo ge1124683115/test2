@@ -18,8 +18,8 @@ export class LoginComponent implements OnInit {
               private activeRouter: ActivatedRoute) {
     this.loginReqData = {
       authId: '',
-      loginName: 'admin001',
-      password: '123456',
+      loginName: '',
+      password: '',
       code: '',
     };
   }
