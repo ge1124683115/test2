@@ -4,6 +4,7 @@ import { MerchantSaleDataServiceNs } from './merchant-sale-data.service';
 import { OperatingDataServiceNs } from '../operating-data/operating-data.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpUtilNs } from '../../../core/infra/http/http-util.service';
+import { PurchaseDataServiceNs } from '../purchase-data/purchase-data.service';
 
 @Component({
   selector: 'app-merchant-sale-data',
@@ -34,7 +35,8 @@ export class MerchantSaleDataComponent implements OnInit {
               private merchantSaleDataService: MerchantSaleDataServiceNs.MerchantSaleDataService,
               private route: ActivatedRoute,
               private router: Router,
-              private http: HttpUtilNs.HttpUtilService) {
+              private http: HttpUtilNs.HttpUtilService,
+              private purchaseDataService: PurchaseDataServiceNs.PurchaseDataService) {
       this.searchParam = {};
       this.currentUnitType = 0;
       this.currentMerchantInfo = {};
@@ -156,14 +158,11 @@ export class MerchantSaleDataComponent implements OnInit {
     });
   }
 
-  private getClassList(): Promise<any> {
-    return this.http.get<HttpUtilNs.UfastHttpResT<any>>('bizs',
-      `ProducnzbPrebuilclass/list?code=0`).toPromise().then( data => {
-        this.productClasses = [{label: '全部', value: ''}];
-      data.value.forEach( item => {
-          this.productClasses.push({label: item.className, value: item.classCode});
-        });
-      return data.value;
+  private async getClassList() {
+    const data = <any[]> (await this.purchaseDataService.getProductClassList(this.searchParam.orgId));
+    this.productClasses = [{label: '全部', value: ''}];
+    data.forEach( item => {
+      this.productClasses.push({label: item.className, value: item.classCode});
     });
   }
 

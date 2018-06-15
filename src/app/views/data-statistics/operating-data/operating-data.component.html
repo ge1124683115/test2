@@ -1,4 +1,4 @@
-<div class="operate-data">
+<div class="operate-data main-form-and-list-wrap">
   <form nz-form [formGroup]="validateForm" class="search-form">
     <div nz-row [nzGutter]="24">
       <div nz-col [nzSpan]="6">
@@ -13,7 +13,7 @@
         <nz-form-item nzFlex>
           <nz-form-label nzFor="companyAreaId">所属区域</nz-form-label>
           <nz-form-control>
-            <nz-cascader style="width: 200px;" nzChangeOnSelect formControlName="companyAreaId" id="companyAreaId" nzPlaceHolder="选择区域"
+            <nz-cascader nzChangeOnSelect formControlName="companyAreaId" id="companyAreaId" nzPlaceHolder="选择区域"
                          [nzLoadData]="loadAreaDataHandler"
                          (ngModelChange)="areaChanges($event)">
             </nz-cascader>
@@ -24,7 +24,7 @@
         <nz-form-item nzFlex>
           <nz-form-label nzFor="companyState">商户状态</nz-form-label>
           <nz-form-control>
-            <nz-select style="width: 200px;" id="companyState" formControlName="companyState">
+            <nz-select id="companyState" formControlName="companyState">
               <nz-option nzValue="0" nzLabel="全部商户"></nz-option>
               <nz-option nzValue="1" nzLabel="在用"></nz-option>
               <nz-option nzValue="2" nzLabel="停用"></nz-option>

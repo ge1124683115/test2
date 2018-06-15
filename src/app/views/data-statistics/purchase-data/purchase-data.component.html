@@ -1,4 +1,4 @@
-<div class="purchase-data">
+<div class="purchase-data main-form-and-list-wrap">
   <div class="head-info">
       <span class="mr25 title">
         {{currentMerchantInfo.companyName}}
@@ -21,7 +21,7 @@
         <nz-form-item nzFlex>
           <nz-form-label nzFor="productClass">商品类别</nz-form-label>
           <nz-form-control>
-			<nz-select style="width: 200px;" id="productClass" formControlName="productClass">
+			<nz-select id="productClass" formControlName="productClass">
               <nz-option *ngFor="let option of productClassList" [nzValue]="option.value" [nzLabel]="option.label"></nz-option>
             </nz-select>
           </nz-form-control>
@@ -31,7 +31,7 @@
         <nz-form-item nzFlex>
           <nz-form-label nzFor="dosage">剂型</nz-form-label>
           <nz-form-control>
-			<nz-select style="width: 200px;" id="dosage" formControlName="dosage">
+			<nz-select id="dosage" formControlName="dosage">
               <nz-option *ngFor="let option of dosageList" [nzValue]="option.value" [nzLabel]="option.label"></nz-option>
             </nz-select>
           </nz-form-control>
@@ -41,7 +41,7 @@
         <nz-form-item nzFlex>
           <nz-form-label nzFor="toxicity">毒性</nz-form-label>
           <nz-form-control>
-            <nz-select style="width: 200px;" id="toxicity" formControlName="toxicity">
+            <nz-select id="toxicity" formControlName="toxicity">
               <nz-option *ngFor="let option of toxicitys" [nzValue]="option.value" [nzLabel]="option.label"></nz-option>
             </nz-select>
           </nz-form-control>
