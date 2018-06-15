@@ -8,7 +8,7 @@ import { MenuServiceNs } from '../../core/common-services/menu.service';
 })
 export class NavBreadcrumbComponent implements OnInit {
 
-  private menuList: MenuServiceNs.MenuAuthorizedItemModel[];
+  public menuList: MenuServiceNs.MenuAuthorizedItemModel[];
   private navUrlList: string[];
   private subHandler: any;
 
@@ -17,7 +17,7 @@ export class NavBreadcrumbComponent implements OnInit {
     this.navUrlList = [];
   }
 
-  private trackById(item: any, index: number){
+  public trackById(item: any, index: number) {
     return item.id;
   }
 

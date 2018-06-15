@@ -79,7 +79,7 @@ export class LoginModalComponent implements OnInit {
     this.loginModalService.modalSubject.destroy('onOk');
   }
 
-  public cancelModal(data: any) {
+  public cancelModal() {
     this.loginModalService.modalSubject.destroy('onCancel');
   }
 
