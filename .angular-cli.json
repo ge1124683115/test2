@@ -20,7 +20,9 @@
       "prefix": "app",
       "styles": [
         "../node_modules/ng-zorro-antd/src/ng-zorro-antd.less",
-        "styles.scss"
+        "assets/fontello/iconfont.css",
+        "styles.scss",
+        "theme.less"
       ],
       "scripts": [],
       "environmentSource": "environments/environment.ts",
