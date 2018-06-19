@@ -19,6 +19,8 @@ $switch-bar-width:20px;
   background: #1E2542;
   position:relative;
   overflow:hidden;
+  position:fixed !important;
+  z-index: 22;
 
   transition:width .2s linear;
   -webkit-transition:width .2s linear;

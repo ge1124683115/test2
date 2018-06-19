@@ -9,6 +9,8 @@ $side-menu-bar-width:180px;
   width:100%;
   overflow:hidden;
   height:$top-menu-bar-height;
+  position: fixed;
+  z-index:22;
 
   li{
     height:$top-menu-bar-height;
@@ -45,6 +47,7 @@ $side-menu-bar-width:180px;
 }
 .main-container{
   position:relative;
+  top:60px;
   height:calc(100% - #{$top-menu-bar-height});
   height:-webkit-calc(100% - #{$top-menu-bar-height});
   height:-moz-calc(100% - #{$top-menu-bar-height});
