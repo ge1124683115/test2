@@ -5,6 +5,7 @@ import { OperatingDataServiceNs } from '../operating-data/operating-data.service
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpUtilNs } from '../../../core/infra/http/http-util.service';
 import { PurchaseDataServiceNs } from '../purchase-data/purchase-data.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-merchant-sale-data',
@@ -36,7 +37,8 @@ export class MerchantSaleDataComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private http: HttpUtilNs.HttpUtilService,
-              private purchaseDataService: PurchaseDataServiceNs.PurchaseDataService) {
+              private purchaseDataService: PurchaseDataServiceNs.PurchaseDataService,
+              private datePipe: DatePipe) {
       this.searchParam = {};
       this.currentUnitType = 0;
       this.currentMerchantInfo = {};
@@ -54,7 +56,9 @@ export class MerchantSaleDataComponent implements OnInit {
         dosage: this.searchParam.dosage || '',
         toxicity: this.searchParam.toxicity || '',
         productClass: this.searchParam.productClass || '',
-        productName: this.searchParam.productName || ''
+        productName: this.searchParam.productName || '',
+        startTime: this.searchParam.startTime || '',
+        endTime: this.searchParam.endTime || ''
       }
     };
     this.loading = true;
@@ -70,12 +74,7 @@ export class MerchantSaleDataComponent implements OnInit {
   }
 
   public resetForm(): void {
-    this.validateForm = this.fb.group({
-      productName: [''],
-      productClass: [''],
-      toxicity: [''],
-      dosage: ['']
-    });
+    this.initSearchFormData();
     this.searchData(true);
   }
   submitForm(): void {
@@ -83,6 +82,14 @@ export class MerchantSaleDataComponent implements OnInit {
     this.searchParam.productClass = this.validateForm.get('productClass').value || '';
     this.searchParam.toxicity = this.validateForm.get('toxicity').value || '';
     this.searchParam.dosage = this.validateForm.get('dosage').value || '';
+    const rangeTime = this.validateForm.get('rangePicker').value || [];
+    if (rangeTime.length > 1) {
+      this.searchParam.startTime = this.datePipe.transform(rangeTime[0], 'yyyy-MM-dd');
+      this.searchParam.endTime = this.datePipe.transform(rangeTime[1], 'yyyy-MM-dd');
+    } else {
+      this.searchParam.startTime = '';
+      this.searchParam.endTime = '';
+    }
     this.searchData(true);
   }
 
@@ -116,20 +123,28 @@ export class MerchantSaleDataComponent implements OnInit {
     window.history.back();
   }
 
-  ngOnInit() {
-
-    this.route.params
-      .subscribe((params) => {
-        this.searchParam.orgId = params['orgId'];
-      });
+  private initSearchFormData(): void {
+    const date = new Date();
+    const endTime = this.datePipe.transform(date, 'yyyy-MM-dd');
+    date.setDate((date.getDate() - 6));
+    const startTime = this.datePipe.transform(date, 'yyyy-MM-dd');
     this.validateForm = this.fb.group({
       productName: [''],
       productClass: [''],
       toxicity: [''],
-      dosage: ['']
+      dosage: [''],
+      rangePicker: [[startTime, endTime]]
     });
+  }
+
+  ngOnInit() {
+    this.route.params
+      .subscribe((params) => {
+        this.searchParam.orgId = params['orgId'];
+      });
+    this.initSearchFormData();
     this.currentMerchantInfo = localStorage.getItem('bkr-merchantData') ? JSON.parse(localStorage.getItem('bkr-merchantData')) : {};
-    this.searchData();
+    this.submitForm();
     this.getToxicityList();
     this.getDosageList();
     this.getClassList();

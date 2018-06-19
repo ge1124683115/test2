@@ -43,6 +43,8 @@ export namespace MerchantSaleDataServiceNs {
     productClass?: string;
     productName?: string;
     toxicity?: string;
+    startTime?: string;
+    endTime?: string;
   }
   @Injectable()
   export class MerchantSaleDataService {

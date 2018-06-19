@@ -9,7 +9,7 @@
   </div>
   <form nz-form [formGroup]="validateForm" class="search-form">
     <div nz-row [nzGutter]="24">
-      <div nz-col [nzSpan]="5">
+      <div nz-col [nzSpan]="6">
         <nz-form-item nzFlex>
           <nz-form-label nzFor="productName">商品名称</nz-form-label>
           <nz-form-control>
@@ -17,7 +17,7 @@
           </nz-form-control>
         </nz-form-item>
       </div>
-      <div nz-col [nzSpan]="5">
+      <div nz-col [nzSpan]="6">
         <nz-form-item nzFlex>
           <nz-form-label nzFor="productClass">商品类别</nz-form-label>
           <nz-form-control>
@@ -27,7 +27,7 @@
           </nz-form-control>
         </nz-form-item>
       </div>
-      <div nz-col [nzSpan]="5">
+      <div nz-col [nzSpan]="6">
         <nz-form-item nzFlex>
           <nz-form-label nzFor="dosage">剂型</nz-form-label>
           <nz-form-control>
@@ -37,7 +37,7 @@
           </nz-form-control>
         </nz-form-item>
       </div>
-      <div nz-col [nzSpan]="5">
+      <div nz-col [nzSpan]="6">
         <nz-form-item nzFlex>
           <nz-form-label nzFor="toxicity">毒性</nz-form-label>
           <nz-form-control>
@@ -47,7 +47,15 @@
           </nz-form-control>
         </nz-form-item>
       </div>
-      <div nz-col [nzSpan]="4">
+      <div nz-col [nzSpan]="10">
+        <nz-form-item nzFlex>
+          <nz-form-label nzFor="rangePicker">交易时间</nz-form-label>
+          <nz-form-control>
+            <nz-range-picker formControlName="rangePicker" nzFormat="yyyy/MM/dd"></nz-range-picker>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzOffset="10" [nzSpan]="4">
         <button nz-button type="button" nzType="default" class="mr10" (click)="resetForm()">清空</button>
         <button nz-button type="button" nzType="primary" (click)="submitForm()">搜索</button>
       </div>
