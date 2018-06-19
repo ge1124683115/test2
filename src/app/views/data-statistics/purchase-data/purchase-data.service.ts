@@ -41,6 +41,8 @@ export namespace PurchaseDataServiceNs {
     productClass?: string;
     orgId?: string;
     toxicity?: string;
+    startDate?: string;
+    endDate?: string;
   }
   @Injectable()
   export class PurchaseDataService {
