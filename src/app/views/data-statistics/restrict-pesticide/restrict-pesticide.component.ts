@@ -53,7 +53,11 @@ export class RestrictPesticideComponent implements OnInit {
       this.pageIndex = 1;
     }
     const param = {
-      'filters': this.searchParam,
+      // 'filters': this.searchParam,
+      'filters': {
+        value: this.searchParam.value.replace(/^\s*|\s*$/g, ''),
+        groupName: this.searchParam.groupName
+      },
       'pageNum': this.pageIndex,
       'pageSize': this.pageSize,
     };

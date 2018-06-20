@@ -122,11 +122,11 @@ export class MerchantDataComponent implements OnInit {
   }
 
   submitForm(): void {
-    this.searchParam.companySearch = this.validateForm.get('companySearch').value || '';
+    this.searchParam.companySearch = this.validateForm.get('companySearch').value.replace(/^\s*|\s*$/g, '') || '';
     this.searchParam.companyAreaId = this.validateForm.get('companyAreaId').value || '';
     this.searchParam.companyState = this.validateForm.get('companyState').value || '0';
-    this.searchParam.unifiedSocialCreditcode = this.validateForm.get('unifiedSocialCreditcode').value || '';
-    this.searchParam.businessLicenseNo = this.validateForm.get('businessLicenseNo').value || '';
+    this.searchParam.unifiedSocialCreditcode = this.validateForm.get('unifiedSocialCreditcode').value.replace(/^\s*|\s*$/g, '') || '';
+    this.searchParam.businessLicenseNo = this.validateForm.get('businessLicenseNo').value.replace(/^\s*|\s*$/g, '') || '';
     this.searchParam.businessLicenseState = this.validateForm.get('businessLicenseState').value || '';
     this.searchParam.businessScope = this.validateForm.get('businessScope').value || '';
     this.searchData(true);

@@ -96,7 +96,7 @@ export class OperatingDataComponent implements OnInit {
   }
 
   submitForm(): void {
-    this.searchParam.companySearch = this.validateForm.get('companySearch').value || '';
+    this.searchParam.companySearch = this.validateForm.get('companySearch').value.replace(/^\s*|\s*$/g, '') || '';
     this.searchParam.companyAreaId = this.validateForm.get('companyAreaId').value || '';
     this.searchParam.companyState = this.validateForm.get('companyState').value || '0';
     this.searchData(true);
