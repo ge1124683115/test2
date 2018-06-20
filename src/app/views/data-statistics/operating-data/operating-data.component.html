@@ -51,11 +51,11 @@
       <thead>
       <tr>
         <th nzWidth="22%">商户名称</th>
-        <th nzWidth="13%">所属区域</th>
-        <th nzWidth="13%">联系人</th>
-        <th nzWidth="13%">手机号</th>
-        <th nzWidth="13%">创建时间</th>
-        <th nzWidth="13%">商户状态</th>
+        <th nzWidth="19%">所属区域</th>
+        <th nzWidth="12%">联系人</th>
+        <th nzWidth="12%">手机号</th>
+        <th nzWidth="12%">创建时间</th>
+        <th nzWidth="10%" style="text-align: center">商户状态</th>
         <th nzWidth="13%">操作</th>
       </tr>
       </thead>
@@ -66,7 +66,7 @@
         <td>{{data.linkMan1 }}</td>
         <td>{{data.linkManTel1}}</td>
         <td>{{data.createDate}}</td>
-        <td>{{data.isLock  | i18nPlural: merchantStatuMapping }}</td>
+        <td class="text-center"><span class="stauts-point available-status-bg" [ngClass]="{'disable-status-bg' : data.isLock === 1}"></span>{{data.isLock  | i18nPlural: merchantStatuMapping }}</td>
         <td>
           <a (click)="jumpRouter(data,'sale')">销售数据</a>
           <nz-divider nzType="vertical"></nz-divider>

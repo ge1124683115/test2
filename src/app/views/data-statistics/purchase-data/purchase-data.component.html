@@ -90,14 +90,14 @@
               (nzPageSizeChange)="searchData(true)">
       <thead>
       <tr>
-        <th style="width: 12%">商品名称</th>
-        <th style="width: 9%">登记证号</th>
-        <th style="width: 9%">规格</th>
-        <th style="width: 9%">品牌</th>
-        <th style="width: 9%">生产厂家</th>
-        <th style="width: 9%">商品类别</th>
+        <th style="width: 13%">商品名称</th>
+        <th style="width: 8%">登记证号</th>
+        <th style="width: 8%">规格</th>
+        <th style="width: 8%">品牌</th>
+        <th style="width: 13%">生产厂家</th>
+        <th style="width: 8%">商品类别</th>
         <th style="width: 8%">剂型</th>
-        <th style="width: 9%">毒性</th>
+        <th style="width: 8%;text-align: center">毒性</th>
         <th style="width: 9%">单位换算关系</th>
         <th style="width: 9%">进货数量</th>
         <th style="width: 8%">操作</th>
@@ -112,7 +112,7 @@
         <td>{{data.manufacturer}}</td>
         <td>{{data.className}}</td>
         <td>{{data.dosage}}</td>
-        <td>{{data.toxicity}}</td>
+        <td class="text-center">{{data.toxicity}}</td>
         <td>{{data.relationDesc}}</td>
         <td>{{(data.productQuantityDOs)?data.productQuantityDOs[currentUnitType].quantityResult:''}}</td>
         <td>
