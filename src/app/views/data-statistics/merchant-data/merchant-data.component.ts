@@ -1,28 +1,29 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup} from '@angular/forms';
-import { MerchantDataServiceNs } from './merchant-data.service';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {MerchantDataServiceNs} from './merchant-data.service';
+
 enum MerchantStatusE {
   inUse = 0,
   blockUp
 }
+
 enum BusinessLicenseStatesE {
-  all = 0,//全部
-  survival,//存续
-  employment,//在业
-  revoked, //吊销
-  cancellation,//注销
-  moveIn, //迁入
-  moveOut,//迁出
-  closed,//停业
-  liquidation,//清算
+  all = 0, // 全部
+  survival, // 存续
+  employment, // 在业
+  revoked,  // 吊销
+  cancellation, // 注销
+  moveIn,  // 迁入
+  moveOut, // 迁出
+  closed, // 停业
+  liquidation, // 清算
 }
 
 enum BusinessScopeStatesE {
-  all = 0,//全部
+  all = 0, // 全部
   unLimit,
   limit
 }
-
 
 
 @Component({
@@ -67,10 +68,11 @@ export class MerchantDataComponent implements OnInit {
   loading = false;
   searchParam: MerchantDataServiceNs.MerchantDataSearchReqModel;
   paramsReqData: MerchantDataServiceNs.MerchantDataReqModel;
-  merchantStatuMapping: {[k: string]: string} = {};
-  businessLicenseStateMapping: {[k: string]: string} = {};
-  businessScopeStateMapping: {[k: string]: string} = {};
+  merchantStatuMapping: { [k: string]: string } = {};
+  businessLicenseStateMapping: { [k: string]: string } = {};
+  businessScopeStateMapping: { [k: string]: string } = {};
   loadAreaDataHandler = null;
+
   constructor(private fb: FormBuilder,
               private merchantDataService: MerchantDataServiceNs.MerchantDataService) {
     this.searchParam = {};
@@ -101,9 +103,9 @@ export class MerchantDataComponent implements OnInit {
     this.paramsReqData = {
       pageNum: this.pageIndex,
       pageSize: this.pageSize,
-      filters : {
+      filters: {
         companySearch: this.searchParam.companySearch,
-        companyAreaId: this.searchParam.companyAreaId ? this.searchParam.companyAreaId[this.searchParam.companyAreaId.length -1] : '',
+        companyAreaId: this.searchParam.companyAreaId ? this.searchParam.companyAreaId[this.searchParam.companyAreaId.length - 1] : '',
         companyState: this.searchParam.companyState,
         unifiedSocialCreditcode: this.searchParam.unifiedSocialCreditcode,
         businessLicenseNo: this.searchParam.businessLicenseNo,
@@ -114,7 +116,7 @@ export class MerchantDataComponent implements OnInit {
     this.merchantDataService.getMerchantData(this.paramsReqData).then((data) => {
       this.loading = false;
       if (!data.value) {
-          return;
+        return;
       }
       this.tableDataSet = data.value.list || [];
       this.total = data.value.total || 0;
@@ -145,11 +147,11 @@ export class MerchantDataComponent implements OnInit {
     this.submitForm();
   }
 
-  public loadAreaData(node: any, index: number):  PromiseLike<any> {
+  public loadAreaData(node: any, index: number): PromiseLike<any> {
     const idStr = node.value || '0';
     const self = this;
     return new Promise((resolve) => {
-        self.merchantDataService.getAreaList(idStr).then((data) => {
+      self.merchantDataService.getAreaList(idStr).then((data) => {
         node.children = this.packAreaData(data.value, index === 1);
         resolve();
       });

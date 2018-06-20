@@ -1,61 +1,70 @@
-import { Injectable } from '@angular/core';
-import { HttpHeaders, HttpParams } from '@angular/common/http';
-import { HttpUtilNs } from '../infra/http/http-util.service';
-import { Observable } from 'rxjs/Observable';
-import { map, retry } from 'rxjs/operators';
-
-import { environment } from '../../../environments/environment';
+import {Injectable} from '@angular/core';
+import {HttpParams} from '@angular/common/http';
+import {HttpUtilNs} from '../infra/http/http-util.service';
+import {Observable} from 'rxjs/Observable';
+import {map, retry} from 'rxjs/operators';
 
 export namespace UserServiceNs {
   import UfastHttpRes = HttpUtilNs.UfastHttpRes;
+
   export interface HttpError extends HttpUtilNs.UfastHttpRes {
     [x: string]: any;
   }
-  export interface UfastHttpResT<T> extends HttpUtilNs.UfastHttpResT<T> {}
+
+  export interface UfastHttpResT<T> extends HttpUtilNs.UfastHttpResT<T> {
+  }
+
   export interface AuthAnyResModel extends HttpUtilNs.UfastHttpRes {
     value: any;
   }
+
   export interface UfastHttpAnyResModel extends HttpUtilNs.UfastHttpRes {
     value: any;
   }
+
   export interface AuthInfoResModel extends HttpUtilNs.UfastHttpRes {
     value: {
       authId: string;
       verifyCode?: string;
       verifyImgUrl: string;
-    }
+    };
   }
+
   export interface AuthLoginReqModel {
     authId: string;
     loginName: string;
     password: string;
     code?: string;
   }
-  export interface AuthUpdateInfoReqModel{
-    email?:string;
-    mobile?:string;
-    areaCode:string;
-    loginName:string;
-    name:string;
-    password:string;
-    telephone:string;
+
+  export interface AuthUpdateInfoReqModel {
+    email?: string;
+    mobile?: string;
+    areaCode: string;
+    loginName: string;
+    name: string;
+    password: string;
+    telephone: string;
   }
+
   export interface AuthLoginInfoValueModel {
-    loginName:string;
-    password:string;
-    deptName:string;      //所属部门
-    email:string;
-    name:string;
-    roleNames:string;     //角色
-    mobile:string;        //手机号
-    telephone:string;     //电话
-    userId:string;
-    rolesVOs:any[];
-    status:number;
-    type:number;
-    [otherKey:string]:any;
+    loginName: string;
+    password: string;
+    deptName: string;      // 所属部门
+    email: string;
+    name: string;
+    roleNames: string;     // 角色
+    mobile: string;        // 手机号
+    telephone: string;     // 电话
+    userId: string;
+    rolesVOs: any[];
+    status: number;
+    type: number;
+
+    [otherKey: string]: any;
   }
-  export interface AuthLoginInfoResModel extends UfastHttpRes{
+
+  export interface AuthLoginInfoResModel extends UfastHttpRes {
     value: AuthLoginInfoValueModel;
   }
 
@@ -80,6 +89,7 @@ export namespace UserServiceNs {
     status?: number;
     userId?: string;
   }
+
   export interface DepartmentModel {
     code: string;
     id: string;
@@ -89,15 +99,17 @@ export namespace UserServiceNs {
     seq: number;
     spaceId: string;
   }
+
   @Injectable()
   export class UserService {
     public userInfo: any;
 
-    constructor(private http: HttpUtilNs.HttpUtilService){
+    constructor(private http: HttpUtilNs.HttpUtilService) {
       this.userInfo = {
         username: ''
       };
     }
+
     public getAuthInfo(): Promise<AuthInfoResModel> {
       return this.http.get<AuthInfoResModel>('ius', '/auth/authInfo')
         .pipe(retry(2), map((data: AuthInfoResModel) => {
@@ -105,6 +117,7 @@ export namespace UserServiceNs {
           return data;
         })).toPromise();
     }
+
     public postLogin(loginData: AuthLoginReqModel): Promise<AuthAnyResModel> {
       return this.http.post<AuthAnyResModel>('ius', 'auth/login', loginData)
         .pipe(map((resData: AuthAnyResModel) => {
@@ -124,50 +137,60 @@ export namespace UserServiceNs {
           return resData;
         }));
     }
-    public modifyPassword(oldPassword:string,newPassword:string):Observable<UfastHttpAnyResModel>{
-      return this.http.post<AuthAnyResModel>('ius','/auth/password',{
-        newPassword:newPassword,
-        oldPassword:oldPassword
+
+    public modifyPassword(oldPassword: string, newPassword: string): Observable<UfastHttpAnyResModel> {
+      return this.http.post<AuthAnyResModel>('ius', '/auth/password', {
+        newPassword: newPassword,
+        oldPassword: oldPassword
       });
     }
-    public getLogin():Observable<UfastHttpAnyResModel>{
-      return this.http.get<AuthLoginInfoResModel>('ius','/profile/getLogin');
-    }
-    public updatePersonInfo(data:AuthUpdateInfoReqModel):Observable<UfastHttpAnyResModel>{
-      return this.http.post<AuthAnyResModel>('ius','/profile/update',data);
-    }
-    public addUser(userInfo:UserInfoModel):Observable<UfastHttpAnyResModel>{
-      return this.http.post('ius','/profile',userInfo);
-    }
-    public updateUserInfo(userInfo:UserInfoModel):Observable<UfastHttpAnyResModel>{
-      return this.http.post('ius','/profile/updateUserInfo',userInfo);
-    }
-    public resetPassword(userIdList:string[]):Observable<UfastHttpAnyResModel>{
-      return this.http.post('ius','/account/resetPassword',userIdList);
-    }
-    public removeUsers(userIdList:string[]):Observable<UfastHttpAnyResModel>{
-      return this.http.post('ius','/profile/remove',userIdList);
-    }
-    public getUserDetail(userId:string):Observable<UfastHttpResT<UserInfoModel>>{
-      let params = new HttpParams();
 
-      return this.http.get('ius','/profile/detail',params.set('userId',userId));
+    public getLogin(): Observable<UfastHttpAnyResModel> {
+      return this.http.get<AuthLoginInfoResModel>('ius', '/profile/getLogin');
     }
-    public getUserList(filter:{filters:any,pageNum:number,pageSize:number}):Observable<UfastHttpAnyResModel>{
-      return this.http.post('ius','/profile/list',filter);
+
+    public updatePersonInfo(data: AuthUpdateInfoReqModel): Observable<UfastHttpAnyResModel> {
+      return this.http.post<AuthAnyResModel>('ius', '/profile/update', data);
     }
-    public lockUsers(lock:number,userIds:string[]):Observable<UfastHttpAnyResModel>{
-      let body = {
-        lock:lock,
-        userIds:userIds
+
+    public addUser(userInfo: UserInfoModel): Observable<UfastHttpAnyResModel> {
+      return this.http.post('ius', '/profile', userInfo);
+    }
+
+    public updateUserInfo(userInfo: UserInfoModel): Observable<UfastHttpAnyResModel> {
+      return this.http.post('ius', '/profile/updateUserInfo', userInfo);
+    }
+
+    public resetPassword(userIdList: string[]): Observable<UfastHttpAnyResModel> {
+      return this.http.post('ius', '/account/resetPassword', userIdList);
+    }
+
+    public removeUsers(userIdList: string[]): Observable<UfastHttpAnyResModel> {
+      return this.http.post('ius', '/profile/remove', userIdList);
+    }
+
+    public getUserDetail(userId: string): Observable<UfastHttpResT<UserInfoModel>> {
+      const params = new HttpParams();
+
+      return this.http.get('ius', '/profile/detail', params.set('userId', userId));
+    }
+
+    public getUserList(filter: { filters: any, pageNum: number, pageSize: number }): Observable<UfastHttpAnyResModel> {
+      return this.http.post('ius', '/profile/list', filter);
+    }
+
+    public lockUsers(lock: number, userIds: string[]): Observable<UfastHttpAnyResModel> {
+      const body = {
+        lock: lock,
+        userIds: userIds
       };
-      return this.http.post('ius','/profile/updateLock',body);
+      return this.http.post('ius', '/profile/updateLock', body);
     }
 
-    public getDepartment(id:string):Observable<HttpUtilNs.UfastHttpResT<DepartmentModel[]>>{
-      let params = new HttpParams();
+    public getDepartment(id: string): Observable<HttpUtilNs.UfastHttpResT<DepartmentModel[]>> {
+      const params = new HttpParams();
 
-      return this.http.get('ius','/department/list',params.set('id',id));
+      return this.http.get('ius', '/department/list', params.set('id', id));
     }
   }
 }

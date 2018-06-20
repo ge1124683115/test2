@@ -1,31 +1,38 @@
-import { Injectable } from "@angular/core";
-import { ValidatorFn,AbstractControl,ValidationErrors } from "@angular/forms";
-import { UfastValidatorsRuleService } from "./validatorsRule.service";
+import {Injectable} from '@angular/core';
+import {AbstractControl, ValidationErrors, ValidatorFn} from '@angular/forms';
+import {UfastValidatorsRuleService} from './validatorsRule.service';
 
 @Injectable()
-export class UfastValidatorsService{
-  constructor(private vrService:UfastValidatorsRuleService){}
+export class UfastValidatorsService {
+  constructor(private vrService: UfastValidatorsRuleService) {
+  }
 
-  public passwordValidator():ValidatorFn{
+  public passwordValidator(): ValidatorFn {
     return this.commonUtil(this.vrService.passwordRule);
   }
-  public mobileValidator():ValidatorFn{
+
+  public mobileValidator(): ValidatorFn {
     return this.commonUtil(this.vrService.mobileRule);
   }
-  public telephoneValidator():ValidatorFn{
+
+  public telephoneValidator(): ValidatorFn {
     return this.commonUtil(this.vrService.telephoneRule);
   }
-  public urlValidator():ValidatorFn{
+
+  public urlValidator(): ValidatorFn {
     return this.commonUtil(this.vrService.urlRule);
   }
-  public emailValidator():ValidatorFn{
+
+  public emailValidator(): ValidatorFn {
     return this.commonUtil(this.vrService.emailRule);
   }
-  public idNoValidator():ValidatorFn{
+
+  public idNoValidator(): ValidatorFn {
     return this.commonUtil(this.vrService.idNoRule);
   }
-  private commonUtil(ruleFun:(value:string)=>ValidationErrors):ValidatorFn{
-    return (control:AbstractControl):ValidationErrors => {
+
+  private commonUtil(ruleFun: (value: string) => ValidationErrors): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors => {
       return ruleFun(control.value);
     };
   }

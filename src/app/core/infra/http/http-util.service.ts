@@ -1,18 +1,20 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams, HttpHeaders, HttpEventType, HttpRequest, HttpEvent, HttpProgressEvent} from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-import { environment } from '../../../../environments/environment';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {Observable} from 'rxjs/Observable';
+import {environment} from '../../../../environments/environment';
 
 export namespace HttpUtilNs {
   export interface UfastHttpRes {
     code: number;
     message: string;
   }
+
   export interface UfastHttpResT<T> {
     code: number;
     message: string;
     value: T;
   }
+
   @Injectable()
   export class HttpUtilService {
     constructor(private http: HttpClient) {
@@ -37,30 +39,30 @@ export namespace HttpUtilNs {
 
     public get<T>(baseUrlName: string, path: string, params?: HttpParams, headers?: HttpHeaders): Observable<any> {
 
-      return this.http.get<T>(this.getFullUrl(baseUrlName, path), this.setOptions(params, headers))
+      return this.http.get<T>(this.getFullUrl(baseUrlName, path), this.setOptions(params, headers));
     }
 
-    public post<T>(baseUrlName: string, path: string, body?: any, params?: HttpParams, headers?: HttpHeaders): Observable<any>{
+    public post<T>(baseUrlName: string, path: string, body?: any, params?: HttpParams, headers?: HttpHeaders): Observable<any> {
 
       return this.http.post<T>(this.getFullUrl(baseUrlName, path), body, this.setOptions(params, headers));
     }
 
-    public put<T>(baseUrlName: string, path: string, body?: any, params?: HttpParams, headers?: HttpHeaders):Observable<any>{
+    public put<T>(baseUrlName: string, path: string, body?: any, params?: HttpParams, headers?: HttpHeaders): Observable<any> {
 
       return this.http.put<T>(this.getFullUrl(baseUrlName, path), body, this.setOptions(params, headers));
     }
 
-    public delete<T>(baseUrlName: string, path: string, params?: HttpParams, headers?: HttpHeaders):Observable<any>{
+    public delete<T>(baseUrlName: string, path: string, params?: HttpParams, headers?: HttpHeaders): Observable<any> {
 
       return this.http.delete<T>(this.getFullUrl(baseUrlName, path), this.setOptions(params, headers));
     }
 
-    public head<T>(baseUrlName: string, path: string, params?: HttpParams, headers?: HttpHeaders):Observable<any>{
+    public head<T>(baseUrlName: string, path: string, params?: HttpParams, headers?: HttpHeaders): Observable<any> {
 
       return this.http.head<T>(this.getFullUrl(baseUrlName, path), this.setOptions(params, headers));
     }
 
-    public options<T>(baseUrlName: string, path: string, params?: HttpParams, headers?: HttpHeaders){
+    public options<T>(baseUrlName: string, path: string, params?: HttpParams, headers?: HttpHeaders) {
 
       return this.http.options<T>(this.getFullUrl(baseUrlName, path), this.setOptions(params, headers));
     }

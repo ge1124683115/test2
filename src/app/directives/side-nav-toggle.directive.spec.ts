@@ -1,4 +1,4 @@
-import { SideNavToggleDirective } from './side-nav-toggle.directive';
+import {SideNavToggleDirective} from './side-nav-toggle.directive';
 
 describe('SideNavToggleDirective', () => {
   it('should create an instance', () => {

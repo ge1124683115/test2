@@ -1,11 +1,12 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { HttpParams } from "@angular/common/http";
-import { map, retry } from 'rxjs/operators';
-import { HttpUtilNs } from '../../../core/infra/http/http-util.service';
+import {Injectable} from '@angular/core';
+import {HttpParams} from '@angular/common/http';
+import {map} from 'rxjs/operators';
+import {HttpUtilNs} from '../../../core/infra/http/http-util.service';
+
 export namespace MerchantDataServiceNs {
   import UfastHttpResT = HttpUtilNs.UfastHttpResT;
   import UfastHttpRes = HttpUtilNs.UfastHttpRes;
+
   export interface MerchantDataModel {
     orgId: string;
     companyName: string;
@@ -40,10 +41,12 @@ export namespace MerchantDataServiceNs {
     companyAreaName: string;
   }
 
-  export interface MerchantInfoResModel extends UfastHttpResT<{list: MerchantDataModel[];
+  export interface MerchantInfoResModel extends UfastHttpResT<{
+    list: MerchantDataModel[];
     total: number;
     pageNum: number;
-    pageSize: number; }> {
+    pageSize: number;
+  }> {
   }
 
   export interface MerchantDataReqModel {

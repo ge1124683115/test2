@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup} from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
-import { PurchaseDataServiceNs } from './purchase-data.service';
-import { OperatingDataServiceNs } from '../operating-data/operating-data.service';
-import { DatePipe } from '@angular/common';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
+import {PurchaseDataServiceNs} from './purchase-data.service';
+import {OperatingDataServiceNs} from '../operating-data/operating-data.service';
+import {DatePipe} from '@angular/common';
+
 @Component({
   selector: 'app-purchase-data',
   templateUrl: './purchase-data.component.html',
@@ -19,11 +20,11 @@ export class PurchaseDataComponent implements OnInit {
   }];
   productClassList = [{
     value: '',
-	  label: '全部'
+    label: '全部'
   }];
   dosageList = [{
-	  value: '',
-	  label: '全部剂型'
+    value: '',
+    label: '全部剂型'
   }];
   tableDataSet = [];
   pageIndex = 1;
@@ -32,6 +33,7 @@ export class PurchaseDataComponent implements OnInit {
   loading = false;
   currentUnitType: number;
   currentMerchantInfo: OperatingDataServiceNs.OperatingDataModel;
+
   constructor(private fb: FormBuilder,
               private purchaseDataService: PurchaseDataServiceNs.PurchaseDataService,
               private route: ActivatedRoute,
@@ -49,7 +51,7 @@ export class PurchaseDataComponent implements OnInit {
     this.paramsReqData = {
       pageNum: this.pageIndex,
       pageSize: this.pageSize,
-      filters : {
+      filters: {
         orgId: this.searchParam.orgId,
         dosage: this.searchParam.dosage || '',
         toxicity: this.searchParam.toxicity || '',
@@ -75,6 +77,7 @@ export class PurchaseDataComponent implements OnInit {
     this.initSearchFormData();
     this.submitForm();
   }
+
   submitForm(): void {
     this.searchParam.fullname = this.validateForm.get('productName').value || '';
     this.searchParam.productClass = this.validateForm.get('productClass').value || 0;
@@ -97,7 +100,7 @@ export class PurchaseDataComponent implements OnInit {
   }
 
   private getCurrentUnitTypeVaule(): void {
-    this.tableDataSet.forEach( item => {
+    this.tableDataSet.forEach(item => {
       if (!item.productQuantityDOs) {
         item.quantityResult = '';
         return;
@@ -109,6 +112,7 @@ export class PurchaseDataComponent implements OnInit {
       item.quantityResult = item.productQuantityDOs[0].quantityResult;
     });
   }
+
   jumpRouter(item: any): void {
     if (!item.productCode) {
       return;
@@ -119,6 +123,7 @@ export class PurchaseDataComponent implements OnInit {
     localStorage.setItem('bkr-productInfo', JSON.stringify(copyObj));
     this.router.navigateByUrl('/main/dataStatistics/purchaseDetails/' + this.searchParam.orgId + '/' + item.productCode);
   }
+
   goBack(): void {
     window.history.back();
   }
@@ -136,6 +141,7 @@ export class PurchaseDataComponent implements OnInit {
       rangePicker: [[startTime, endTime]]
     });
   }
+
   ngOnInit() {
     localStorage.removeItem('bkr-productInfo');
     this.route.params
@@ -145,15 +151,15 @@ export class PurchaseDataComponent implements OnInit {
     this.initSearchFormData();
     this.currentMerchantInfo = localStorage.getItem('bkr-merchantData') ? JSON.parse(localStorage.getItem('bkr-merchantData')) : {};
     this.submitForm();
-	  this.getDosageList();
-	  this.getProductClassList();
+    this.getDosageList();
+    this.getProductClassList();
     this.getToxicityList();
   }
 
   private async getDosageList() {
     const data = <any[]> (await this.purchaseDataService.getDictList('DosageType'));
     this.dosageList = [{label: '全部剂型', value: ''}];
-    data.forEach( item => {
+    data.forEach(item => {
       this.dosageList.push({label: item.value, value: item.value});
     });
   }
@@ -161,7 +167,7 @@ export class PurchaseDataComponent implements OnInit {
   private async getProductClassList() {
     const data = <any[]> (await this.purchaseDataService.getProductClassList(this.searchParam.orgId));
     this.productClassList = [{label: '全部', value: ''}];
-    data.forEach( item => {
+    data.forEach(item => {
       this.productClassList.push({label: item.className, value: item.classCode});
     });
   }
@@ -169,7 +175,7 @@ export class PurchaseDataComponent implements OnInit {
   private async getToxicityList() {
     const data = <any[]> (await this.purchaseDataService.getDictList('ToxicityType'));
     this.toxicitys = [{label: '全部毒性', value: ''}];
-    data.forEach( item => {
+    data.forEach(item => {
       this.toxicitys.push({label: item.value, value: item.value});
     });
   }

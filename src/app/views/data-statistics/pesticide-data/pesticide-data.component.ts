@@ -63,7 +63,7 @@ export class PesticideDataComponent implements OnInit {
     holderName: '',
     pesticideCategoryCode: '',
     pesticideName: '',
-	status: '',
+    status: '',
     toxicityCode: ''
   };
   constructor(private http: HttpUtilNs.HttpUtilService,

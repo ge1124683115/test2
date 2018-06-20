@@ -1,9 +1,10 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { map, retry } from 'rxjs/operators';
-import { HttpUtilNs } from '../../../core/infra/http/http-util.service';
+import {Injectable} from '@angular/core';
+import {map} from 'rxjs/operators';
+import {HttpUtilNs} from '../../../core/infra/http/http-util.service';
+
 export namespace PurchaseDataServiceNs {
   import UfastHttpResT = HttpUtilNs.UfastHttpResT;
+
   export interface PurchaseDataModel {
     orgId?: string;
     productCode?: number;
@@ -23,10 +24,12 @@ export namespace PurchaseDataServiceNs {
     relationDesc?: string;
   }
 
-  export interface PurchaseResModel extends UfastHttpResT<{list: PurchaseDataModel[];
+  export interface PurchaseResModel extends UfastHttpResT<{
+    list: PurchaseDataModel[];
     total: number;
     pageNum: number;
-    pageSize: number; }> {
+    pageSize: number;
+  }> {
   }
 
   export interface PurchaseReqModel {
@@ -44,10 +47,12 @@ export namespace PurchaseDataServiceNs {
     startDate?: string;
     endDate?: string;
   }
+
   @Injectable()
   export class PurchaseDataService {
     constructor(private http: HttpUtilNs.HttpUtilService) {
     }
+
     public getPurchaseData(paramsData: PurchaseReqModel): Promise<PurchaseResModel> {
       return this.http.post<PurchaseResModel>('bizs', 'company/getCompanyPurchaseList', paramsData)
         .pipe(map((data: PurchaseResModel) => {
@@ -55,19 +60,19 @@ export namespace PurchaseDataServiceNs {
         })).toPromise();
     }
 
-	public getDictList(dicType: string): Promise<any> {
-		return this.http.get<HttpUtilNs.UfastHttpResT<any>>('bizs',
-		  'sysDict/list?groupName='+dicType).toPromise().then( data => {
-			return data.value;
-		});
-	}
+    public getDictList(dicType: string): Promise<any> {
+      return this.http.get<HttpUtilNs.UfastHttpResT<any>>('bizs',
+        'sysDict/list?groupName=' + dicType).toPromise().then(data => {
+        return data.value;
+      });
+    }
 
-	public getProductClassList(orgId: string): Promise<any> {
-		return this.http.get<HttpUtilNs.UfastHttpResT<any>>('bizs',
-      'company/getPorductClassList?orgId=' + orgId).toPromise().then( data => {
-			return data.value;
-		});
-	}
+    public getProductClassList(orgId: string): Promise<any> {
+      return this.http.get<HttpUtilNs.UfastHttpResT<any>>('bizs',
+        'company/getPorductClassList?orgId=' + orgId).toPromise().then(data => {
+        return data.value;
+      });
+    }
 
   }
 }
