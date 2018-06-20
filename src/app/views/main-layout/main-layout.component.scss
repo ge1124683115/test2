@@ -47,16 +47,21 @@ $side-menu-bar-width:180px;
 }
 .main-container{
   position:relative;
-  top:60px;
+  top:#{$top-menu-bar-height};
   height:calc(100% - #{$top-menu-bar-height});
-  width:calc(100% - 180px);
+  width:calc(100% - #{$side-menu-bar-width});
   min-width:1300px;
-  left:180px;
+  left:#{$side-menu-bar-width};
   height:-webkit-calc(100% - #{$top-menu-bar-height});
   height:-moz-calc(100% - #{$top-menu-bar-height});
-  width:-webkit-calc(100% - 180px);
-  width:-moz-calc(100% - 180px);
+  width:-webkit-calc(100% - #{$side-menu-bar-width});
+  width:-moz-calc(100% - #{$side-menu-bar-width});
   background-color: #D4D5D4;
+
+  .main-container-breadcrumb{
+    padding: 10px 0px;
+    width:100%;
+  }
 }
 
 .content-container{
