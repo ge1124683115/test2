@@ -116,6 +116,10 @@ export class MerchantSaleDataComponent implements OnInit {
     if (!item.productCode) {
       return;
     }
+    const copyObj = JSON.parse(JSON.stringify(item));
+    copyObj.startDate = this.searchParam.startTime;
+    copyObj.endDate = this.searchParam.endTime;
+    localStorage.setItem('bkr-productInfo', JSON.stringify(copyObj));
     this.router.navigateByUrl('/main/dataStatistics/saleDetails/' + item.productCode);
   }
 
@@ -138,6 +142,7 @@ export class MerchantSaleDataComponent implements OnInit {
   }
 
   ngOnInit() {
+    localStorage.removeItem('bkr-productInfo');
     this.route.params
       .subscribe((params) => {
         this.searchParam.orgId = params['orgId'];

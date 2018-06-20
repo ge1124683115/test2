@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup} from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
-import { DatePipe } from '@angular/common';
-import { PurchaseDetailsServiceNs} from './purchase-details.service';
-import { PurchaseDataServiceNs } from '../purchase-data/purchase-data.service';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {Router, ActivatedRoute} from '@angular/router';
+import {DatePipe} from '@angular/common';
+import {PurchaseDetailsServiceNs} from './purchase-details.service';
+import {PurchaseDataServiceNs} from '../purchase-data/purchase-data.service';
 
 @Component({
   selector: 'app-purchase-details',
@@ -23,6 +23,7 @@ export class PurchaseDetailsComponent implements OnInit {
   searchParam: PurchaseDetailsServiceNs.PurchaseDetailSearchReqModel;
   currentUnitType = 0;
   currentProductInfo: PurchaseDataServiceNs.PurchaseDataModel;
+
   constructor(private fb: FormBuilder,
               private purchaseDetailsService: PurchaseDetailsServiceNs.PurchaseDetailsService,
               private datePipe: DatePipe,
@@ -39,8 +40,8 @@ export class PurchaseDetailsComponent implements OnInit {
     this.paramsReqData = {
       pageNum: this.pageIndex,
       pageSize: this.pageSize,
-      filters : {
-        companyName : this.searchParam.companyName ,
+      filters: {
+        companyName: this.searchParam.companyName,
         contacter: this.searchParam.contacter,
         endTime: this.searchParam.endTime || '',
         productCode: this.searchParam.productCode || '',
@@ -63,7 +64,7 @@ export class PurchaseDetailsComponent implements OnInit {
   }
 
   private getCurrentUnitTypeVaule(): void {
-    this.tableDataSet.forEach( item => {
+    this.tableDataSet.forEach(item => {
       if (item.productQuantityDOs && item.productQuantityDOs.length > 1) {
         item.quantityResult = item.productQuantityDOs[this.currentUnitType].quantityResult;
         return;
@@ -73,11 +74,7 @@ export class PurchaseDetailsComponent implements OnInit {
   }
 
   resetForm(): void {
-    this.validateForm = this.fb.group({
-      companyName : [''],
-      contacter: [''],
-      rangePicker: [[]]
-    });
+    this.initFormData();
     this.submitForm();
   }
 
@@ -88,7 +85,7 @@ export class PurchaseDetailsComponent implements OnInit {
 
   submitForm(): void {
     const rangeTime = this.validateForm.get('rangePicker').value || [];
-    this.searchParam.companyName  = this.validateForm.get('companyName').value || '';
+    this.searchParam.companyName = this.validateForm.get('companyName').value || '';
     this.searchParam.contacter = this.validateForm.get('contacter').value || '';
     if (rangeTime.length > 1) {
       this.searchParam.startTime = this.datePipe.transform(rangeTime[0], 'yyyy-MM-dd');
@@ -99,22 +96,30 @@ export class PurchaseDetailsComponent implements OnInit {
     }
     this.searchData(true);
   }
+
   goBack(): void {
     window.history.back();
   }
+
+  private initFormData(): void {
+    const startDate = (localStorage.getItem('bkr-productInfo') ? JSON.parse(localStorage.getItem('bkr-productInfo')) : {}).startDate || '';
+    const endDate = (localStorage.getItem('bkr-productInfo') ? JSON.parse(localStorage.getItem('bkr-productInfo')) : {}).endDate || '';
+    this.validateForm = this.fb.group({
+      companyName: [''],
+      contacter: [''],
+      rangePicker: [[startDate, endDate]]
+    });
+  }
+
   ngOnInit() {
     this.currentProductInfo = localStorage.getItem('bkr-productInfo') ? JSON.parse(localStorage.getItem('bkr-productInfo')) : {};
     this.route.params
       .subscribe((params) => {
-        this.searchParam.productCode  = params['productCode'];
+        this.searchParam.productCode = params['productCode'];
         this.searchParam.orgId = params['orgId'];
       });
-    this.validateForm = this.fb.group({
-      companyName: [''],
-      contacter: [''],
-      rangePicker: [[]]
-    });
-    this.searchData();
+    this.initFormData();
+    this.submitForm();
   }
 
 }

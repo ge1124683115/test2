@@ -113,7 +113,10 @@ export class PurchaseDataComponent implements OnInit {
     if (!item.productCode) {
       return;
     }
-    localStorage.setItem('bkr-productInfo', JSON.stringify(item));
+    const copyObj = JSON.parse(JSON.stringify(item));
+    copyObj.startDate = this.searchParam.startDate;
+    copyObj.endDate = this.searchParam.endDate;
+    localStorage.setItem('bkr-productInfo', JSON.stringify(copyObj));
     this.router.navigateByUrl('/main/dataStatistics/purchaseDetails/' + this.searchParam.orgId + '/' + item.productCode);
   }
   goBack(): void {

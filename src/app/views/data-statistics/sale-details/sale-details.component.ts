@@ -73,10 +73,7 @@ export class SaleDetailsComponent implements OnInit {
   }
 
   resetForm(): void {
-    this.validateForm = this.fb.group({
-      dealerName: [''],
-      rangePicker: [[]]
-    });
+    this.initFormData();
     this.submitForm();
   }
 
@@ -88,7 +85,6 @@ export class SaleDetailsComponent implements OnInit {
   submitForm(): void {
     const rangeTime = this.validateForm.get('rangePicker').value || [];
     this.searchParam.dealerName = this.validateForm.get('dealerName').value || '';
-
     if (rangeTime.length > 1) {
       this.searchParam.startTime = this.datePipe.transform(rangeTime[0], 'yyyy-MM-dd');
       this.searchParam.endTime = this.datePipe.transform(rangeTime[1], 'yyyy-MM-dd');
@@ -101,16 +97,23 @@ export class SaleDetailsComponent implements OnInit {
   goBack(): void {
       window.history.back();
   }
+
+  private initFormData(): void {
+    const startDate = (localStorage.getItem('bkr-productInfo') ? JSON.parse(localStorage.getItem('bkr-productInfo')) : {}).startDate || '';
+    const endDate = (localStorage.getItem('bkr-productInfo') ? JSON.parse(localStorage.getItem('bkr-productInfo')) : {}).endDate || '';
+    this.validateForm = this.fb.group({
+      dealerName: [''],
+      rangePicker: [[startDate, endDate]]
+    });
+  }
+
   ngOnInit() {
     this.route.params
       .subscribe((params) => {
         this.searchParam.productCode  = params['productCode'];
       });
-    this.validateForm = this.fb.group({
-      dealerName: [''],
-      rangePicker: [[]]
-    });
-    this.searchData();
+    this.initFormData();
+    this.submitForm();
   }
 
 }
