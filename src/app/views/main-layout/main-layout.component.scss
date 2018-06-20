@@ -49,8 +49,13 @@ $side-menu-bar-width:180px;
   position:relative;
   top:60px;
   height:calc(100% - #{$top-menu-bar-height});
+  width:calc(100% - 180px);
+  min-width:1300px;
+  left:180px;
   height:-webkit-calc(100% - #{$top-menu-bar-height});
   height:-moz-calc(100% - #{$top-menu-bar-height});
+  width:-webkit-calc(100% - 180px);
+  width:-moz-calc(100% - 180px);
   background-color: #D4D5D4;
 }
 

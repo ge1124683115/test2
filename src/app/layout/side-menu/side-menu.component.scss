@@ -20,6 +20,7 @@ $switch-bar-width:20px;
   position:relative;
   overflow:hidden;
   position:fixed !important;
+  top:60px;
   z-index: 22;
 
   transition:width .2s linear;

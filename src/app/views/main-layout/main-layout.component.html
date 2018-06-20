@@ -22,14 +22,15 @@
     </div>
   </div>
 </ul>
+<side-menu [sideMenu]="mainMenu" width="180px"></side-menu>
 <div class="main-container" appSideNavToggle>
 
-  <side-menu [sideMenu]="mainMenu" width="180px"></side-menu>
-  <div style="padding: 10px 0px;margin-left: 180px;width:100%;">
+  <!--<side-menu [sideMenu]="mainMenu" width="180px"></side-menu>-->
+  <div style="padding: 10px 0px;width:100%;">
     <app-nav-breadcrumb></app-nav-breadcrumb>
   </div>
   <div class="content-container"
-       [ngStyle]="{'marginLeft': (mainMenu.length===0 ? '0px': (hideSideMenu ? '20px':'180px'))}">
+       [ngStyle]="{'marginLeft': (mainMenu.length===0 ? '0px': (hideSideMenu ? '20px':'0px'))}">
     <router-outlet></router-outlet>
   </div>
 </div>
