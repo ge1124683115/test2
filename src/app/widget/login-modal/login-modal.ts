@@ -1,8 +1,8 @@
-import { Component, Injectable, OnInit} from '@angular/core';
-import { NzModalService, NzModalRef } from 'ng-zorro-antd';
-import {FormGroup, FormBuilder, Validators} from '@angular/forms';
+import {Component, Injectable, OnInit} from '@angular/core';
+import {NzModalRef, NzModalService} from 'ng-zorro-antd';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
-import { UserServiceNs } from '../../core/common-services/user.service';
+import {UserServiceNs} from '../../core/common-services/user.service';
 
 
 @Injectable()
@@ -13,7 +13,8 @@ export class LoginModalService {
 
   constructor(private modalService: NzModalService) {
   }
-  public showLoginModal(maskCloseable: boolean = false ): NzModalRef{
+
+  public showLoginModal(maskCloseable: boolean = false): NzModalRef {
     this.modalSubject = this.modalService.create({
       nzTitle: '用户登录',
       nzContent: LoginModalComponent,
@@ -49,18 +50,20 @@ export class LoginModalComponent implements OnInit {
       code: ''
     };
     this.usernameDisable = false;
-    if ( this.userService.userInfo.username.length > 0) {
+    if (this.userService.userInfo.username.length > 0) {
       this.usernameDisable = true;
     }
     this.verifyImgUrl = '';
     this.remark = '';
     this.loading = false;
   }
+
   public async refreshVerify() {
     const data: UserServiceNs.AuthInfoResModel = await this.userService.getAuthInfo();
     this.verifyImgUrl = data.value.verifyImgUrl;
     this.loginReqData.authId = data.value.authId;
   }
+
   public async loginSubmit() {
     for (const key in this.validateForm.controls) {
       this.validateForm.controls[key].markAsDirty();
@@ -86,9 +89,9 @@ export class LoginModalComponent implements OnInit {
   ngOnInit() {
     this.refreshVerify();
     this.validateForm = this.fb.group({
-      userName: [ null, [ Validators.required ] ],
-      password: [ null, [ Validators.required ] ],
-      verifyCode: [null, [ Validators.required]],
+      userName: [null, [Validators.required]],
+      password: [null, [Validators.required]],
+      verifyCode: [null, [Validators.required]],
     });
   }
 

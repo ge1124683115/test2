@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {NgZorroAntdModule} from 'ng-zorro-antd';
-import {HttpUtilNs} from './infra/http/http-util.service';
+import {HttpUtilNs} from './infra/http/http-util.service";
 
 import {DefaultInterceptor, UfastCodeInterceptor} from './infra/interceptors/default.interceptor';
 
