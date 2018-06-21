@@ -5,7 +5,7 @@ import {EventBusService} from '../core/common-services/event-bus.service';
 })
 export class SideNavToggleDirective {
 
-  constructor(private el: ElementRef, public eventBusService: EventBusService) { }
+  constructor(private el?: ElementRef, public eventBusService?: EventBusService) { }
 
   @HostListener('click') onClick() {
     this.hideSideNav();

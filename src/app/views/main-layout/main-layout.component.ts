@@ -1,17 +1,18 @@
-import { Component, ChangeDetectorRef, enableProdMode, OnInit} from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
-import { ShowMessageService } from '../../widget/show-message/show-message';
-import { MenuServiceNs } from '../../core/common-services/menu.service';
-import { UserServiceNs } from '../../core/common-services/user.service';
+import {ChangeDetectorRef, Component, enableProdMode, OnInit, AfterViewInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {ShowMessageService} from '../../widget/show-message/show-message';
+import {MenuServiceNs} from '../../core/common-services/menu.service';
+import {UserServiceNs} from '../../core/common-services/user.service';
 import 'rxjs/add/operator/filter';
 
 enableProdMode();
+
 @Component({
   selector: 'app-main-layout',
   styleUrls: ['./main-layout.component.scss'],
   templateUrl: './main-layout.component.html'
 })
-export class MainLayoutComponent implements OnInit {
+export class MainLayoutComponent implements AfterViewInit, OnInit {
 
   hideSideMenu: boolean;
   mainMenu: MenuServiceNs.MenuAuthorizedItemModel[];
@@ -24,7 +25,7 @@ export class MainLayoutComponent implements OnInit {
               private detectorRef: ChangeDetectorRef,
               private menuService: MenuServiceNs.MenuService,
               public router: Router,
-              public userService: UserServiceNs.UserService){
+              public userService: UserServiceNs.UserService) {
     this.selectedIndex = null;
     this.mainMenu = [];
     this.sideMenu = {name: '', url: '', children: [], auths: []};
@@ -49,12 +50,15 @@ export class MainLayoutComponent implements OnInit {
         this.hideSideMenu = false;
       });
   }
+
   public navigateUserInfo() {
     this.router.navigateByUrl('/main/personal/personalInfo');
   }
+
   public navigatePassword() {
     this.router.navigateByUrl('/main/personal/modifyPwd');
   }
+
   public logOut() {
     this.userService.logout().subscribe(() => {
       this.router.navigateByUrl('/login');
@@ -63,6 +67,7 @@ export class MainLayoutComponent implements OnInit {
       this.router.navigateByUrl('/login');
     });
   }
+
   ngOnInit() {
     this.userService.getLogin().subscribe((resData: UserServiceNs.UfastHttpAnyResModel) => {
       if (resData.code === 0) {
@@ -74,8 +79,9 @@ export class MainLayoutComponent implements OnInit {
       this.messageService.showAlertMessage('', error.message, 'error');
     });
   }
+
   ngAfterViewInit() {
-    this.menuService.getMenuAuthorized().then( value => {
+    this.menuService.getMenuAuthorized().then(value => {
       this.mainMenu = value;
       console.log(value);
       this.detectorRef.detectChanges();

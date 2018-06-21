@@ -3,7 +3,7 @@ import { MenuServiceNs } from '../../core/common-services/menu.service';
 import { Router, NavigationEnd } from '@angular/router';
 import {EventBusService} from '../../core/common-services/event-bus.service';
 @Component({
-  selector: 'side-menu',
+  selector: 'app-side-menu',
   styleUrls: ['./side-menu.component.scss'],
   templateUrl: './side-menu.component.html'
 })
